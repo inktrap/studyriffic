@@ -1,0 +1,7 @@
+{
+    "max_step":10,
+    "min_scale": 1,
+    "max_scale": 5,
+    "min_scale_desc" : "Definitely false",
+    "max_scale_desc" : "Definitely true"
+}
