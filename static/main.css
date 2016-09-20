@@ -1,2 +1,11 @@
 .inline {display:inline;}
-.hide {display:none;}
+.is_hidden {display:none;}
+.description { margin:1em;
+               padding: 0 5px 0 5px;
+               font-style: italic;
+             }
+div.answer, div.situation, div.sentence { margin:1em; }
+
+.scaledescription {
+        padding: 5px;
+    }

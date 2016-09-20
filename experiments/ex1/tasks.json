@@ -1,1 +1,6 @@
-{}
+[
+    {"situation":"fo0", "sentence":"bara"},
+    {"situation":"fo1", "sentence":"barv"},
+    {"situation":"fo2", "sentence":"barc"},
+    {"situation":"fo3", "sentence":"bard"}
+]
