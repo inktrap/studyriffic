@@ -36,8 +36,12 @@ A simple beautiful rock solid survey tool to be used with prolific.
  - enable error logging: ``uberspace-configure-webserver enable error_log``
  - upload with the upload script
  - remove ``pkg-resources==0.0.0`` from requirements.txt
- - install requirements with the latest available version of pip: ``[perigen@diphda surveyriffic]$ pip3.4 install -r requirements.txt --user``
- - change python version to the version of pip (currently: ``/usr/local/bin/python3.4``)
+ - install virtualenv with pip: ``[perigen@diphda surveyriffic]$ pip3.4 install virtualenv --user``
+ - create the virtualenv and activate it: ``virtualenv .env && source ./.env/bin/activate``
+ - install the requirements: ``[perigen@diphda surveyriffic]$ pip3.4 install -r requirements.txt``
+
+ - change the script, use currently: ``/usr/local/bin/python3.4``
+ - https://perigen.diphda.uberspace.de/fcgi-bin/surveyriffic.fcgi
 
  - check that the syntax of your wrapper works: ``python3.4 -m py_compile surveyriffic.fcgi``
  - check that the syntax of your script works: ``python3.4 -m py_compile surveyriffic.fcgi``
