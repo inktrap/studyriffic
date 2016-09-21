@@ -1,7 +1,9 @@
 # Surveyriffic
 
 A simple beautiful rock solid survey tool to be used with prolific.
-<http://127.0.0.1:8080/?prolific_pid=123&session_id=foobar>
+
+ - <http://127.0.0.1:8080/?prolific_pid=123&session_id=foobar>
+ - <https://perigen.diphda.uberspace.de/fcgi-bin/surveyriffic.fcgi>
 
 # Valentin Todo
 
