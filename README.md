@@ -3,13 +3,26 @@
 A simple beautiful rock solid survey tool to be used with prolific.
 <http://127.0.0.1:8080/?prolific_pid=123&session_id=foobar>
 
-# Todo
+# Valentin Todo
 
- - footer with contact information
+ - put demo online with an example and send a link.
+ - extra form demographic questions.
  - page with requirements
  - check if the prolific id already did the survey
  - write results to db and display link
  - get link from config
+ - implement task selection
+ - change format of tasks from latex to json
+
+# Zsofia (?)
+
+- write demographic questions.
+- clear task selection criteria.
+- prerequisite for task selection: label the tasks we have according to these major and minor categories first.
+- rethink timing? Account for the time for consent form and introduction/examples and the demographic questions.
+- come up with fillers for 2 & 3.
+- write an introduction/example and write/modify the consent form.
+- decide if RT is a factor for payment, if yes, which RTs?
 
 # Maybe/Sometimes
 
