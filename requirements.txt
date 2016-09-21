@@ -1,0 +1,4 @@
+bottle==0.12.9
+flipflop==1.0
+pymongo==3.3.0
+ua-parser==0.7.1
