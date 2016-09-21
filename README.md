@@ -5,6 +5,14 @@ A simple beautiful rock solid survey tool to be used with prolific.
 
 # Todo
 
+ - footer with contact information
+ - page with requirements
+ - check if the prolific id already did the survey
+ - write results to db and display link
+ - get link from config
+
+# Maybe/Sometimes
+
  - separation into modules
  - tests
  - documentation
