@@ -31,3 +31,10 @@ A simple beautiful rock solid survey tool to be used with prolific.
  - documentation
  - publish
 
+# Deployment
+
+ - upload with the upload script
+ - remove ``pkg-resources==0.0.0`` from requirements.txt
+ - install requirements with the latest available version of pip: ``[perigen@diphda surveyriffic]$ pip3.4 install -r requirements.txt --user``
+ - change python version to the version of pip (currently: ``/usr/local/bin/python3.4``)
+
