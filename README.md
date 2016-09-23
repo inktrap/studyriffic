@@ -28,9 +28,18 @@ A simple beautiful rock solid survey tool to be used with prolific.
 
 # Maybe/Sometimes
 
+ - multiple experiments at the same time
+     - traverse experiment folder
+         - read all the settings
+         - include active: true setting
+         - log by experiment
+     - change all the backends
+         - create routes per experiment
+         - set cookie by experiment, aso.
  - separation into modules
  - tests
  - documentation
+ - autopep8
  - publish
 
 # Deployment
