@@ -15,6 +15,15 @@ A simple beautiful rock solid survey tool to be used with prolific.
  - get link from config
  - implement task selection
  - change format of tasks from latex to json
+ - multiple experiments at the same time
+     - traverse experiment folder
+         - read all the settings
+         - include active: true setting
+         - log by experiment
+         - have first template by experiment
+     - change all the backends
+         - create routes per experiment
+         - set cookie by experiment, aso.
 
 # Zsofia (?)
 
@@ -28,14 +37,6 @@ A simple beautiful rock solid survey tool to be used with prolific.
 
 # Maybe/Sometimes
 
- - multiple experiments at the same time
-     - traverse experiment folder
-         - read all the settings
-         - include active: true setting
-         - log by experiment
-     - change all the backends
-         - create routes per experiment
-         - set cookie by experiment, aso.
  - separation into modules
  - tests
  - documentation
