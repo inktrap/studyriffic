@@ -183,7 +183,7 @@ def check_useragent(user_agent):
 
 def make_error(err, markup=True):
     u''' format error messages'''
-    logger.debug(err)
+    logger.error(err)
     if markup:
         return template('error.tpl', error=err, name='Error')
     else:
