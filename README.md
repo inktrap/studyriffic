@@ -9,13 +9,13 @@ A simple beautiful rock solid survey tool to be used with prolific.
 
  - put demo online with an example and send a link.
  - extra form demographic questions.
- - page with requirements
  - check if the prolific id already did the survey
  - write results to db and display link
  - get link from config
- - implement task selection
  - change format of tasks from latex to json
- - multiple experiments at the same time
+
+ x implement task selection
+ x multiple experiments at the same time
      - traverse experiment folder
          - read all the settings
          - include active: true setting
@@ -37,6 +37,7 @@ A simple beautiful rock solid survey tool to be used with prolific.
 
 # Maybe/Sometimes
 
+ - page with requirements
  - separation into modules
  - tests
  - documentation

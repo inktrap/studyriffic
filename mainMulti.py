@@ -65,6 +65,7 @@ def configure_study(study, study_path):
     with open(study_settings, 'r') as fh:
         settings = json.load(fh)
         if 'active' in settings.keys():
+            # the active key is opional
             if settings['active'] is False:
                 # do not include inactive studies
                 return False
@@ -74,8 +75,9 @@ def configure_study(study, study_path):
             assert all([os.path.isfile(os.path.join(study_template_path, template)) for template in settings['templates']]), "Study %s needs the templates %s in %s" % (study, ', '.join(settings['templates']), study_template_path)
         else:
             settings['templates'] = []
-        if 'restrictions' in settings.keys():
-            assert all([restriction in restrictions for restriction in settings['restrictions']]), "Study %s uses a restriction that is not one of: %s" % (study, ', '.join(restrictions))
+        # let the task selection module worry about restrictions
+        #if 'restrictions' in settings.keys():
+        #    assert all([restriction in restrictions for restriction in settings['restrictions']]), "Study %s uses a restriction that is not one of: %s" % (study, ', '.join(restrictions))
         settings['name'] = study.capitalize()
         settings['study'] = study
         # settings['template_lookup'] = os.path.join(template_path, study)
@@ -324,8 +326,8 @@ def get_current_task(study):
 def select_tasks(study):
     # todo generate a list of tasks
     this_tasks = list(range(0, studies[study]['settings']['max_step']))
-    restrictions = studies[study]['settings']['restrictions']
-    logger.debug(restrictions)
+    #restrictions = studies[study]['settings']['restrictions']
+    #logger.debug(restrictions)
     assert len(this_tasks) == studies[study]['settings'][
         'max_step'], 'The number of selected tasks does not match max_step'
     return this_tasks
