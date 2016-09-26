@@ -16,7 +16,7 @@ actions = ['max_successors', 'select']
 categories = ['filler', 'target']
 types = ['any'] + ['soft-presupposition', 'hard-presupposition', 'extra-soft-presupposition'] + ['bad', 'good', 'meh']
 
-max_step = 4
+questions = 4
 
 # max_successor defines how many *successors* are *permitted*
 # this allows 2 successors of type 'bad' to follow, so 3 in a sequence are allowed
@@ -112,8 +112,8 @@ def check_select(restrictions):
 
     # check that all the arguments are dividable without a remainder
     for select_restriction in select_restrictions:
-        #print(math.modf(max_step * select_restriction['argument'])[0])
-        assert (math.modf(max_step * select_restriction['argument']))[0] == 0.0, "selection arguments can not produce items less than 1."
+        #print(math.modf(questions * select_restriction['argument'])[0])
+        assert (math.modf(questions * select_restriction['argument']))[0] == 0.0, "selection arguments can not produce items less than 1."
     return select_restrictions
 
 
@@ -152,7 +152,7 @@ def apply_select(select_restrictions):
 
         assert len(category_tasks) > 0
         # get number of entities the current restriction takes
-        take_restrictions = max_step * select_restriction['argument']
+        take_restrictions = questions * select_restriction['argument']
         # print(take_restrictions)
         # print(len(category_tasks))
         assert take_restrictions <= len(category_tasks)

@@ -84,7 +84,7 @@ def configure_study(study, study_path):
     with open(study_tasks, 'r') as fh:
         tasks = json.load(fh)
     assert len(tasks) >= settings[
-        'max_step'], 'Study %s: There are not enough tasks (or max_step is too high.)' % study
+        'questions'], 'Study %s: There are not enough tasks (or questions is too high.)' % study
 
     return {'settings': settings,
             'tasks': tasks,
@@ -260,7 +260,7 @@ def last(study):
     # save the results and check that the data matches up
     results_cookie = get_results_cookie()
     study_cookie = get_study_cookie(study)
-    if len(results_cookie) != studies[study]['settings']['max_step'] != len(study_cookie['tasks']) != study_cookie['step']:
+    if len(results_cookie) != studies[study]['settings']['questions'] != len(study_cookie['tasks']) != study_cookie['step']:
         return make_error("Your results don't match up. This is bad.")
     result_ids = [result['id'] for result in results_cookie]
     for task_id in study_cookie['tasks']:
@@ -325,11 +325,11 @@ def get_current_task(study):
 
 def select_tasks(study):
     # todo generate a list of tasks
-    this_tasks = list(range(0, studies[study]['settings']['max_step']))
+    this_tasks = list(range(0, studies[study]['settings']['questions']))
     #restrictions = studies[study]['settings']['restrictions']
     #logger.debug(restrictions)
     assert len(this_tasks) == studies[study]['settings'][
-        'max_step'], 'The number of selected tasks does not match max_step'
+        'questions'], 'The number of selected tasks does not match questions'
     return this_tasks
 
 
@@ -339,14 +339,14 @@ def fetch_task(study):
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         study_cookie = get_study_cookie(study)
         logger.debug("maxstep")
-        logger.debug(studies[study]['settings']['max_step'])
+        logger.debug(studies[study]['settings']['questions'])
         logger.debug("step")
         logger.debug(study_cookie['step'])
         logger.debug("tasks")
         logger.debug(study_cookie['tasks'])
-        if study_cookie['step'] == studies[study]['settings']['max_step']:
+        if study_cookie['step'] == studies[study]['settings']['questions']:
             data = {'error': "No more steps.", 'status': None}
-        elif study_cookie['step'] < studies[study]['settings']['max_step'] and \
+        elif study_cookie['step'] < studies[study]['settings']['questions'] and \
                 study_cookie['step'] < len(studies[study]['tasks']):
             data = get_current_task(study)
             data['status'] = True
@@ -360,7 +360,7 @@ def fetch_task(study):
 
 @verified_study
 def get_progress(step, study):
-    return int(round(((step / float(studies[study]['settings']['max_step'])) * 100), 0))
+    return int(round(((step / float(studies[study]['settings']['questions'])) * 100), 0))
 
 
 @route('/study/<study>/main', method='GET')
@@ -382,7 +382,7 @@ def completion(study):
 
 
 def set_study_cookie(pid, sid, step, tasks, study):
-    assert step <= studies[study]['settings']['max_step'], 'the current step is greater than max_step'
+    assert step <= studies[study]['settings']['questions'], 'the current step is greater than questions'
     assert step <= len(tasks), 'the current step is greater than the number of tasks'
     assert pid is not None, 'pid is None'
     assert sid is not None, 'sid is None'

@@ -8,10 +8,11 @@ A simple beautiful rock solid survey tool to be used with prolific.
 # Valentin Todo
 
  - put demo online with an example and send a link.
- - extra form demographic questions.
+
+ - change template to use custom template if specified
+     - extra form demographic questions.
  - check if the prolific id already did the survey
- - write results to db and display link
- - get link from config
+ - write results to db
  - change format of tasks from latex to json
 
  x implement task selection
