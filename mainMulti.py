@@ -260,12 +260,14 @@ def last(study):
     # save the results and check that the data matches up
     results_cookie = get_results_cookie()
     study_cookie = get_study_cookie(study)
+    if results_cookie is None:
+        return make_error("Could not find any of the tasks that were given to you. This is bad.")
     if len(results_cookie) != studies[study]['settings']['questions'] != len(study_cookie['tasks']) != study_cookie['step']:
         return make_error("Your results don't match up. This is bad.")
     result_ids = [result['id'] for result in results_cookie]
     for task_id in study_cookie['tasks']:
         if task_id not in result_ids:
-            return make_error("Could not find all of the tasks that were given you. This is bad.")
+            return make_error("Could not find all of the tasks that were given to you. This is bad.")
     print(get_results_cookie())
     # when should i pay people?
     # yes: display payment link

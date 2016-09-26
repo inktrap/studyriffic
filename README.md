@@ -12,6 +12,7 @@ A simple beautiful rock solid survey tool to be used with prolific.
  - change template to use custom template if specified
      - extra form demographic questions.
  - check if the prolific id already did the survey
+ - check that users can't skip to last
  - reenable session check
  - write results to db
  - change format of tasks from latex to json
