@@ -16,6 +16,7 @@ SimpleTemplate.defaults["url"] = url
 from ua_parser import user_agent_parser
 import json
 import os
+import re
 # dev
 import pprint
 pp = pprint.PrettyPrinter(indent=4)
@@ -33,14 +34,28 @@ ch.setLevel(logging.DEBUG)
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
+# build paths
+project_root = os.path.abspath(os.path.dirname(os.path.realpath(__file__)))
+template_path = os.path.join(project_root, 'views')
+bottle.TEMPLATE_PATH.insert(0, template_path)
+
+# customize these
 cookie_secret = 'ajkbkjnkvnklrkvlkbgjknjkls'
 this_port = 63536
-project_root = os.path.abspath(os.path.dirname(os.path.realpath(__file__)))
+
+# a list of customizable templates
+templates = ['first.tpl', 'last.tpl', 'consent.tpl', 'main.tpl']
+
+# study directories have to match this regex
+study_regex = "[a-z,A-Z,0-9,-]+"
 
 
 def configure_study(study, study_path):
     study_settings = os.path.join(study_path, "settings.json")
     study_tasks = os.path.join(study_path, "tasks.json")
+    study_template_path = os.path.join(template_path, study)
+
+    assert re.match(study_regex, study), "Rename your directory to match %s" % study_regex
 
     assert os.path.isfile(
         study_settings), "%s: Please create %s" % (study, study_settings)
@@ -49,12 +64,25 @@ def configure_study(study, study_path):
 
     with open(study_settings, 'r') as fh:
         settings = json.load(fh)
+        if 'active' in settings.keys():
+            if settings['active'] is False:
+                # do not include inactive studies
+                return False
+        if 'templates' in settings.keys():
+            # assert that all templates that are specified by study exist
+            assert all([template in templates for template in settings['templates']]), "Study %s uses a template that is not one of: %s" % (study, ', '.join(templates))
+            assert all([os.path.isfile(os.path.join(study_template_path, template)) for template in settings['templates']]), "Study %s needs the templates %s in %s" % (study, ', '.join(settings['templates']), study_template_path)
+        else:
+            settings['templates'] = []
+        if 'restrictions' in settings.keys():
+            assert all([restriction in restrictions for restriction in settings['restrictions']]), "Study %s uses a restriction that is not one of: %s" % (study, ', '.join(restrictions))
         settings['name'] = study.capitalize()
         settings['study'] = study
+        # settings['template_lookup'] = os.path.join(template_path, study)
     with open(study_tasks, 'r') as fh:
         tasks = json.load(fh)
     assert len(tasks) >= settings[
-        'max_step'], '%s: There are not enough tasks (or max_step is too high.)' % study
+        'max_step'], 'Study %s: There are not enough tasks (or max_step is too high.)' % study
 
     return {'settings': settings,
             'tasks': tasks,
@@ -66,9 +94,12 @@ def configure():
     studies = {}
     for study in os.listdir(studies_path):
         study_path = os.path.join(studies_path, study)
-        logger.debug(study_path)
+        #logger.debug(study_path)
         if os.path.isdir(study_path):
-            studies[study] = configure_study(study, study_path)
+            this_study = configure_study(study, study_path)
+            if this_study is False:
+                continue
+            studies[study] = this_study
     assert len(studies.keys()) > 0, "No studies configured."
     return studies
 
@@ -81,7 +112,7 @@ print('''Please visit:
 
 # studies are configured by convention
 studies = configure()
-logger.debug(list(studies.keys()))
+#logger.debug(list(studies.keys()))
 
 
 def get_useragent():
@@ -152,7 +183,7 @@ def make_error(err, markup=True):
     u''' format error messages'''
     logger.debug(err)
     if markup:
-        return template('error.tpl', error=err, name='Default Error Page')
+        return template('error.tpl', error=err, name='Error')
     else:
         return err
 
@@ -169,69 +200,81 @@ def strip_path():
     request.environ['PATH_INFO'] = request.environ['PATH_INFO'].rstrip('/')
 
 
+def get_study(*args, **kwargs):
+    logger.debug("get study")
+    logger.debug("args")
+    logger.debug(args)
+    logger.debug("kwargs")
+    logger.debug(kwargs)
+    if 'study' in kwargs.keys():
+        logger.debug(kwargs['study'])
+        if kwargs['study'] in studies.keys():
+            return kwargs['study']
+    else:
+        if len(args) == 1:
+            if args[0] in studies.keys():
+                return args[0]
+    return False
+
+
 def verified_cookie(f):
     def func_wrapper(*args, **kwargs):
-        user_cookie = get_user_cookie(kwargs['study'])
-        if isinstance(user_cookie, str):
-            return make_error(user_cookie)
+        logger.debug("verified cookie")
+        study = get_study(*args, **kwargs)
+        logger.debug(study)
+        study_cookie = get_study_cookie(study)
+        if isinstance(study_cookie, str):
+            return make_error(study_cookie)
         else:
             return f(*args, **kwargs)
     return func_wrapper
 
 
-def valid_study(f):
+def verified_study(f):
     def func_wrapper(*args, **kwargs):
-        logger.debug(studies.keys())
-        if 'study' in kwargs.keys():
-            logger.debug(kwargs)
-            logger.debug(kwargs['study'])
-            if kwargs['study'] in studies.keys():
-                return f(*args, **kwargs)
-            else:
-                return make_error("Not a valid study: %s" % kwargs['study'], False)
+        logger.debug("valid study")
+        study = get_study(*args, **kwargs)
+        if study is False:
+            #logger.debug("Study does not exist")
+            return make_error("Not a valid study: %s" % study, False)
         else:
-            logger.debug(args)
-            if len(args) == 1:
-                if args[0] in studies.keys():
-                    return f(*args, **kwargs)
-                else:
-                    return make_error("Not a valid study: %s" % args[0], False)
-            else:
-                logger.error("Wrong number of arguments: %i" % len(args))
-                return make_error("Internal error.")
+            #logger.debug("Study exists")
+            return f(*args, **kwargs)
     return func_wrapper
 
 
 @route('/study/<study>/first', method='GET')
 @verified_cookie
-@valid_study
+@verified_study
 def first(study):
-    return template('first.tpl', **studies[study]['settings'])
+    # return template('first.tpl', **studies[study]['settings'])
+    return template(os.path.join(template_path, study, 'first.tpl'), **studies[study]['settings'])
 
 
 @route('/study/<study>/last', method='GET', name='last')
 @verified_cookie
-@valid_study
+@verified_study
 def last(study):
     # save the results and check that the data matches up
     results_cookie = get_results_cookie()
-    user_cookie = get_user_cookie(study)
-    if len(results_cookie) != studies[study]['settings']['max_step'] != len(user_cookie[study]['tasks']) != user_cookie[study]['step']:
+    study_cookie = get_study_cookie(study)
+    if len(results_cookie) != studies[study]['settings']['max_step'] != len(study_cookie['tasks']) != study_cookie['step']:
         return make_error("Your results don't match up. This is bad.")
     result_ids = [result['id'] for result in results_cookie]
-    for task_id in user_cookie[study]['tasks']:
+    for task_id in study_cookie['tasks']:
         if task_id not in result_ids:
             return make_error("Could not find all of the tasks that were given you. This is bad.")
     print(get_results_cookie())
     # when should i pay people?
     # yes: display payment link
     # check response times?
+    # return template(os.path.join(template_path, study, 'first.tpl'), complete=100, **studies[study]['settings'])
     return template('last.tpl', complete=100, **studies[study]['settings'])
 
 
 @route('/study/<study>/first', method='POST')
 @verified_cookie
-@valid_study
+@verified_study
 def set_first(study):
     # get rt how long it took to read the description
     redirect("/study/%s/main" % study)
@@ -255,33 +298,36 @@ def set_results(study):
         # and points to the current task
         # when saving a result it is necessary to get the id of the previous
         # task
-        set_results_cookie(get_task_id(), request.json[
+        set_results_cookie(get_current_task_id(study), request.json[
                            'situation_rt'], request.json['sentence_rt'], request.json['value'])
         # iterate the step and save it
-        user_cookie = get_user_cookie(study)
-        user_cookie[study]['step'] += 1
-        set_user_cookie(**user_cookie)
+        study_cookie = get_study_cookie(study)
+        study_cookie['step'] += 1
+        logger.debug(study_cookie)
+        set_study_cookie(study=study, **study_cookie)
         return {'status': True}
     else:
         return {'message': "Invalid choice", 'status': False}
 
 
-def get_task_id(study):
+def get_current_task_id(study):
     '''get the id of the current task'''
-    user_cookie = get_user_cookie(study)
-    return user_cookie[study]['tasks'][user_cookie[study]['step']]
+    study_cookie = get_study_cookie(study)
+    return study_cookie['tasks'][study_cookie['step']]
 
 
-def get_task(study):
+def get_current_task(study):
     '''get the current task'''
-    return studies[study]['tasks'][get_task_id(study)]
+    return studies[study]['tasks'][get_current_task_id(study)]
 
 
 def select_tasks(study):
     # todo generate a list of tasks
     this_tasks = list(range(0, studies[study]['settings']['max_step']))
+    restrictions = studies[study]['settings']['restrictions']
+    logger.debug(restrictions)
     assert len(this_tasks) == studies[study]['settings'][
-        'max_step'], 'the number of selected tasks does not match max_step'
+        'max_step'], 'The number of selected tasks does not match max_step'
     return this_tasks
 
 
@@ -289,20 +335,20 @@ def select_tasks(study):
 @verified_cookie
 def fetch_task(study):
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        user_cookie = get_user_cookie(study)
-        # print("maxstep")
-        # print(settings['max_step'])
-        # print("step")
-        # print(user_cookie['step'])
-        # print("tasks")
-        # print(user_cookie['tasks'])
-        if user_cookie[study]['step'] == studies[study]['settings']['max_step']:
+        study_cookie = get_study_cookie(study)
+        logger.debug("maxstep")
+        logger.debug(studies[study]['settings']['max_step'])
+        logger.debug("step")
+        logger.debug(study_cookie['step'])
+        logger.debug("tasks")
+        logger.debug(study_cookie['tasks'])
+        if study_cookie['step'] == studies[study]['settings']['max_step']:
             data = {'error': "No more steps.", 'status': None}
-        elif user_cookie[study]['step'] < studies[study]['settings']['max_step'] and \
-                user_cookie[study]['step'] < len(studies[study]['task']):
-            data = get_task(study)
+        elif study_cookie['step'] < studies[study]['settings']['max_step'] and \
+                study_cookie['step'] < len(studies[study]['tasks']):
+            data = get_current_task(study)
             data['status'] = True
-            data['complete'] = get_progress(user_cookie[study]['step'])
+            data['complete'] = get_progress(study_cookie['step'], study=study)
         else:
             data = {'error': "Unknown error.", 'status': False}
     else:
@@ -310,16 +356,19 @@ def fetch_task(study):
     return data
 
 
-def get_progress(study, step):
+@verified_study
+def get_progress(step, study):
     return int(round(((step / float(studies[study]['settings']['max_step'])) * 100), 0))
 
 
 @route('/study/<study>/main', method='GET')
 @verified_cookie
-@valid_study
 def main(study):
+    logger.debug("main")
+    logger.debug("Study: %s" % study)
+    logger.debug(studies[study]['settings'].keys())
     return template('main.tpl',
-                    complete=get_progress(study, 0),
+                    complete=get_progress(0, study=study),
                     **studies[study]['settings']
                     )
 
@@ -330,21 +379,23 @@ def completion(study):
     return ""
 
 
-def set_user_cookie(pid, sid, step, tasks, study):
+def set_study_cookie(pid, sid, step, tasks, study):
     assert step <= studies[study]['settings']['max_step'], 'the current step is greater than max_step'
     assert step <= len(tasks), 'the current step is greater than the number of tasks'
     assert pid is not None, 'pid is None'
     assert sid is not None, 'sid is None'
+    #logger.debug("Setting cookie %s" % study)
     return response.set_cookie('surveyriffic-user-%s' % study, {'pid': pid, 'sid': sid, 'step': step, 'tasks': tasks}, secret=cookie_secret)
 
 
-@valid_study
-def get_user_cookie(study):
+@verified_study
+def get_study_cookie(study):
     this_cookie = request.get_cookie('surveyriffic-user-%s' % study, secret=cookie_secret)
     if this_cookie is None:
         return "Cookie is not set. Please enable cookies and start this survey again."
     assert isinstance(this_cookie, dict), 'the cookie is not a dictionary'
     assert len(this_cookie.keys()) == 4, 'the cookie does not have 4 keys'
+    #logger.debug("Getting cookie %s" % study)
     return this_cookie
 
 
@@ -363,7 +414,7 @@ def get_results_cookie():
     return request.get_cookie('surveyriffic-results', secret=cookie_secret)
 
 
-@valid_study
+@verified_study
 def verify_consent(study):
     ''' verifies consent and returns the pid and the sid from the cookie'''
     if not request.forms.get('consent') == "true":
@@ -381,12 +432,12 @@ def verify_consent(study):
         return "Empty session id."
     '''
     sid = "foobar"
-    response = set_user_cookie(pid, sid, 0, select_tasks(study), study)
+    response = set_study_cookie(pid, sid, 0, select_tasks(study), study=study)
     return True
 
 
 @route('/study/<study>/consent', method='POST')
-@valid_study
+@verified_study
 def consent(study):
     consent_result = verify_consent(study)
     if isinstance(consent_result, str):
@@ -397,11 +448,6 @@ def consent(study):
         return make_error("An unknown error occurred")
 
 
-@route('/')
-def index():
-    return '/'
-
-
 @route('/favicon.ico', method='GET')
 def favicon():
     return server_static('icons/favicon.ico')
@@ -409,7 +455,7 @@ def favicon():
 
 @route('/study/')
 @route('/study/<study>')
-def study(study=None):
+def index(study=None):
 
     if study is None:
         return make_error("Please choose a study.")
@@ -430,8 +476,8 @@ def study(study=None):
     sid = request.query.session_id
 
     logger.debug(studies[study]['settings'])
-    return template('consent.tpl', session_id=sid, prolific_pid=pid,
-                    **studies[study]['settings'])
+    return template('consent.tpl', session_id=sid, prolific_pid=pid, **studies[study]['settings'])
+    # return template(os.path.join(template_path, study, 'consent.tpl'), session_id=sid, prolific_pid=pid, **studies[study]['settings'])
 
 
 if __name__ == '__main__':
