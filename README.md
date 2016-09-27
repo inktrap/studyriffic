@@ -41,6 +41,7 @@ Here is a quick overview of the framework I wrote. It features:
    300 values in the interval [0,20] distribute …)
  - I need to incorporate and test the selection logic.
  - and I finally need to change the data to fit our needs.
+ - include university placeholder
 
  x implement task selection
  x multiple experiments at the same time
