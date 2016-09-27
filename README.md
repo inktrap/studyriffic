@@ -30,19 +30,14 @@ Here is a quick overview of the framework I wrote. It features:
 
  - change template to use custom template if specified
      - extra form demographic questions.
- - check if the prolific id already did the survey
- - reenable session check
  - write results to db
+ - check if the prolific id already did the survey
  - change format of tasks from latex to json
- - I need to write the results of the study to the db. (Most important
-   step!)
-   (So the selection of new tasks could be based on previous selections …
-   but I guess that random selection would be fine? Well, I could test how
-   300 values in the interval [0,20] distribute …)
- - I need to incorporate and test the selection logic.
- - and I finally need to change the data to fit our needs.
- - include university placeholder
+ - use selection logic (use as module)
+ - put user agent check in a module
+ - reenable session check, check for TODOs
 
+ x include university placeholder
  x implement task selection
  x multiple experiments at the same time
      - traverse experiment folder
