@@ -28,14 +28,27 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Valentin Todo
 
- - change template to use custom template if specified
-     - extra form demographic questions.
- - write results to db
- - check if the prolific id already did the survey
- - change format of tasks from latex to json
- - use selection logic (use as module)
- - put user agent check in a module
- - reenable session check, check for TODOs
+ - major: extra optional form for demographic questions.
+ - major: write results to db
+ - major: change format of tasks from latex to json
+ - major: use selection logic (use as module)
+ - major: put user agent check in a module
+ - major: make the step before last rock solid!!!
+     - check if the prolific id already did the survey
+     - reenable session check, check for TODOs
+
+ - minor: change all the view functions to use the custom template if specified
+ - minor issue: newlines in tasks.
+     - json newlines won't be transformed into the html equivalent and inline html won't be interpretated.
+
+ - maybe: page with requirements?
+ - maybe: separation into modules?
+ - maybe: tests?
+ - maybe: documentation?
+ - maybe: autopep8?
+ - maybe: publish?? (blogpost, pr)
+
+# Done
 
  x include university placeholder
  x implement task selection
@@ -49,28 +62,31 @@ Here is a quick overview of the framework I wrote. It features:
          - create routes per experiment
          - set cookie by experiment, aso.
 
-
 # Zsofia (?)
 
-- write demographic questions.
-- clear task selection criteria.
-- prerequisite for task selection: label the tasks we have according to these major and minor categories first.
+x write demographic questions.
+x clear task selection criteria.
+x prerequisite for task selection: label the tasks we have according to these major and minor categories first.
+x come up with fillers for 2 & 3.
+x write an introduction/example and write/modify the consent form.
 - rethink timing? Account for the time for consent form and introduction/examples and the demographic questions.
-- come up with fillers for 2 & 3.
-- write an introduction/example and write/modify the consent form.
 - decide if RT is a factor for payment, if yes, which RTs?
 
-# Maybe/Sometimes
+# Deployment (automate uberspace deployment in general)
 
- - page with requirements
- - separation into modules
- - tests
- - documentation
- - autopep8
- - publish
+## Init Uberspace
 
-# Deployment
+ - manual step: create uberspace
+ - automate?
+     - use pwgen and symlink pw
+     - use password file sheme
+     - change ssh config
+     - upload ssh key
+     - rsync minimal config
 
+## Init Code
+
+ - (it would be best to write a script for this that automates this process via ssh.)
  - enable error logging: ``uberspace-configure-webserver enable error_log``
  - upload with the upload script
  - remove ``pkg-resources==0.0.0`` from requirements.txt
@@ -78,4 +94,17 @@ Here is a quick overview of the framework I wrote. It features:
  - create the virtualenv and activate it: ``virtualenv .env && source ./.env/bin/activate``
  - install the requirements: ``[perigen@diphda surveyriffic]$ pip3.4 install -r requirements.txt``
  - use upload script to create service file and replace python path to virtualenv
+
+## Init DB
+
+ - enable own mongodb instance, password protected
+ - run mongodb instance via uberspace
+ - change the webapp config so pymongo can access the db
+
+## Run Code
+
+ - use run script
  - check log: ``watch -n 1 "zcat -f ~/service/surveyriffic/log/main/* | tai64nlocal | tail -n 30"``
+
+## Reporting/Monitoring/Testing?
+
