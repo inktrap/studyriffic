@@ -12,3 +12,8 @@ div.answer, div.situation, div.sentence { margin:1em; }
 .progress{
     margin-bottom: 1px !important;
 }
+
+form.scale.inline > input {
+    margin-left: 5px;
+    margin-right: 5px;
+}
