@@ -28,6 +28,15 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Valentin Todo
 
+ - major bug: in general: status bar blocks the view, continue not visible
+ - major bug: in general: footer blocks the view, continue not visible
+ -> really get into bootstrap and check everything in responsive mode
+
+ - bug: opera: progress bar not visible? more info needed, resizing issue?
+ - bug: ie (weird): skips back to 0% and first question, then after Continue, skips to the next new question after the last position before break-off (e.g., 50%).
+ - bug: ie 11 (weird): does not work (endless loop after two questions)
+ - bug: ie 11: default magnification too big
+
  - major: extra optional form for demographic questions.
  - major: write results to db
  - major: change format of tasks from latex to json
@@ -37,7 +46,9 @@ Here is a quick overview of the framework I wrote. It features:
      - check if the prolific id already did the survey
      - reenable session check, check for TODOs
 
- - minor: change all the view functions to use the custom template if specified
+ - minor: bigger font size
+ - minor: vertically center task
+ - minor: change all the view functions to use the custom template, if specified
  - minor issue: newlines in tasks.
      - json newlines won't be transformed into the html equivalent and inline html won't be interpretated.
 
@@ -50,6 +61,9 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Done
 
+ x drop situation and sentence headings
+ x include go back link in error page, if available
+ x spacing between answers
  x include university placeholder
  x implement task selection
  x multiple experiments at the same time
