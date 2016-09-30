@@ -28,8 +28,9 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Valentin Todo
 
+ - minor: bigger font size (TODO: make this based on the viewport size, see main.css)
+
  - major bug: in general: status bar blocks the view, continue not visible
- - major bug: in general: footer blocks the view, continue not visible
  -> really get into bootstrap and check everything in responsive mode
 
  - bug: opera: progress bar not visible? more info needed, resizing issue?
@@ -46,7 +47,6 @@ Here is a quick overview of the framework I wrote. It features:
      - check if the prolific id already did the survey
      - reenable session check, check for TODOs
 
- - minor: bigger font size
  - minor: vertically center task
  - minor: change all the view functions to use the custom template, if specified
  - minor issue: newlines in tasks.
@@ -61,6 +61,7 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Done
 
+ - x major bug: in general: footer blocks the view, continue not visible
  x drop situation and sentence headings
  x include go back link in error page, if available
  x spacing between answers
