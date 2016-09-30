@@ -9,38 +9,6 @@ import errno
 import os
 import signal
 
-# restrictions
-# this leads to the following grammar:
-actions = ['max_successors', 'select']
-# categories and the types that are defined in tasks.xml
-categories = ['filler', 'target']
-types = ['any'] + ['soft-presupposition', 'hard-presupposition', 'extra-soft-presupposition'] + ['bad', 'good', 'meh']
-
-questions = 4
-
-# max_successor defines how many *successors* are *permitted*
-# this allows 2 successors of type 'bad' to follow, so 3 in a sequence are allowed
-# {'action':'max_successors', 'type':'bad', 'argument':2},
-# this allows 0 sucessors of type bad.
-# {'action':'max_successors', 'type':'bad', 'argument':0},
-this_restrictions = [
-    {'action':'max_successors', 'type':'bad', 'argument':0},
-    {'action':'max_successors', 'type':'good', 'argument':0},
-    {'action':'max_successors', 'type':'hard-presupposition', 'argument':0},
-    {'action':'max_successors', 'type':'extra-soft-presupposition', 'argument':0},
-    {'action':'max_successors', 'type':'soft-presupposition', 'argument':0},
-    {'action':'select', 'type':'filler', 'argument':0.5},
-    {'action':'select', 'type':'target', 'argument':0.5}
-]
-
-this_tasks = [
-    {'category':'filler', 'type':'bad', 'situation':'1','sentence':'Barfoo'},
-    {'category':'target', 'type':'hard-presupposition', 'situation':'2','sentence':'Barfoo'},
-    {'category':'filler', 'type':'bad', 'situation':'3','sentence':'Barfoo'},
-    {'category':'target', 'type':'extra-soft-presupposition', 'situation':'4','sentence':'Barfoo'}
-]
-
-
 class TimeoutError(Exception):
     pass
 
@@ -71,7 +39,7 @@ def check_restriction(restriction):
     assert 'type' in restriction.keys()
     assert 'argument' in restriction.keys()
     assert len(restriction.keys()) == 3
-    assert restriction['action'] in actions
+    assert restriction['action'] in settings['actions']
     assert isinstance(restriction['type'], str)
     # print(type(restriction['argument']))
     assert (isinstance(restriction['argument'], int) or
@@ -93,8 +61,8 @@ def check_task(task):
     assert 'situation' in task.keys()
     assert 'sentence' in task.keys()
     assert len(task.keys()) == 4
-    assert task['category'] in categories
-    assert task['type'] in types
+    assert task['category'] in settings['categories']
+    assert task['type'] in settings['types']
     assert isinstance(task['situation'], str)
     assert isinstance(task['sentence'], str)
 
@@ -112,8 +80,8 @@ def check_select(restrictions):
 
     # check that all the arguments are dividable without a remainder
     for select_restriction in select_restrictions:
-        #print(math.modf(questions * select_restriction['argument'])[0])
-        assert (math.modf(questions * select_restriction['argument']))[0] == 0.0, "selection arguments can not produce items less than 1."
+        #print(math.modf(settings['questions'] * select_restriction['argument'])[0])
+        assert (math.modf(settings['questions'] * select_restriction['argument']))[0] == 0.0, "selection arguments can not produce items less than 1."
     return select_restrictions
 
 
@@ -148,11 +116,11 @@ def apply_select(select_restrictions):
         # get tasks by category
         # this works nicely because dictionary keys are **NOT** ordered
         # otherwise the first entries would be favored
-        category_tasks = list(filter(lambda x: x['category'] == select_restriction['type'], this_tasks))
+        category_tasks = list(filter(lambda x: x['category'] == select_restriction['type'], tasks))
 
         assert len(category_tasks) > 0
         # get number of entities the current restriction takes
-        take_restrictions = questions * select_restriction['argument']
+        take_restrictions = settings['questions'] * select_restriction['argument']
         # print(take_restrictions)
         # print(len(category_tasks))
         assert take_restrictions <= len(category_tasks)
@@ -177,21 +145,57 @@ def apply_restrictions(restrictions):
     select_restrictions = check_select(restrictions)
     random_sample = apply_select(select_restrictions)
     successor_restrictions = list(filter(lambda x: x['action'] == 'max_successors', restrictions))
-    is_restricted = apply_successor(random_sample, successor_restrictions)
-    while (is_restricted is False):
-        random_sample = apply_select(select_restrictions)
+    if len(successor_restrictions) > 0:
         is_restricted = apply_successor(random_sample, successor_restrictions)
+        while (is_restricted is False):
+            random_sample = apply_select(select_restrictions)
+            is_restricted = apply_successor(random_sample, successor_restrictions)
     return random_sample
 
 
-def main():
-    for this_restriction in this_restrictions:
+def main(settings, tasks):
+    assert 'restrictions' in settings.keys()
+    assert isinstance(tasks, list)
+    assert len(tasks) > 0
+    for this_restriction in settings['restrictions']:
         check_restriction(this_restriction)
-    for this_task in this_tasks:
+    for this_task in tasks:
         check_task(this_task)
-    print(apply_restrictions(this_restrictions))
-    return True
+    return apply_restrictions(settings['restrictions'])
+
 
 if __name__ == '__main__':
-    print(main())
+
+    settings = {}
+    # restrictions
+    # this leads to the following grammar:
+    settings['actions'] = ['max_successors', 'select']
+    # categories and the types that are defined in tasks.xml
+    settings['categories'] = ['filler', 'target']
+    settings['types'] = ['any'] + ['soft-presupposition', 'hard-presupposition', 'extra-soft-presupposition'] + ['bad', 'good', 'meh']
+    settings['questions'] = 4
+
+    # max_successor defines how many *successors* are *permitted*
+    # this allows 2 successors of type 'bad' to follow, so 3 in a sequence are allowed
+    # {'action':'max_successors', 'type':'bad', 'argument':2},
+    # this allows 0 sucessors of type bad.
+    # {'action':'max_successors', 'type':'bad', 'argument':0},
+    settings['restrictions'] = [
+        {'action':'max_successors', 'type':'bad', 'argument':0},
+        {'action':'max_successors', 'type':'good', 'argument':0},
+        {'action':'max_successors', 'type':'hard-presupposition', 'argument':0},
+        {'action':'max_successors', 'type':'extra-soft-presupposition', 'argument':0},
+        {'action':'max_successors', 'type':'soft-presupposition', 'argument':0},
+        {'action':'select', 'type':'filler', 'argument':0.5},
+        {'action':'select', 'type':'target', 'argument':0.5}
+    ]
+
+    tasks = [
+        {'category':'filler', 'type':'bad', 'situation':'1','sentence':'Barfoo'},
+        {'category':'target', 'type':'hard-presupposition', 'situation':'2','sentence':'Barfoo'},
+        {'category':'filler', 'type':'bad', 'situation':'3','sentence':'Barfoo'},
+        {'category':'target', 'type':'extra-soft-presupposition', 'situation':'4','sentence':'Barfoo'}
+    ]
+
+    print(main(settings, tasks))
 
