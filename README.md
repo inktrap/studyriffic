@@ -55,6 +55,7 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Done
 
+ x added edge 12 to min versions
  x major bug: in general: status bar blocks the view, continue not visible (not reproducible)
  x bug: opera: progress bar not visible? more info needed, resizing issue? (not reproducible)
  x minor: bigger font size (change this via custom bootstrap file: <http://getbootstrap.com/customize/?id=c7d628a60824a5506ec07364dd3ce003>
