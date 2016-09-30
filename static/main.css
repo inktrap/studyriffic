@@ -17,3 +17,30 @@ form.scale.inline > input {
     margin-left: 5px;
     margin-right: 5px;
 }
+
+.vertical-center {
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh; /* These two lines are counted as one :-)       */
+
+  display: flex;
+  align-items: center;
+}
+
+#content {
+  margin-bottom: -60px;
+  padding-bottom: 60px;
+}
+
+.footer {
+  height: 60px;
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+.footer > div {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+
+}
