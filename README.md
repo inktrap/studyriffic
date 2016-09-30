@@ -28,40 +28,37 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Valentin Todo
 
- - minor: bigger font size (TODO: make this based on the viewport size, see main.css)
-
- - major bug: in general: status bar blocks the view, continue not visible
- -> really get into bootstrap and check everything in responsive mode
-
- - bug: opera: progress bar not visible? more info needed, resizing issue?
- - bug: ie (weird): skips back to 0% and first question, then after Continue, skips to the next new question after the last position before break-off (e.g., 50%).
- - bug: ie 11 (weird): does not work (endless loop after two questions)
- - bug: ie 11: default magnification too big
-
  - major: extra optional form for demographic questions.
  - major: write results to db
  - major: change format of tasks from latex to json
  - major: use selection logic (use as module)
- - major: put user agent check in a module
  - major: make the step before last rock solid!!!
      - check if the prolific id already did the survey
      - reenable session check, check for TODOs
 
- - minor: vertically center task
- - minor: change all the view functions to use the custom template, if specified
- - minor issue: newlines in tasks.
-     - json newlines won't be transformed into the html equivalent and inline html won't be interpretated.
+ - minor: adjust task and content location on all devices
 
- - maybe: page with requirements?
- - maybe: separation into modules?
- - maybe: tests?
- - maybe: documentation?
- - maybe: autopep8?
- - maybe: publish?? (blogpost, pr)
+ - optional: put user agent check in a module
+ - optional: change all the view functions to use the custom template, if specified
+
+ - optional/maybe: page with requirements?
+ - optional/maybe: separation into modules?
+ - optional/maybe: tests?
+ - optional/maybe: documentation?
+ - optional/maybe: autopep8?
+ - optional/maybe: publish?? (blogpost, pr)
+ - known limitation: no newlines in tasks.
+ - info needed:
+     - bug: ie (weird): skips back to 0% and first question, then after Continue, skips to the next new question after the last position before break-off (e.g., 50%).
+     - bug: ie 11 (weird): does not work (endless loop after two questions)
+     - bug: ie 11: default magnification too big
 
 # Done
 
- - x major bug: in general: footer blocks the view, continue not visible
+ x major bug: in general: status bar blocks the view, continue not visible (not reproducible)
+ x bug: opera: progress bar not visible? more info needed, resizing issue? (not reproducible)
+ x minor: bigger font size (change this via custom bootstrap file: <http://getbootstrap.com/customize/?id=c7d628a60824a5506ec07364dd3ce003>
+ x major bug: in general: footer blocks the view, continue not visible
  x drop situation and sentence headings
  x include go back link in error page, if available
  x spacing between answers
