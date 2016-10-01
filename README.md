@@ -1,6 +1,6 @@
-# Surveyriffic
+# Studyriffic
 
-A simple beautiful rock solid survey tool to be used with prolific.
+A simple beautiful rock solid study tool to be used with prolific.
 
 ## Features
 
@@ -33,7 +33,7 @@ Here is a quick overview of the framework I wrote. It features:
  - major: change format of tasks from latex to json
  - major: use selection logic (use as module)
  - major: make the step before last rock solid!!!
-     - check if the prolific id already did the survey
+     - check if the prolific id already did the study
      - reenable session check, check for TODOs
 
  - minor: adjust task and content location on all devices
@@ -103,9 +103,9 @@ x write an introduction/example and write/modify the consent form.
  - enable error logging: ``uberspace-configure-webserver enable error_log``
  - upload with the upload script
  - remove ``pkg-resources==0.0.0`` from requirements.txt
- - install virtualenv with pip: ``[perigen@diphda surveyriffic]$ pip3.4 install virtualenv --user``
+ - install virtualenv with pip: ``[perigen@diphda studyriffic]$ pip3.4 install virtualenv --user``
  - create the virtualenv and activate it: ``virtualenv .env && source ./.env/bin/activate``
- - install the requirements: ``[perigen@diphda surveyriffic]$ pip3.4 install -r requirements.txt``
+ - install the requirements: ``[perigen@diphda studyriffic]$ pip3.4 install -r requirements.txt``
  - use upload script to create service file and replace python path to virtualenv
 
 ## Init DB
@@ -117,7 +117,7 @@ x write an introduction/example and write/modify the consent form.
 ## Run Code
 
  - use run script
- - check log: ``watch -n 1 "zcat -f ~/service/surveyriffic/log/main/* | tai64nlocal | tail -n 30"``
+ - check log: ``watch -n 1 "zcat -f ~/service/studyriffic/log/main/* | tai64nlocal | tail -n 30"``
 
 ## Reporting/Monitoring/Testing?
 
