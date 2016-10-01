@@ -4,7 +4,9 @@
 import re
 import os
 import json
+from modules import get_tasks
 from modules.logging import logger
+
 
 class baseConfig():
 
@@ -16,14 +18,16 @@ class baseConfig():
         self.study_regex = "[a-z,A-Z,0-9,-]+"
         # a list of customizable templates
         self.templates = ['first.tpl', 'last.tpl', 'consent.tpl', 'main.tpl']
+        self.template_path = template_path
+        # baseConfig.studies are configured by convention
+        self.studies = self.configure(project_root)
 
-
-    def configure_study(study, study_path):
+    def configure_study(self, study, study_path):
         study_settings = os.path.join(study_path, "settings.json")
         study_tasks = os.path.join(study_path, "tasks.json")
-        study_template_path = os.path.join(template_path, study)
+        study_template_path = os.path.join(self.template_path, study)
 
-        assert re.match(study_regex, study), "Rename your directory to match %s" % study_regex
+        assert re.match(self.study_regex, study), "Rename your directory to match %s" % self.study_regex
 
         assert os.path.isfile(
             study_settings), "%s: Please create %s" % (study, study_settings)
@@ -43,7 +47,7 @@ class baseConfig():
                     return False
             if 'templates' in settings.keys():
                 # assert that all templates that are specified by study exist
-                assert all([template in templates for template in settings['templates']]), "Study %s uses a template that is not one of: %s" % (study, ', '.join(templates))
+                assert all([template in self.templates for template in settings['templates']]), "Study %s uses a template that is not one of: %s" % (study, ', '.join(self.templates))
                 assert all([os.path.isfile(os.path.join(study_template_path, template)) for template in settings['templates']]), "Study %s needs the templates %s in %s" % (study, ', '.join(settings['templates']), study_template_path)
             else:
                 settings['templates'] = []
@@ -60,7 +64,7 @@ class baseConfig():
 
         # todo check tasks and restrictions here
         try:
-            tasks.check_config(settings, this_tasks)
+            get_tasks.check_config(settings, this_tasks)
         except AssertionError as e:
             logger.error("There is an error in either settings.json or tasks.json for: %s" % study)
             raise e
@@ -69,21 +73,17 @@ class baseConfig():
                 'tasks': this_tasks,
                 }
 
+    def configure(self, project_root):
+        studies_path = os.path.join(project_root, 'studies')
+        studies = {}
+        for study in os.listdir(studies_path):
+            study_path = os.path.join(studies_path, study)
+            #logger.debug(study_path)
+            if os.path.isdir(study_path):
+                this_study = self.configure_study(study, study_path)
+                if this_study is False:
+                    continue
+                studies[study] = this_study
+        assert len(studies.keys()) > 0, "No studies configured."
+        return studies
 
-def configure(project_root):
-    studies_path = os.path.join(project_root, 'studies')
-    studies = {}
-    for study in os.listdir(studies_path):
-        study_path = os.path.join(studies_path, study)
-        #logger.debug(study_path)
-        if os.path.isdir(study_path):
-            this_study = configure_study(study, study_path)
-            if this_study is False:
-                continue
-            studies[study] = this_study
-    assert len(studies.keys()) > 0, "No studies configured."
-    return studies
-
-# baseConfig.studies are configured by convention
-baseConfig.studies = configure()
-#logger.debug(list(baseConfig.studies.keys()))

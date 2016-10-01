@@ -9,6 +9,8 @@ import errno
 import os
 import signal
 
+from modules.logging import logger
+
 
 class TimeoutError(Exception):
     pass
@@ -71,6 +73,7 @@ def check_task(settings, task):
 
 
 def get_select_restrictions(restrictions):
+    logger.info(restrictions)
     return list(filter(lambda x: x['action'] == 'select', restrictions))
 
 
@@ -114,7 +117,7 @@ def apply_successor(sample, successor_restrictions):
     return True
 
 
-def apply_select(select_restrictions):
+def apply_select(select_restrictions, tasks):
     result = []
     # apply
     for select_restriction in select_restrictions:
@@ -155,7 +158,7 @@ def apply_restrictions(settings, restrictions):
     if len(successor_restrictions) > 0:
         is_restricted = apply_successor(random_sample, successor_restrictions)
         while (is_restricted is False):
-            random_sample = apply_select(select_restrictions)
+            random_sample = apply_select(select_restrictions, settings['tasks'])
             is_restricted = apply_successor(random_sample, successor_restrictions)
     return random_sample
 
@@ -181,7 +184,7 @@ def check_config(this_settings, tasks):
 
 def main(this_settings, tasks):
     check_config(this_settings, tasks)
-    return apply_restrictions(this_settings, tasks)
+    return apply_restrictions(this_settings, this_settings['restrictions'])
 
 
 if __name__ == '__main__':
