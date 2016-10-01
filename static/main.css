@@ -3,9 +3,62 @@
 .description { margin:1em;
                padding: 0 5px 0 5px;
                font-style: italic;
-             }
+ }
+
 div.answer, div.situation, div.sentence { margin:1em; }
 
+div.answer {
+    padding-bottom: 30px;
+    white-space: nowrap;
+}
+
 .scaledescription {
-        padding: 5px;
-    }
+    padding: 1%;
+    display: inline-block;
+    word-wrap: break-word !important;
+}
+
+.progress{
+    margin-bottom: 0px !important;
+    height: 2em;
+}
+
+.progress .sr-only { position: relative; }
+
+.progress-bar{
+    height: 100%;
+    display: block;
+}
+
+form.scale.inline > input {
+    margin-left: 1%;
+    margin-right: 1%;
+}
+
+.vertical-center {
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh; /* These two lines are counted as one :-)       */
+
+  display: flex;
+  align-items: center;
+}
+
+#content {
+  margin-bottom: -60px;
+  padding-bottom: 60px;
+}
+
+.footer {
+  padding: 5px 0 5px 0;
+  height: 60px;
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+.footer > div {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+
+}
