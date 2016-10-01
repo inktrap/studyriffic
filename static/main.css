@@ -44,13 +44,13 @@ form.scale.inline > input {
 }
 
 #content {
-  margin-bottom: -70px;
-  padding-bottom: 70px;
+  margin-bottom: -60px;
+  padding-bottom: 60px;
 }
 
 .footer {
-  padding: 10px 0 10px 0;
-  height: 70px;
+  padding: 5px 0 5px 0;
+  height: 60px;
   -webkit-transform-style: preserve-3d;
   -moz-transform-style: preserve-3d;
   transform-style: preserve-3d;
