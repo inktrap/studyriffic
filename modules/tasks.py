@@ -9,6 +9,7 @@ import errno
 import os
 import signal
 
+
 class TimeoutError(Exception):
     pass
 
@@ -33,7 +34,7 @@ def timeout(seconds=10, error_message=os.strerror(errno.ETIME)):
     return decorator
 
 
-def check_restriction(restriction):
+def check_restriction(settings, restriction):
     assert isinstance(restriction, dict)
     assert 'action' in restriction.keys()
     assert 'type' in restriction.keys()
@@ -52,9 +53,11 @@ def check_restriction(restriction):
     elif restriction['action'] == 'select':
         assert isinstance(restriction['argument'], float)
         assert 0.0 < restriction['argument'] < 1.0
+    else:
+        raise ValueError("Unknown restriction action %s" % restriction['action'])
 
 
-def check_task(task):
+def check_task(settings, task):
     assert isinstance(task, dict)
     assert 'category' in task.keys()
     assert 'type' in task.keys()
@@ -67,11 +70,13 @@ def check_task(task):
     assert isinstance(task['sentence'], str)
 
 
-def check_select(restrictions):
+def get_select_restrictions(restrictions):
+    return list(filter(lambda x: x['action'] == 'select', restrictions))
 
-    # first apply the select restrictions
+
+def check_select(settings, select_restrictions):
+    # semantic checks for select restrictions
     # check if the numbers of selects add up to 1
-    select_restrictions = list(filter(lambda x: x['action'] == 'select', restrictions))
     assert sum([select_restriction['argument'] for select_restriction in select_restrictions]) == 1
 
     # check if select has been specified more than once with the same argument
@@ -81,8 +86,8 @@ def check_select(restrictions):
     # check that all the arguments are dividable without a remainder
     for select_restriction in select_restrictions:
         #print(math.modf(settings['questions'] * select_restriction['argument'])[0])
-        assert (math.modf(settings['questions'] * select_restriction['argument']))[0] == 0.0, "selection arguments can not produce items less than 1."
-    return select_restrictions
+        assert (math.modf(settings['questions'] * select_restriction['argument']))[0] == 0.0, "selection arguments can not produce items less than 1 (F.e.: You can not split a question in half)."
+    return True
 
 
 def apply_successor(sample, successor_restrictions):
@@ -138,11 +143,13 @@ def apply_select(select_restrictions):
 
 
 @timeout(5)
-def apply_restrictions(restrictions):
+def apply_restrictions(settings, restrictions):
+    # returns a random sample
     # apply the strictions and just to be save, do so with a timeout
     # (in the tests I did i never waited longer than 0.11s even with very strict
     # restrictions and a small number of tasks)
-    select_restrictions = check_select(restrictions)
+    select_restrictions = get_select_restrictions(restrictions)
+    check_select(settings, select_restrictions)
     random_sample = apply_select(select_restrictions)
     successor_restrictions = list(filter(lambda x: x['action'] == 'max_successors', restrictions))
     if len(successor_restrictions) > 0:
@@ -153,15 +160,28 @@ def apply_restrictions(restrictions):
     return random_sample
 
 
-def main(settings, tasks):
-    assert 'restrictions' in settings.keys()
+def check_config(this_settings, tasks):
+    '''
+    see if:
+        the tasks implement the categories and types from settings
+        selections have semantical contradictions
+        restrictions have the allowed datatypes
+    '''
+    assert 'restrictions' in this_settings.keys()
     assert isinstance(tasks, list)
     assert len(tasks) > 0
-    for this_restriction in settings['restrictions']:
-        check_restriction(this_restriction)
+    for this_restriction in this_settings['restrictions']:
+        check_restriction(this_settings, this_restriction)
+    check_select(this_settings, get_select_restrictions(this_settings['restrictions']))
+
     for this_task in tasks:
-        check_task(this_task)
-    return apply_restrictions(settings['restrictions'])
+        check_task(this_settings, this_task)
+    return True
+
+
+def main(this_settings, tasks):
+    check_config(this_settings, tasks)
+    return apply_restrictions(this_settings, tasks)
 
 
 if __name__ == '__main__':
