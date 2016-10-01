@@ -28,17 +28,18 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Valentin Todo
 
+ - major: use selection logic (use as module)
+
  - major: extra optional form for demographic questions.
  - major: write results to db
  - major: change format of tasks from latex to json
- - major: use selection logic (use as module)
  - major: make the step before last rock solid!!!
      - check if the prolific id already did the study
      - reenable session check, check for TODOs
+ - write R package (see Rexperigen.R)
 
  - minor: adjust task and content location on all devices
 
- - optional: put user agent check in a module
  - optional: change all the view functions to use the custom template, if specified
 
  - optional/maybe: page with requirements?
@@ -55,6 +56,7 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Done
 
+ x optional: put user agent check in a module
  x added edge 12 to min versions
  x major bug: in general: status bar blocks the view, continue not visible (not reproducible)
  x bug: opera: progress bar not visible? more info needed, resizing issue? (not reproducible)
