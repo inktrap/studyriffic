@@ -5,6 +5,16 @@ from ua_parser import user_agent_parser
 import pprint
 pp = pprint.PrettyPrinter(indent=4)
 
+import logging
+logger = logging.getLogger('ua_checker')
+logger.setLevel(logging.INFO)
+formatter = logging.Formatter(
+    '[%(asctime)s] p%(process)s {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s', '%m-%d %H:%M:%S')
+ch = logging.StreamHandler()
+ch.setLevel(logging.DEBUG)
+ch.setFormatter(formatter)
+logger.addHandler(ch)
+
 
 def parse_useragent(ua):
     try:

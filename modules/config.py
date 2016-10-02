@@ -4,23 +4,35 @@
 import re
 import os
 import json
-from modules import get_tasks
-from modules.logging import logger
+# from modules import get_tasks
+
+import logging
+logger = logging.getLogger('config.py')
+logger.setLevel(logging.INFO)
+formatter = logging.Formatter(
+    '[%(asctime)s] p%(process)s {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s', '%m-%d %H:%M:%S')
+ch = logging.StreamHandler()
+ch.setLevel(logging.DEBUG)
+ch.setFormatter(formatter)
+logger.addHandler(ch)
 
 
 class baseConfig():
 
-    def __init__(self, project_root, template_path):
+    def __init__(self):
+        self.project_root = os.path.abspath(os.path.dirname(os.path.realpath(os.path.join(__file__, '..'))))
+        logger.debug(self.project_root)
         # customize these
-        self.cookie_scret = 'ajkbkjnkvnklrkvlkbgjknjkls'
+        self.cookie_secret = 'ajkbkjnkvnklrkvlkbgjknjkls'
         self.this_port = 63536
         # study directories have to match this regex
         self.study_regex = "[a-z,A-Z,0-9,-]+"
         # a list of customizable templates
         self.templates = ['first.tpl', 'last.tpl', 'consent.tpl', 'main.tpl']
-        self.template_path = template_path
+        self.template_path = os.path.join(self.project_root, 'views')
         # baseConfig.studies are configured by convention
-        self.studies = self.configure(project_root)
+        # studies dict contains settings for each study
+        self.studies = self.configure()
 
     def configure_study(self, study, study_path):
         study_settings = os.path.join(study_path, "settings.json")
@@ -64,7 +76,8 @@ class baseConfig():
 
         # todo check tasks and restrictions here
         try:
-            get_tasks.check_config(settings, this_tasks)
+            # get_tasks.check_config(settings, this_tasks)
+            pass
         except AssertionError as e:
             logger.error("There is an error in either settings.json or tasks.json for: %s" % study)
             raise e
@@ -73,8 +86,8 @@ class baseConfig():
                 'tasks': this_tasks,
                 }
 
-    def configure(self, project_root):
-        studies_path = os.path.join(project_root, 'studies')
+    def configure(self):
+        studies_path = os.path.join(self.project_root, 'studies')
         studies = {}
         for study in os.listdir(studies_path):
             study_path = os.path.join(studies_path, study)
@@ -87,3 +100,5 @@ class baseConfig():
         assert len(studies.keys()) > 0, "No studies configured."
         return studies
 
+
+thisConfig = baseConfig()
