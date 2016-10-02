@@ -24,7 +24,7 @@ class TestGetTasks(unittest.TestCase):
 
     def test_main(self):
         # logger.info("Starting test")
-        get_tasks.main('binary')
+        print(get_tasks.main('binary'))
 
 if __name__ == '__main__':
     unittest.main()

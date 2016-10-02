@@ -82,7 +82,10 @@ def check_task(settings, task):
     assert 'type' in task.keys()
     assert 'situation' in task.keys()
     assert 'sentence' in task.keys()
-    assert len(task.keys()) == 4
+    # id is added by this module which only returns the id
+    # the id matches the index of the list of all tasks
+    assert 'id' in task.keys()
+    assert len(task.keys()) == 5
     assert task['category'] in settings['categories']
     assert task['type'] in settings['types']
     assert isinstance(task['situation'], str)
@@ -163,6 +166,8 @@ def apply_select(settings, select_restrictions, tasks):
 def main(study):
     settings = thisConfig.studies[study]['settings']
     tasks = thisConfig.studies[study]['tasks']
+    for i,t in enumerate(tasks):
+        tasks[i]['id'] = i
     check_config(settings, tasks)
     # returns a random sample
     # apply the strictions and just to be save, do so with a timeout
@@ -177,7 +182,7 @@ def main(study):
         while (is_restricted is False):
             random_sample = apply_select(settings, select_restrictions, tasks)
             is_restricted = apply_successor(random_sample, successor_restrictions)
-    return random_sample
+    return [r['id'] for r in random_sample]
 
 
 def check_config(settings, tasks):
