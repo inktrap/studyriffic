@@ -15,12 +15,17 @@ ch.setFormatter(formatter)
 logger.addHandler(ch)
 
 
+import pprint
+pp = pprint.PrettyPrinter(indent=4)
+
 class TestConfigMethods(unittest.TestCase):
 
     def test_init(self):
         logger.info("Starting test")
         thisConfig = baseConfig()
+        #pp.pprint(vars(thisConfig))
         logger.debug(thisConfig.project_root)
+
 
 if __name__ == '__main__':
     unittest.main()

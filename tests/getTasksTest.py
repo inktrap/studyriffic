@@ -25,6 +25,7 @@ class TestGetTasks(unittest.TestCase):
     def test_main(self):
         logger.info("Starting test")
 
+        '''
         settings = {}
         # restrictions
         # this leads to the following grammar:
@@ -55,8 +56,9 @@ class TestGetTasks(unittest.TestCase):
             {'category':'filler', 'type':'bad', 'situation':'3','sentence':'Barfoo'},
             {'category':'target', 'type':'extra-soft-presupposition', 'situation':'4','sentence':'Barfoo'}
         ]
+        '''
 
-        print(get_tasks.main(tasks))
+        print(get_tasks.main('binary'))
 
 if __name__ == '__main__':
     unittest.main()

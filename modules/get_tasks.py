@@ -21,6 +21,13 @@ ch.setLevel(logging.DEBUG)
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
+''' this modules
+ - checks the config for the study, semantically, datatypes, missing stuff
+ - selects the tasks for ONE study, according to the restrictions
+ - checks that the order fits the requirements and will fail with a
+   TimeoutError if the requirements can't be met.
+'''
+
 
 class TimeoutError(Exception):
     pass
@@ -127,7 +134,7 @@ def apply_successor(sample, successor_restrictions):
     return True
 
 
-def apply_select(select_restrictions, tasks):
+def apply_select(settings, select_restrictions, tasks):
     result = []
     # apply
     for select_restriction in select_restrictions:
@@ -135,19 +142,16 @@ def apply_select(select_restrictions, tasks):
         # this works nicely because dictionary keys are **NOT** ordered
         # otherwise the first entries would be favored
         category_tasks = list(filter(lambda x: x['category'] == select_restriction['type'], tasks))
-
         assert len(category_tasks) > 0
         # get number of entities the current restriction takes
         take_restrictions = settings['questions'] * select_restriction['argument']
         # print(take_restrictions)
         # print(len(category_tasks))
         assert take_restrictions <= len(category_tasks)
-
         # create a list of the indices
         # we can use int here, because I checked this with math.modf before
         random_sample = random.sample(category_tasks, int(take_restrictions))
         # random.sample: Used for random sampling without replacement.
-
         result += random_sample
 
     # shuffle, because the *selections* were applied in order
@@ -156,43 +160,41 @@ def apply_select(select_restrictions, tasks):
 
 
 @timeout(5)
-def apply_restrictions(settings, restrictions):
+def main(study):
+    settings = thisConfig.studies[study]['settings']
+    tasks = thisConfig.studies[study]['tasks']
+    check_config(settings, tasks)
     # returns a random sample
     # apply the strictions and just to be save, do so with a timeout
     # (in the tests I did i never waited longer than 0.11s even with very strict
     # restrictions and a small number of tasks)
-    select_restrictions = get_select_restrictions(restrictions)
+    select_restrictions = get_select_restrictions(settings['restrictions'])
     check_select(settings, select_restrictions)
-    random_sample = apply_select(select_restrictions)
-    successor_restrictions = list(filter(lambda x: x['action'] == 'max_successors', restrictions))
+    random_sample = apply_select(settings, select_restrictions, tasks)
+    successor_restrictions = list(filter(lambda x: x['action'] == 'max_successors', settings['restrictions']))
     if len(successor_restrictions) > 0:
         is_restricted = apply_successor(random_sample, successor_restrictions)
         while (is_restricted is False):
-            random_sample = apply_select(select_restrictions, settings['tasks'])
+            random_sample = apply_select(settings, select_restrictions, tasks)
             is_restricted = apply_successor(random_sample, successor_restrictions)
     return random_sample
 
 
-def check_config(this_settings, tasks):
+def check_config(settings, tasks):
     '''
     see if:
         the tasks implement the categories and types from settings
         selections have semantical contradictions
         restrictions have the allowed datatypes
     '''
-    assert 'restrictions' in this_settings.keys()
+    assert 'restrictions' in settings.keys()
     assert isinstance(tasks, list)
     assert len(tasks) > 0
-    for this_restriction in this_settings['restrictions']:
-        check_restriction(this_settings, this_restriction)
-    check_select(this_settings, get_select_restrictions(this_settings['restrictions']))
+    for this_restriction in settings['restrictions']:
+        check_restriction(settings, this_restriction)
+    check_select(settings, get_select_restrictions(settings['restrictions']))
 
-    for this_task in tasks:
-        check_task(this_settings, this_task)
+    for task in tasks:
+        check_task(settings, task)
     return True
-
-
-def main(tasks):
-    check_config(thisConfig.studies, tasks)
-    return apply_restrictions(thisConfig.studies, thisConfig.restrictions)
 
