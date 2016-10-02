@@ -21,7 +21,7 @@ class baseConfig():
 
     def __init__(self):
         self.project_root = os.path.abspath(os.path.dirname(os.path.realpath(os.path.join(__file__, '..'))))
-        logger.debug(self.project_root)
+        # logger.debug(self.project_root)
         # customize these
         self.cookie_secret = 'ajkbkjnkvnklrkvlkbgjknjkls'
         self.this_port = 63536

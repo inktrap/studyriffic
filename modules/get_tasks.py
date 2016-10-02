@@ -13,7 +13,7 @@ from modules.config import thisConfig
 
 import logging
 logger = logging.getLogger('get_tasks')
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 formatter = logging.Formatter(
     '[%(asctime)s] p%(process)s {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s', '%m-%d %H:%M:%S')
 ch = logging.StreamHandler()
@@ -90,7 +90,7 @@ def check_task(settings, task):
 
 
 def get_select_restrictions(restrictions):
-    logger.info(restrictions)
+    #logger.debug(restrictions)
     return list(filter(lambda x: x['action'] == 'select', restrictions))
 
 

@@ -24,7 +24,8 @@ class TestConfigMethods(unittest.TestCase):
         logger.info("Starting test")
         thisConfig = baseConfig()
         #pp.pprint(vars(thisConfig))
-        logger.debug(thisConfig.project_root)
+        logger.info(thisConfig.cookie_secret)
+        #logger.debug(thisConfig.project_root)
 
 
 if __name__ == '__main__':
