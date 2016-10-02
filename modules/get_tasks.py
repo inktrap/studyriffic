@@ -166,8 +166,6 @@ def apply_select(settings, select_restrictions, tasks):
 def main(study):
     settings = thisConfig.studies[study]['settings']
     tasks = thisConfig.studies[study]['tasks']
-    for i,t in enumerate(tasks):
-        tasks[i]['id'] = i
     check_config(settings, tasks)
     # returns a random sample
     # apply the strictions and just to be save, do so with a timeout
@@ -182,7 +180,7 @@ def main(study):
         while (is_restricted is False):
             random_sample = apply_select(settings, select_restrictions, tasks)
             is_restricted = apply_successor(random_sample, successor_restrictions)
-    return [r['id'] for r in random_sample]
+    return random_sample
 
 
 def check_config(settings, tasks):

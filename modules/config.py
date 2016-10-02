@@ -4,7 +4,7 @@
 import re
 import os
 import json
-# from modules import get_tasks
+from modules import get_tasks
 
 import logging
 logger = logging.getLogger('config.py')
@@ -71,13 +71,14 @@ class baseConfig():
             # settings['template_lookup'] = os.path.join(template_path, study)
         with open(study_tasks, 'r') as fh:
             this_tasks = json.load(fh)
+            # give tasks an id
+            for i,t in enumerate(this_tasks):
+                this_tasks[i]['id'] = i
         assert len(this_tasks) >= settings[
             'questions'], 'Study %s: There are not enough tasks (or questions is too high.)' % study
 
-        # todo check tasks and restrictions here
         try:
-            # get_tasks.check_config(settings, this_tasks)
-            pass
+            get_tasks.check_config(settings, this_tasks)
         except AssertionError as e:
             logger.error("There is an error in either settings.json or tasks.json for: %s" % study)
             raise e
