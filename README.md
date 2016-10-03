@@ -28,7 +28,6 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Valentin Todo
 
- - why is the method to insert the document into the db called twice?!
  - major: change format of tasks from latex to json (vim macros)
  - check for TODOs
  - deploy
@@ -54,6 +53,8 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Done
 
+ x consent form styling
+ x why is the method to insert the document into the db called twice?!
  x major: make the step before last rock solid!!!
      - check if the prolific id already did the study
  x major: write results to db
