@@ -5,10 +5,12 @@
                font-style: italic;
  }
 
-div.answer, div.situation, div.sentence { margin:1em; }
+div.form-content, div.answer, div.situation, div.sentence { margin:1em; }
 
 div.answer {
+    /*
     padding-bottom: 30px;
+    */
     white-space: nowrap;
 }
 
@@ -34,6 +36,8 @@ form.scale.inline > input {
     margin-left: 1%;
     margin-right: 1%;
 }
+
+
 
 .vertical-center {
   min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
