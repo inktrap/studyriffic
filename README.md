@@ -29,14 +29,21 @@ Here is a quick overview of the framework I wrote. It features:
 # Valentin Todo
 
  - major: write results to db
- - major: change format of tasks from latex to json
+ - major: change format of tasks from latex to json (vim macros)
  - major: make the step before last rock solid!!!
      - check if the prolific id already did the study
-     - reenable session check, check for TODOs
- - results
-    - cronjob with mongoexport (so we get backups!): ``mongoexport --db test --collection traffic --out traffic.json``
-    - json to r: jsonlite <https://www.opencpu.org/posts/jsonlite-a-smarter-json-encoder/>
+     - reenable session check?
+     - check for TODOs
+ - deploy
+    - separate uberspace with some money
+    - daemontools
+    - create cronjob file from settings.json
+        - cronjob with mongoexport and timestamps, (so we get backups!)
+        - to location accessible from pw protected dir
+        - ``mongoexport --db test --collection traffic --out traffic.json``
 
+ - at some point: results
+    - json to r: jsonlite <https://www.opencpu.org/posts/jsonlite-a-smarter-json-encoder/>
  - optional: change all the view functions to use the custom template, if specified
  - optional/maybe: tests?
  - optional/maybe: documentation?
