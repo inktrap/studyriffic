@@ -28,22 +28,16 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Valentin Todo
 
- - major: use selection logic (use as module)
-
- - major: extra optional form for demographic questions.
  - major: write results to db
  - major: change format of tasks from latex to json
  - major: make the step before last rock solid!!!
      - check if the prolific id already did the study
      - reenable session check, check for TODOs
- - write R package (see Rexperigen.R)
-
- - minor: adjust task and content location on all devices
+ - results
+    - cronjob with mongoexport (so we get backups!): ``mongoexport --db test --collection traffic --out traffic.json``
+    - json to r: jsonlite <https://www.opencpu.org/posts/jsonlite-a-smarter-json-encoder/>
 
  - optional: change all the view functions to use the custom template, if specified
-
- - optional/maybe: page with requirements?
- - optional/maybe: separation into modules?
  - optional/maybe: tests?
  - optional/maybe: documentation?
  - optional/maybe: autopep8?
@@ -56,6 +50,11 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Done
 
+ x major: extra optional form for demographic questions.
+ x optional/maybe: separation into modules?
+ x optional/maybe: page with requirements? (no!)
+ x minor: adjust task and content location on all devices
+ x major: use selection logic (use as module)
  x optional: put user agent check in a module
  x added edge 12 to min versions
  x major bug: in general: status bar blocks the view, continue not visible (not reproducible)

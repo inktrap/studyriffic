@@ -5,6 +5,16 @@ from ua_parser import user_agent_parser
 import pprint
 pp = pprint.PrettyPrinter(indent=4)
 
+import logging
+logger = logging.getLogger('ua_checker')
+logger.setLevel(logging.INFO)
+formatter = logging.Formatter(
+    '[%(asctime)s] p%(process)s {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s', '%m-%d %H:%M:%S')
+ch = logging.StreamHandler()
+ch.setLevel(logging.DEBUG)
+ch.setFormatter(formatter)
+logger.addHandler(ch)
+
 
 def parse_useragent(ua):
     try:
@@ -18,20 +28,6 @@ def parse_useragent(ua):
     except:
         return False
     return result['user_agent']
-
-# possible testcase
-# opera = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.52 Safari/537.36 OPR/15.0.1147.100"
-# chrome = "Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.133 Mobile Safari/535.19"
-# firefox = "Mozilla/5.0 (Windows NT x.y; rv:10.0) Gecko/20100101 Firefox/10.0"
-# safari = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9) AppleWebKit/537.71 (KHTML, like Gecko) Version/7.0 Safari/537.71"
-# ie = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)"
-# edge = "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10136"
-# uas = [opera, chrome, firefox, safari, ie, edge]
-# all_uas = ""
-# for ua in uas:
-# this_ua = get_useragent()
-#    this_ua = user_agent_parser.Parse(ua)
-#    pp.pprint(this_ua['user_agent']['family'])
 
 
 def main(user_agent):
