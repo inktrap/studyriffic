@@ -83,6 +83,12 @@ def check_task(settings, task):
     # id is added by this module which only returns the id
     # the id matches the index of the list of all tasks
     assert 'id' in task.keys()
+    logger.debug(task.keys())
+    try:
+        logger.debug(task['complete'])
+        logger.debug(task['status'])
+    except KeyError:
+        pass
     assert len(task.keys()) == 5
     assert task['category'] in settings['categories']
     assert task['type'] in settings['types']

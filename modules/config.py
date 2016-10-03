@@ -77,6 +77,7 @@ class baseConfig():
             # give tasks an id
             for i,t in enumerate(this_tasks):
                 this_tasks[i]['id'] = i
+                assert len(this_tasks[i].keys()) == 5
         assert len(this_tasks) >= settings[
             'questions'], 'Study %s: There are not enough tasks (or questions is too high.)' % study
 
