@@ -33,10 +33,11 @@ Here is a quick overview of the framework I wrote. It features:
  - major: make the step before last rock solid!!!
      - check if the prolific id already did the study
      - reenable session check, check for TODOs
- - write R package (see Rexperigen.R)
+ - results
+    - cronjob with mongoexport (so we get backups!): ``mongoexport --db test --collection traffic --out traffic.json``
+    - json to r: jsonlite <https://www.opencpu.org/posts/jsonlite-a-smarter-json-encoder/>
 
  - optional: change all the view functions to use the custom template, if specified
-
  - optional/maybe: tests?
  - optional/maybe: documentation?
  - optional/maybe: autopep8?
