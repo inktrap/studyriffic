@@ -5,6 +5,7 @@ import re
 import os
 import json
 from modules import get_tasks
+from pymongo import MongoClient
 
 import logging
 logger = logging.getLogger('config.py')
@@ -20,6 +21,8 @@ logger.addHandler(ch)
 class baseConfig():
 
     def __init__(self):
+        client = MongoClient('mongodb://localhost:27017/')
+        self.db = client['studyriffic']
         self.project_root = os.path.abspath(os.path.dirname(os.path.realpath(os.path.join(__file__, '..'))))
         # logger.debug(self.project_root)
         # customize these
