@@ -9,8 +9,6 @@ import errno
 import os
 import signal
 
-from modules.config import thisConfig
-
 import logging
 logger = logging.getLogger('get_tasks')
 logger.setLevel(logging.DEBUG)
@@ -163,9 +161,7 @@ def apply_select(settings, select_restrictions, tasks):
 
 
 @timeout(5)
-def main(study):
-    settings = thisConfig.studies[study]['settings']
-    tasks = thisConfig.studies[study]['tasks']
+def main(settings, tasks):
     check_config(settings, tasks)
     # returns a random sample
     # apply the strictions and just to be save, do so with a timeout

@@ -24,7 +24,10 @@ class TestGetTasks(unittest.TestCase):
 
     def test_main(self):
         # logger.info("Starting test")
-        print(get_tasks.main('binary'))
+        study = 'binary'
+        settings = thisConfig.studies[study]['settings']
+        tasks = thisConfig.studies[study]['tasks']
+        print(get_tasks.main(settings, tasks))
 
 if __name__ == '__main__':
     unittest.main()
