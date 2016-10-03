@@ -160,7 +160,9 @@ def apply_select(settings, select_restrictions, tasks):
     return result
 
 
-@timeout(5)
+# timeout gives: ValueError: signal only works in main thread
+# because cherrypy in deployment uses multiple threads
+#@timeout(5)
 def main(settings, tasks):
     check_config(settings, tasks)
     # returns a random sample
@@ -172,10 +174,15 @@ def main(settings, tasks):
     random_sample = apply_select(settings, select_restrictions, tasks)
     successor_restrictions = list(filter(lambda x: x['action'] == 'max_successors', settings['restrictions']))
     if len(successor_restrictions) > 0:
+        iterations = 0
         is_restricted = apply_successor(random_sample, successor_restrictions)
         while (is_restricted is False):
+            iterations += 1
             random_sample = apply_select(settings, select_restrictions, tasks)
             is_restricted = apply_successor(random_sample, successor_restrictions)
+            if iterations > 100000:
+                random_sample = "Could not get a valid sample."
+                break
     return random_sample
 
 
