@@ -28,7 +28,6 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Valentin Todo
 
- - major: extra optional form for demographic questions.
  - major: write results to db
  - major: change format of tasks from latex to json
  - major: make the step before last rock solid!!!
@@ -50,6 +49,7 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Done
 
+ x major: extra optional form for demographic questions.
  x optional/maybe: separation into modules?
  x optional/maybe: page with requirements? (no!)
  x minor: adjust task and content location on all devices
