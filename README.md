@@ -28,12 +28,9 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Valentin Todo
 
- - major: write results to db
+ - why is the method to insert the document into the db called twice?!
  - major: change format of tasks from latex to json (vim macros)
- - major: make the step before last rock solid!!!
-     - check if the prolific id already did the study
-     - reenable session check?
-     - check for TODOs
+ - check for TODOs
  - deploy
     - separate uberspace with some money
     - daemontools
@@ -57,6 +54,9 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Done
 
+ x major: make the step before last rock solid!!!
+     - check if the prolific id already did the study
+ x major: write results to db
  x major: extra optional form for demographic questions.
  x optional/maybe: separation into modules?
  x optional/maybe: page with requirements? (no!)
