@@ -28,15 +28,17 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Valentin Todo
 
- - major: change format of tasks from latex to json (vim macros)
- - check for TODOs
+ - separate hostname based db config for uberspace
+ - (load private settings from separate settings file, add it to gitignore)
  - deploy
     - separate uberspace with some money
     - daemontools
     - create cronjob file from settings.json
         - cronjob with mongoexport and timestamps, (so we get backups!)
-        - to location accessible from pw protected dir
+        - to location accessible from pw protected dir (htaccess htuser)
         - ``mongoexport --db test --collection traffic --out traffic.json``
+ - major: change format of tasks from latex to json (vim macros)
+ - write documentation and maybe some tests
 
  - at some point: results
     - json to r: jsonlite <https://www.opencpu.org/posts/jsonlite-a-smarter-json-encoder/>
@@ -46,15 +48,16 @@ Here is a quick overview of the framework I wrote. It features:
  - optional/maybe: autopep8?
  - optional/maybe: publish?? (blogpost, pr)
  - known limitation: no newlines in tasks.
- - info needed:
-     - bug: ie (weird): skips back to 0% and first question, then after Continue, skips to the next new question after the last position before break-off (e.g., 50%).
-     - bug: ie 11 (weird): does not work (endless loop after two questions)
-     - bug: ie 11: default magnification too big
+ - info needed (if ie has this weird behaviour i am going to exclude it as well as edge):
+     - bug: ie: skips back to 0% and first question, then after Continue, skips to the next new question after the last position before break-off (e.g., 50%).
+     - bug: ie 11: does not work (endless loop after two questions)
+     - bug: ie 11: default magnification too big (why?)
 
 # Done
 
+ x check for TODOs
  x consent form styling
- x why is the method to insert the document into the db called twice?!
+ x why is the method to insert the document into the db called twice?! (answer: js and redirect)
  x major: make the step before last rock solid!!!
      - check if the prolific id already did the study
  x major: write results to db
