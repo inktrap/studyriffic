@@ -5,7 +5,9 @@ import re
 import os
 import json
 from modules import get_tasks
+import socket
 from pymongo import MongoClient
+import urllib.parse
 
 import logging
 logger = logging.getLogger('config.py')
@@ -21,8 +23,25 @@ logger.addHandler(ch)
 class baseConfig():
 
     def __init__(self):
-        client = MongoClient('mongodb://localhost:27017/')
-        self.db = client['studyriffic']
+        database = 'studyriffic'
+        if socket.gethostname() == "box":
+            client = MongoClient()
+            mongodb_uri = 'mongodb://localhost:27017/%s' % database
+        else:
+            # configured uberspace
+            # client = MongoClient('mongodb://username:password@localhost:27017/')
+            username = 'perigen'
+            password = 'zeishee3ue'
+            this_username = urllib.parse.quote_plus(username)
+            this_password = urllib.parse.quote_plus(password)
+            this_port = 21205
+            mongodb_uri = 'mongodb://%s:%s@localhost:%i/%s' % (this_username, this_password, this_port, database)
+
+        client = MongoClient(mongodb_uri, serverSelectionTimeoutMS=1)
+        db_test = client.server_info()
+        logger.debug(db_test)
+
+        self.db = client[database]
         self.project_root = os.path.abspath(os.path.dirname(os.path.realpath(os.path.join(__file__, '..'))))
         # logger.debug(self.project_root)
         # customize these

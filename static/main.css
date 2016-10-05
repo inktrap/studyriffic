@@ -8,9 +8,6 @@
 div.form-content, div.answer, div.situation, div.sentence { margin:1em; }
 
 div.answer {
-    /*
-    padding-bottom: 30px;
-    */
     white-space: nowrap;
 }
 
