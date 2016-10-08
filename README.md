@@ -28,8 +28,7 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Valentin Todo
 
- - separate hostname based db config for uberspace
- - (load private settings from separate settings file, add it to gitignore)
+ - check if the prolific id already did the study (before saving and before the study loads)
  - deploy
     - separate uberspace with some money
     - daemontools
@@ -40,6 +39,7 @@ Here is a quick overview of the framework I wrote. It features:
  - major: change format of tasks from latex to json (vim macros)
  - write documentation and maybe some tests
 
+ - optional (load private settings from separate settings file, add it to gitignore)
  - at some point: results
     - json to r: jsonlite <https://www.opencpu.org/posts/jsonlite-a-smarter-json-encoder/>
  - optional: change all the view functions to use the custom template, if specified
@@ -55,6 +55,7 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Done
 
+ x separate hostname based db config for uberspace
  x check for TODOs
  x consent form styling
  x why is the method to insert the document into the db called twice?! (answer: js and redirect)
