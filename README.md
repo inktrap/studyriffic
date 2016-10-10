@@ -28,8 +28,10 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Valentin Todo
 
+ - should I really give the tasks their id according to their position/order in the json file? or should i introduce an extra id field?
  - include final and correct consent form
  - major: change format of tasks from latex to json (vim macros)
+ - clean up uberspace (no mysql db needed, delete unnecessary data …)
 
  - deploy
     - create cronjob file from settings.json
