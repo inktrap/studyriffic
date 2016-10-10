@@ -28,20 +28,38 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Valentin Todo
 
- - check if the prolific id already did the study (before saving and before the study loads)
+ - include final and correct consent form
+ - major: change format of tasks from latex to json (vim macros)
+
  - deploy
-    - separate uberspace with some money
-    - daemontools
     - create cronjob file from settings.json
         - cronjob with mongoexport and timestamps, (so we get backups!)
-        - to location accessible from pw protected dir (htaccess htuser)
+        - study data  is accessible from pw protected dir (htaccess htuser, data.perigen …)
         - ``mongoexport --db test --collection traffic --out traffic.json``
- - major: change format of tasks from latex to json (vim macros)
- - write documentation and maybe some tests
+ - major: after everything is set up, password protect the index for testing
+
+ - meeting: share information (increase the bus factor). give zsophia:
+    - the uberspace credentials
+    - the study testing credentials
+    - the study data access credentials
+    - possibly documentation
+
+ - run a small test experiment?
+    - create a prolific account
+    - transfer money to prolific
+    - reset the db
+    - do a very small test experiment (to get the selectors right and see how everything works 5€?)
+ - run main experiment:
+    - reset the db
+    - do the main experiment
+
+ - write documentation and maybe some more tests
+    - a paper would be nice that could be cited by … zsophia? is that a good idea?
 
  - optional (load private settings from separate settings file, add it to gitignore)
  - at some point: results
     - json to r: jsonlite <https://www.opencpu.org/posts/jsonlite-a-smarter-json-encoder/>
+
  - optional: change all the view functions to use the custom template, if specified
  - optional/maybe: tests?
  - optional/maybe: documentation?
@@ -55,6 +73,7 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Done
 
+ x check if the prolific id already did the study (before saving and before the study loads)
  x separate hostname based db config for uberspace
  x check for TODOs
  x consent form styling
