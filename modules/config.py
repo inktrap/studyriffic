@@ -49,9 +49,27 @@ class baseConfig():
         self.this_port = 63536
         # study directories have to match this regex
         self.study_regex = "[a-z,A-Z,0-9,-]+"
-        # a list of customizable templates
+        # a list of customizable templates (currently only first.tpl is customizable)
         self.templates = ['first.tpl', 'last.tpl', 'consent.tpl', 'main.tpl']
         self.template_path = os.path.join(self.project_root, 'views')
+        self.required_settings_keys = ["question",
+                                       "situation",
+                                       "questions",
+                                       "min_scale",
+                                       "max_scale",
+                                       "min_scale_desc",
+                                       "max_scale_desc",
+                                       "university",
+                                       "investigator",
+                                       "contact",
+                                       "active",
+                                       "time",
+                                       "link",
+                                       "actions",
+                                       "types",
+                                       "categories",
+                                       "restrictions"
+                                       ]
         # baseConfig.studies are configured by convention
         # studies dict contains settings for each study
         self.studies = self.configure()
@@ -74,6 +92,8 @@ class baseConfig():
             except json.decoder.JSONDecodeError as e:
                 logger.error("There is an error in one of your settings.json files: %s" % study_settings)
                 raise e
+            for key in self.required_settings_keys:
+                assert key in settings.keys(), "You have to specify the key '%s' in your settings file: %s" % (key, study_settings)
             if 'active' in settings.keys():
                 # the active key is opional
                 if settings['active'] is False:
