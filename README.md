@@ -22,9 +22,8 @@ Here is a quick overview of the framework I wrote. It features:
 
 ## Demo
 
- - A longer study with the binary scale: <https://perigen.diphda.uberspace.de/study/binary?prolific_pid=123&session_id=foobar>
- - A longer study with the likert scale: <https://perigen.diphda.uberspace.de/study/likert?prolific_pid=123&session_id=foobar>
- - A small, silly study: <https://perigen.diphda.uberspace.de/study/silly?prolific_pid=123&session_id=foobar>
+ - A study with the likert scale: <https://perigen.diphda.uberspace.de/study/demo_likert?prolific_pid=123&session_id=foobar>
+ - A study with the likert scale: <https://perigen.diphda.uberspace.de/study/demo_binary?prolific_pid=123&session_id=foobar>
 
 # Valentin Todo
 
