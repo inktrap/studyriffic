@@ -52,30 +52,37 @@ def timeout(seconds=10, error_message=os.strerror(errno.ETIME)):
 
 
 def check_restriction(settings, restriction):
-    assert isinstance(restriction, dict)
-    assert 'action' in restriction.keys()
-    assert 'type' in restriction.keys()
-    assert 'argument' in restriction.keys()
-    assert len(restriction.keys()) == 3
-    assert restriction['action'] in settings['actions']
-    assert isinstance(restriction['type'], str)
+    assert isinstance(restriction, dict), "a restriction has to be a dictionary"
+    assert 'action' in restriction.keys(), "a restriction has to have an action"
+    assert (not('type' in restriction.keys() and 'category' in restriction.keys())), "a restriction operates on a type or a category, not both."
+    assert 'argument' in restriction.keys(), "a restriction has to have an argument."
+    assert len(restriction.keys()) == 3, "a restriction has to have 3 keys."
+    assert restriction['action'] in settings['actions'], "the action of the restriction is not in the settings file."
+
+    if 'type' in restriction.keys():
+        assert isinstance(restriction['type'], str), "a type has to be a string."
+    elif 'category' in restriction.keys():
+        assert isinstance(restriction['category'], str), "a category has to be a string."
     # print(type(restriction['argument']))
     assert (isinstance(restriction['argument'], int) or
             eq('all', restriction['argument']) or
-            isinstance(restriction['argument'], float))
+            isinstance(restriction['argument'], float)), "the argument has to be an int or a float or 'all'."
 
     if restriction['action'] == 'max_successors':
         assert isinstance(restriction['argument'], int)
+        assert 'category' in restriction.keys() or 'type' in restriction.keys()
         assert restriction['argument'] >= 0
     elif restriction['action'] == 'select':
         assert isinstance(restriction['argument'], float)
+        assert 'category' in restriction.keys() or 'type' in restriction.keys()
         assert 0.0 < restriction['argument'] < 1.0
     else:
         raise ValueError("Unknown restriction action %s" % restriction['action'])
 
 
 def check_task(settings, task):
-    assert isinstance(task, dict)
+    assert isinstance(task, dict), 'A task has to be a dictionary'
+    assert len(task.keys()) == 5, 'A task has to have 5 keys.'
     assert 'category' in task.keys()
     assert 'type' in task.keys()
     assert 'situation' in task.keys()
@@ -83,15 +90,15 @@ def check_task(settings, task):
     # id is added by this module which only returns the id
     # the id matches the index of the list of all tasks
     assert 'id' in task.keys()
-    logger.debug(task.keys())
+    #logger.debug(task.keys())
     try:
         logger.debug(task['complete'])
         logger.debug(task['status'])
     except KeyError:
         pass
     assert len(task.keys()) == 5
-    assert task['category'] in settings['categories']
-    assert task['type'] in settings['types']
+    assert task['category'] in settings['categories'], "The category %s has to be in settings" % task['category']
+    assert task['type'] in settings['types'], "The type %s has to be in settings" % task['type']
     assert isinstance(task['situation'], str)
     assert isinstance(task['sentence'], str)
 
@@ -106,14 +113,28 @@ def check_select(settings, select_restrictions):
     # check if the numbers of selects add up to 1
     assert sum([select_restriction['argument'] for select_restriction in select_restrictions]) == 1
 
-    # check if select has been specified more than once with the same argument
-    select_types = [select_restriction['type'] for select_restriction in select_restrictions]
-    assert len(set(select_types)) == len(select_types), "A type can only be used once in a select statement, otherwise it contradicts the previous statements."
+    select_types = []
+    select_categories = []
 
-    # check that all the arguments are dividable without a remainder
     for select_restriction in select_restrictions:
         #print(math.modf(settings['questions'] * select_restriction['argument'])[0])
         assert (math.modf(settings['questions'] * select_restriction['argument']))[0] == 0.0, "selection arguments can not produce items less than 1 (F.e.: You can not split a question in half)."
+        if 'type' in select_restriction.keys():
+            select_types.append(select_restriction)['type']
+        elif 'category' in select_restriction.keys():
+            select_categories.append(select_restriction['category'])
+        else:
+            raise ValueError("Neither type nor category key present")
+
+    # check if select has been specified more than once with the same argument
+    #select_types = [select_restriction['type'] for select_restriction in select_restrictions]
+    assert len(set(select_types)) == len(select_types), "A type can only be used once in a select statement, otherwise it contradicts the previous statements."
+
+    # same for categories
+    #select_categories = [select_restriction['category'] for select_restriction in select_restrictions]
+    #logger.debug(select_categories)
+    assert len(set(select_categories)) == len(select_categories), "A category can only be used once in a select statement, otherwise it contradicts the previous statements."
+
     return True
 
 
@@ -128,6 +149,12 @@ def apply_successor(sample, successor_restrictions):
             # if there are not enough items, their order is not important
             if (index + successor_restriction['argument'] + 2) >= len(sample):
                 continue
+
+            if 'category' in successor_restriction.keys():
+                restricted = 'category'
+            elif 'type' in successor_restriction.keys():
+                restricted = 'type'
+
             # extract all the unique types form the given range into a list
             # the range includes the current item (index)
             # and on top of that the items that are allowed
@@ -135,8 +162,8 @@ def apply_successor(sample, successor_restrictions):
             # and it is +2 because slices give an interval like [x,y)
             #print(successor_restriction)
             #print(list(map(lambda x: x['type'], sample[index:index + successor_restriction['argument'] + 2])))
-            successors = list(set(map(lambda x: x['type'], sample[index:index + successor_restriction['argument'] + 2])))
-            if len(successors) == 1 and (successors[0] == successor_restriction['type']):
+            successors = list(set(map(lambda x: x[restricted], sample[index:index + successor_restriction['argument'] + 2])))
+            if len(successors) == 1 and (successors[0] == successor_restriction[restricted]):
                 return False
     return True
 
@@ -148,7 +175,7 @@ def apply_select(settings, select_restrictions, tasks):
         # get tasks by category
         # this works nicely because dictionary keys are **NOT** ordered
         # otherwise the first entries would be favored
-        category_tasks = list(filter(lambda x: x['category'] == select_restriction['type'], tasks))
+        category_tasks = list(filter(lambda x: x['category'] == select_restriction['category'], tasks))
         assert len(category_tasks) > 0, "There are no tasks for this category"
         # get number of entities the current restriction takes
         take_restrictions = settings['questions'] * select_restriction['argument']

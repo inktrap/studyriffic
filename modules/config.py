@@ -15,7 +15,7 @@ logger.setLevel(logging.INFO)
 formatter = logging.Formatter(
     '[%(asctime)s] p%(process)s {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s', '%m-%d %H:%M:%S')
 ch = logging.StreamHandler()
-ch.setLevel(logging.DEBUG)
+ch.setLevel(logging.INFO)
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
@@ -50,7 +50,7 @@ class baseConfig():
         # study directories have to match this regex
         self.study_regex = "[a-z,A-Z,0-9,-]+"
         # a list of customizable templates (currently only first.tpl is customizable)
-        self.templates = ['first.tpl', 'last.tpl', 'consent.tpl', 'main.tpl']
+        self.templates = ['demographics.tpl', 'first.tpl', 'last.tpl', 'consent.tpl', 'main.tpl']
         self.template_path = os.path.join(self.project_root, 'views')
         self.required_settings_keys = ["question",
                                        "situation",
@@ -68,6 +68,7 @@ class baseConfig():
                                        "actions",
                                        "types",
                                        "categories",
+                                       "templates",
                                        "restrictions"
                                        ]
         # baseConfig.studies are configured by convention
@@ -113,10 +114,6 @@ class baseConfig():
             # settings['template_lookup'] = os.path.join(template_path, study)
         with open(study_tasks, 'r') as fh:
             this_tasks = json.load(fh)
-            # give tasks an id
-            for i,t in enumerate(this_tasks):
-                this_tasks[i]['id'] = i
-                assert len(this_tasks[i].keys()) == 5
         assert len(this_tasks) >= settings[
             'questions'], 'Study %s: There are not enough tasks (or questions is too high.)' % study
 
@@ -141,6 +138,7 @@ class baseConfig():
                 if this_study is False:
                     continue
                 studies[study] = this_study
+        logger.debug(studies.keys())
         assert len(studies.keys()) > 0, "No studies configured."
         return studies
 
