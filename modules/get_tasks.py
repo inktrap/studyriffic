@@ -176,7 +176,7 @@ def apply_select(settings, select_restrictions, tasks):
         # this works nicely because dictionary keys are **NOT** ordered
         # otherwise the first entries would be favored
         category_tasks = list(filter(lambda x: x['category'] == select_restriction['category'], tasks))
-        assert len(category_tasks) > 0, "There are no tasks for this category"
+        assert len(category_tasks) > 0, "There are no tasks for the category %s" % select_restriction['category']
         # get number of entities the current restriction takes
         take_restrictions = settings['questions'] * select_restriction['argument']
         # print(take_restrictions)

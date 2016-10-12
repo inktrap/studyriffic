@@ -27,7 +27,14 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Valentin Todo
 
- - should I really give the tasks their id according to their position/order in the json file? or should i introduce an extra id field?
+ - create more question types, f.e. question answer pair question types (how
+ could this be done flexibly? currently this is … an inconvenience, but for
+ studyriffic to be really useful this would be needed, c.f. experigen setup.
+ generate main.tpl content from json?)
+    - the thing is … the data that is saved in the cookies and so on is checked
+    to be consistent … I have to rewrite a lot of stuff and generate it dynamically …
+    this is not practical for now (should I just adapt it to fit the situation?)
+
  - major: change format of tasks from latex to json (vim macros)
  - clean up uberspace (no mysql db needed, delete unnecessary data …)
 
@@ -73,6 +80,7 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Done
 
+ x tasks have an extra id field
  x check if the prolific id already did the study (before saving and before the study loads)
  x separate hostname based db config for uberspace
  x check for TODOs
