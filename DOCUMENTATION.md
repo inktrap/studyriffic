@@ -176,6 +176,34 @@ that this is not the preferred way of doing this.)
 
 # Views
 
- - if you use a custom template, create the appropriate directory under views
- and a template file
+ - if you want to use a custom template, create a directory that is named like
+ your study in the views directory. Then put the template file you want to use
+ in it. F.e.: to use a custom ``first.tpl`` in our owls-study, create
+ we would have to create ``ROOT/views/owls/first.tpl``. But if you forget it,
+ don't worry, I'll remind you with an AssertionError.
+
+# Errors
+
+When I am configuring a study I don't expect it to work immediately: “I will
+get a lot of errors and that is a good thing.” It is like programming in
+a statically typed language : The compiler will catch the biggest mistakes and
+you have less headaches once your stuff works. (Yes, I used -- dynamically
+typed -- Python here :)). This section is about common errors and what you have
+to do to fix them.
+
+It is easy to catch structural things and it is harder to get the
+intentions right. So there are two broad categories of errors:
+
+ - **logical errors:** which means you messed up a settings that conflicts with
+ other settings or a setting/item/whatever has the wrong type or conflicts
+ logically with the assumptions that I made for you and
+
+ - **structural errors:** a file is missing or a key or a value -- it does not
+ matter -- something is missing or has not the structure that I expect.
+
+
+## Logical
+
+## Structural
+
 
