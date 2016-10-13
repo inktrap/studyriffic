@@ -4,7 +4,7 @@
 import re
 import os
 import json
-from modules import get_tasks
+from modules import tasks_module
 import socket
 from pymongo import MongoClient
 import urllib.parse
@@ -115,10 +115,10 @@ class baseConfig():
         with open(study_tasks, 'r') as fh:
             this_tasks = json.load(fh)
         assert len(this_tasks) >= settings[
-            'questions'], 'Study %s: There are not enough tasks (or questions is too high.)' % study
+            'questions'], 'Study %s: There are not enough tasks (or number of questions is greater.)' % study
 
         try:
-            get_tasks.check_config(settings, this_tasks)
+            tasks_module.check_config(settings, this_tasks)
         except AssertionError as e:
             logger.error("There is an error in either settings.json or tasks.json for: %s" % study)
             raise e
