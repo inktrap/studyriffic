@@ -1,12 +1,181 @@
+# Studyriffic
+
+Studyriffic is a simple tool to create and host multiple studies.
+Let's have a look at how this works.
+
+
 # Create a new study
 
-# settings.json
+Basicly what you are doing is always the same. Studyriffic is run by convention
+over configuration and therefore some files are pretty important. You should
+probably now what [json](https://en.wikipedia.org/wiki/JSON) is. Let's assume
+you do. Let's assume further your are interested in owls and you would like to
+ask people questions about owls.
 
- - conventions
- - if you use a custom template, create the appropriate directory under views and a template file
+The first thing we have to do, is to create a folder, like this: ``ROOT/studies/owls``.
+This folder gives our study it's name and will contain the settings and tasks files.
 
-# tasks.json
 
- - conventions
- - give all the tasks an id
+# Settings
+
+Our settings are living in a file called ``settings.json`` in the folder we just created.
+
+A settings file looks like the example below, and the keys are mandatory. We
+are checking this pretty strictly, so you probably will get a lot of complaints
+(AssertionError) (which is a good thing!) if you are writing your file from
+scratch.
+
+Json does not allow comments, so you probably want to download the file without
+comments here. TODO
+
+~~~
+~~~
+
+
+# Tasks
+
+Your tasks are living in a file called ``tasks.json`` and it also has a pretty
+strict format. Some values here affect ``settings.json``, so they have to fit
+together. Again, json does not allow comments, so download the whole example here. TODO
+
+## A single task
+
+A ``tasks.json`` file consists of a list of tasks. A single task looks like this:
+~~~
+{
+    "situation": "", /* this is the situation. if it is non-empty (that means anything else than "") it will be displayed first, see: situation-sentence-example. */ TODO
+    "category": "", /* the whole task has to have a category. typical categories are filler and target */
+    "sentence": "", /* this is the sentence that the participant is going to rate/judge */
+    "type": "", /* the whole task can have a type which acts as a fine-grained labeling that is not as broad as categories */
+    "id": /* lastly a task has to have a sequential numerical id that is unique for this tasks file */
+}
+~~~
+
+## An example tasks file
+
+And a ``tasks.json`` file might look like this:
+
+~~~
+[
+{
+    "situation": "Owls can hunt if it is dark.",
+    "category": "filler",
+    "sentence": "It was surprising that the owl saw the mouse even if it was dark.",
+    "type": "hunt",
+    "id": 0
+}, {
+    "situation": "Owls are very good hunters.",
+    "category": "target",
+    "sentence": "The owl caught the mouse and ate it.",
+    "type": "hunt",
+    "id": 1
+}
+]
+~~~
+
+So, we have two tasks, one is a filler and one a target and both are of the
+type ``hunt``. We also have two different situations and sentences. The ids are
+how they should be: unique, numerical and sequential.
+
+## A tasks file that works
+
+Typicly you have a lot of questions and this is pretty important, otherwise the
+task selection algorithm might not be able to produce results according to your
+requirements -- there simply might not be enough items in each category or
+type. So, this is like the previous file, only larger.
+
+~~~
+[
+{
+    "situation": "Owls can hunt if it is dark.",
+    "category": "filler",
+    "sentence": "It was surprising that the owl saw the mouse even if it was dark.",
+    "type": "hunt",
+    "id": 0
+}, {
+    "situation": "Owls are very good hunters.",
+    "category": "target",
+    "sentence": "The owl caught the mouse and ate it.",
+    "type": "hunt",
+    "id": 1
+},
+{
+    "situation": "Owls can eat a lot of mice.",
+    "category": "filler",
+    "sentence": "It was surprising that the owl did not eat the mouse.",
+    "type": "fact",
+    "id": 2
+}, {
+    "situation": "Owls are not very good listeners.",
+    "category": "target",
+    "sentence": "Jimmy called the owl but the owl did not listen.",
+    "type": "fact",
+    "id": 3
+},
+{
+    "situation": "Owls are awesome.",
+    "category": "filler",
+    "sentence": "It was surprising that the owl saw the mouse even if it was dark.",
+    "type": "fact",
+    "id": 4
+}, {
+    "situation": "Owls have a lot of feathers.",
+    "category": "target",
+    "sentence": "The owl caught the mouse and ate it.",
+    "type": "hunt",
+    "id": 5
+},
+{
+    "situation": "Owls have a lot of humor.",
+    "category": "filler",
+    "sentence": "It was surprising that the owl saw the mouse even if it was dark.",
+    "type": "fact",
+    "id": 6
+}, {
+    "situation": "Jimmy petted an owl once.",
+    "category": "target",
+    "sentence": "The owl caught the mouse and ate it.",
+    "type": "jimmy",
+    "id": 7
+},
+{
+    "situation": "The owl caught a mouse and brought it to Jimmy.",
+    "category": "filler",
+    "sentence": "It was surprising that the owl saw the mouse even if it was dark.",
+    "type": "jimmy",
+    "id": 8
+}, {
+    "situation": "Jimmy is the best friend of an owl.",
+    "category": "target",
+    "sentence": "The owl caught the mouse and ate it.",
+    "type": "jimmy",
+    "id": 9
+}
+]
+~~~
+
+Here we have ten tasks, two categories (``filler, target``) and three types
+(``jimmy, hunt, fact``). This should be enough for a small study with
+four questions.
+
+
+## Inline HTML and newlines
+
+The value of a ``"sentence"`` and ``"situation"``-key might contain a newline.
+As per the JSON-standard, newlines have to be written as `\n`. The newline will
+be transformed into an HTML-linebreak by JavaScript in the template
+``main.tpl``.
+
+(Please note: ``main.tpl`` uses Jquery's ``html``-method to display the content
+-- and therefore is vulnerable to XSS-attacks and other shenanigans. I worked
+with the assumption that you are creating your template (or are using mine) but
+you are definitely creating your own tasks and settings files, so you can trust
+them. That way you have the flexibility to include other inline markup, despite
+that this is not the preferred way of doing this.)
+
+
+# Views
+
+ - if you use a custom template, create the appropriate directory under views
+ and a template file
 
