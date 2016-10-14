@@ -80,6 +80,7 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Done
 
+~~~
  x tasks have an extra id field
  x check if the prolific id already did the study (before saving and before the study loads)
  x separate hostname based db config for uberspace
@@ -114,9 +115,11 @@ Here is a quick overview of the framework I wrote. It features:
      - change all the backends
          - create routes per experiment
          - set cookie by experiment, aso.
+~~~
 
 # Zsofia (?)
 
+~~~
 x write demographic questions.
 x clear task selection criteria.
 x prerequisite for task selection: label the tasks we have according to these major and minor categories first.
@@ -124,6 +127,7 @@ x come up with fillers for 2 & 3.
 x write an introduction/example and write/modify the consent form.
 - rethink timing? Account for the time for consent form and introduction/examples and the demographic questions.
 - decide if RT is a factor for payment, if yes, which RTs?
+~~~
 
 # Deployment (automate uberspace deployment in general)
 
