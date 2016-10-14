@@ -1,7 +1,11 @@
-# Studyriffic
+# A user guide to Studyriffic
 
-Studyriffic is a simple tool to create and host multiple studies.
-Let's have a look at how this works.
+“Or: I am getting ``AssertionError``s, how does this thing work?”
+
+Studyriffic is a simple tool to create and host multiple studies, especially on
+[prolific](). This is the [user guide](), but [developers]() should read it as well,
+because I am going to explain the ideas and concepts while I create our first
+study. Let's start!
 
 
 # Create a new study
@@ -9,24 +13,23 @@ Let's have a look at how this works.
 Basicly what you are doing is always the same. Studyriffic is run by convention
 over configuration and therefore some files are pretty important. You should
 probably now what [json](https://en.wikipedia.org/wiki/JSON) is. Let's assume
-you do. Let's assume further your are interested in owls and you would like to
+you do. Let's assume further your are interested in [owls]() and you would like to
 ask people questions about owls.
 
-The first thing we have to do, is to create a folder, like this: ``ROOT/studies/owls``.
-This folder gives our study it's name and will contain the settings and tasks files.
+The first thing you have to do, is to create a folder, like this: ``ROOT/studies/owls``.
+This folder gives your study it's name and will contain the settings and tasks files.
 
 
 # Settings
 
 Our settings are living in a file called ``settings.json`` in the folder we just created.
 
-A settings file looks like the example below, and the keys are mandatory. We
-are checking this pretty strictly, so you probably will get a lot of complaints
-(AssertionError) (which is a good thing!) if you are writing your file from
-scratch.
+A settings file looks like the example below, and the keys that are described
+below are mandatory. Studyriffic is checking this pretty strictly, so you
+probably will get a lot of complaints (which is a good thing!).
 
-Json does not allow comments, so you probably want to download the file without
-comments here. TODO
+Json does not allow comments, so you probably want to download the complete
+[settings.json]() file without comments.
 
 ~~~
 ~~~
@@ -36,7 +39,8 @@ comments here. TODO
 
 Your tasks are living in a file called ``tasks.json`` and it also has a pretty
 strict format. Some values here affect ``settings.json``, so they have to fit
-together. Again, json does not allow comments, so download the whole example here. TODO
+together. Again, json does not allow comments, so download the whole
+[tasks.json]() file without comments.
 
 ## A single task
 
@@ -82,7 +86,7 @@ how they should be: unique, numerical and sequential.
 Typicly you have a lot of questions and this is pretty important, otherwise the
 task selection algorithm might not be able to produce results according to your
 requirements -- there simply might not be enough items in each category or
-type. So, this is like the previous file, only larger.
+for each type. So, this is like the previous file, only with more tasks.
 
 ~~~
 [
@@ -173,6 +177,11 @@ you are definitely creating your own tasks and settings files, so you can trust
 them. That way you have the flexibility to include other inline markup, despite
 that this is not the preferred way of doing this.)
 
+(Additional note/reminder for mysel: I still have to find out if bottle's
+cookie function is vulnerable to CSRF and if my endpoints should look out for
+token. On the other hand: the prolifc id is stored in the cookie, which has
+a signature.)
+
 
 # Views
 
@@ -180,13 +189,13 @@ that this is not the preferred way of doing this.)
  your study in the views directory. Then put the template file you want to use
  in it. F.e.: to use a custom ``first.tpl`` in our owls-study, create
  we would have to create ``ROOT/views/owls/first.tpl``. But if you forget it,
- don't worry, I'll remind you with an AssertionError.
+ don't worry, Studyriffic will remind you with an ``AssertionError``.
 
 # Errors
 
 When I am configuring a study I don't expect it to work immediately: “I will
 get a lot of errors and that is a good thing.” It is like programming in
-a statically typed language : The compiler will catch the biggest mistakes and
+a statically typed language: The compiler will catch the biggest mistakes and
 you have less headaches once your stuff works. (Yes, I used -- dynamically
 typed -- Python here :)). This section is about common errors and what you have
 to do to fix them.
@@ -194,12 +203,12 @@ to do to fix them.
 It is easy to catch structural things and it is harder to get the
 intentions right. So there are two broad categories of errors:
 
- - **logical errors:** which means you messed up a settings that conflicts with
- other settings or a setting/item/whatever has the wrong type or conflicts
- logically with the assumptions that I made for you and
+ - **logical errors:** mean you messed up a setting that conflicts with other
+ settings or it might be that a setting/item/whatever has the wrong type or
+ conflicts logically with the assumptions that I made for you and there are
 
- - **structural errors:** a file is missing or a key or a value -- it does not
- matter -- something is missing or has not the structure that I expect.
+ - **structural errors:** a file or a key or a value is missing -- it does not
+ matter what -- something is missing or has not the structure that I expect.
 
 
 ## Logical
