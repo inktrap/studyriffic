@@ -1,7 +1,7 @@
 #!/usr/bin/env python3.5
 # -*- coding: utf-8 -*-
 import unittest
-from modules import get_tasks
+from modules import tasks_module
 from modules.config import thisConfig
 import os
 
@@ -24,10 +24,10 @@ class TestGetTasks(unittest.TestCase):
 
     def test_main(self):
         # logger.info("Starting test")
-        study = 'binary'
+        study = next(iter(thisConfig.studies))
         settings = thisConfig.studies[study]['settings']
         tasks = thisConfig.studies[study]['tasks']
-        print(get_tasks.main(settings, tasks))
+        print(tasks_module.main(settings, tasks))
 
 if __name__ == '__main__':
     unittest.main()

@@ -27,6 +27,13 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Valentin Todo
 
+ - Problems:
+    - experiment 1b) has a 50/50 split between filler and target-items, but 15 questions. This is not possible.
+    - experiment 1b) will have the same taskorder than 1a), right?
+    - a task can only have one label, since it is a string and not a list
+        - conj/disj can only be implemented as extra labels, which is … annoying?
+
+
  - create more question types, f.e. question answer pair question types (how
  could this be done flexibly? currently this is … an inconvenience, but for
  studyriffic to be really useful this would be needed, c.f. experigen setup.
@@ -35,9 +42,7 @@ Here is a quick overview of the framework I wrote. It features:
     to be consistent … I have to rewrite a lot of stuff and generate it dynamically …
     this is not practical for now (should I just adapt it to fit the situation?)
 
- - major: change format of tasks from latex to json (vim macros)
  - clean up uberspace (no mysql db needed, delete unnecessary data …)
-
  - deploy
     - create cronjob file from settings.json
         - cronjob with mongoexport and timestamps, (so we get backups!)
