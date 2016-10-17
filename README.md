@@ -24,23 +24,37 @@ Here is a quick overview of the framework I wrote. It features:
 
  - A study with the likert scale: <https://perigen.diphda.uberspace.de/study/demo_likert?prolific_pid=123&session_id=foobar>
  - A study with the likert scale: <https://perigen.diphda.uberspace.de/study/demo_binary?prolific_pid=123&session_id=foobar>
+ - meeting: monday 16:30 office
+
+
+
+# Meeting
+
+ - deadline for test study: friday?
+ - participant selection criteria
+ - uberspace billing
+
+ - share information (increase the bus factor). give zsophia:
+     - the uberspace credentials
+     - the study testing credentials
+     - the study data access credentials
+     - possibly documentation
+
+ - i gave all the experiments names that contain the number (and a random noun so it is harder to guess a study)
+ - experiment 1b) has a 50/50 split between filler and target-items, but 15 questions. This is not possible.
+ - clarification: experiment 1b) will have the same taskorder than 1a), right?
+ - limitation: a task can only have one label, since it is a string and not a list
+    - conj/disj can not be implemented … (is that a priority?)
 
 # Valentin Todo
 
- - Problems:
-    - experiment 1b) has a 50/50 split between filler and target-items, but 15 questions. This is not possible.
-    - experiment 1b) will have the same taskorder than 1a), right?
-    - a task can only have one label, since it is a string and not a list
-        - conj/disj can only be implemented as extra labels, which is … annoying?
-
-
- - create more question types, f.e. question answer pair question types (how
- could this be done flexibly? currently this is … an inconvenience, but for
- studyriffic to be really useful this would be needed, c.f. experigen setup.
- generate main.tpl content from json?)
-    - the thing is … the data that is saved in the cookies and so on is checked
-    to be consistent … I have to rewrite a lot of stuff and generate it dynamically …
-    this is not practical for now (should I just adapt it to fit the situation?)
+ - use the correct introduction
+    - as to highlighting in the intro: a few things are already highlighted in
+    Exp. 1's instructions, but maybe we can highlight the following in addition:
+    Exp 1: "indicate on a scale of 1 to 5 how certain you are that the sentence is
+    true in that particular situation" Exp 2: "tell us whether you think it sounds
+    acceptable or not" Exp 3: "tell us whether you think it sounds acceptable or
+    not"
 
  - clean up uberspace (no mysql db needed, delete unnecessary data …)
  - deploy
@@ -48,22 +62,14 @@ Here is a quick overview of the framework I wrote. It features:
         - cronjob with mongoexport and timestamps, (so we get backups!)
         - study data  is accessible from pw protected dir (htaccess htuser, data.perigen …)
         - ``mongoexport --db test --collection traffic --out traffic.json``
+
  - major: after everything is set up, password protect the index for testing
 
- - meeting: share information (increase the bus factor). give zsophia:
-    - the uberspace credentials
-    - the study testing credentials
-    - the study data access credentials
-    - possibly documentation
 
- - run a small test experiment?
-    - create a prolific account
-    - transfer money to prolific
-    - reset the db
-    - do a very small test experiment (to get the selectors right and see how everything works 5€?)
- - run main experiment:
-    - reset the db
-    - do the main experiment
+---
+
+ - run 1b as a test
+ - run main experiment
 
  - write documentation and maybe some more tests
     - a paper would be nice that could be cited by … zsophia? is that a good idea?
@@ -82,6 +88,14 @@ Here is a quick overview of the framework I wrote. It features:
      - bug: ie: skips back to 0% and first question, then after Continue, skips to the next new question after the last position before break-off (e.g., 50%).
      - bug: ie 11: does not work (endless loop after two questions)
      - bug: ie 11: default magnification too big (why?)
+
+ - create more question types, f.e. question answer pair question types (how
+ could this be done flexibly? currently this is … an inconvenience, but for
+ studyriffic to be really useful this would be needed, c.f. experigen setup.
+ generate main.tpl content from json?)
+    - the thing is … the data that is saved in the cookies and so on is checked
+    to be consistent … I have to rewrite a lot of stuff and generate it dynamically …
+    this is not practical for now (should I just adapt it to fit the situation?)
 
 # Done
 
