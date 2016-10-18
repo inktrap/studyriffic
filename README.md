@@ -24,30 +24,17 @@ Here is a quick overview of the framework I wrote. It features:
 
  - A study with the likert scale: <https://perigen.diphda.uberspace.de/study/demo_likert?prolific_pid=123&session_id=foobar>
  - A study with the likert scale: <https://perigen.diphda.uberspace.de/study/demo_binary?prolific_pid=123&session_id=foobar>
- - meeting: monday 16:30 office
+ - meeting: monday 16:30 office 23.32.02.65.
 
-
-
-# Meeting
-
- - deadline for test study: friday?
- - participant selection criteria
- - uberspace billing
-
- - share information (increase the bus factor). give zsophia:
-     - the uberspace credentials
-     - the study testing credentials
-     - the study data access credentials
-     - possibly documentation
-
- - i gave all the experiments names that contain the number (and a random noun so it is harder to guess a study)
- - experiment 1b) has a 50/50 split between filler and target-items, but 15 questions. This is not possible.
- - clarification: experiment 1b) will have the same taskorder than 1a), right?
- - limitation: a task can only have one label, since it is a string and not a list
-    - conj/disj can not be implemented … (is that a priority?)
 
 # Valentin Todo
 
+ - use introductions per experiment
+ - include heading for consent
+ - explicit types (restrictions, task labels) (conj, disj)
+ - kontierungsblatt uberspace
+ - write documentation a paper and maybe some more tests
+    - a paper describing the workflow would be nice and would be cited by zsophia :)
  - use the correct introduction
     - as to highlighting in the intro: a few things are already highlighted in
     Exp. 1's instructions, but maybe we can highlight the following in addition:
@@ -55,24 +42,24 @@ Here is a quick overview of the framework I wrote. It features:
     true in that particular situation" Exp 2: "tell us whether you think it sounds
     acceptable or not" Exp 3: "tell us whether you think it sounds acceptable or
     not"
-
  - clean up uberspace (no mysql db needed, delete unnecessary data …)
  - deploy
     - create cronjob file from settings.json
         - cronjob with mongoexport and timestamps, (so we get backups!)
         - study data  is accessible from pw protected dir (htaccess htuser, data.perigen …)
         - ``mongoexport --db test --collection traffic --out traffic.json``
-
  - major: after everything is set up, password protect the index for testing
 
-
----
-
- - run 1b as a test
+ - test run for all studies to check time assumptions. deadline: friday
+ - run 1b as a test (new deadline?)
  - run main experiment
+ - participant selection criteria
+    - english speaking
+    - > 18
+    - for 1a) exclude 1b)
 
- - write documentation and maybe some more tests
-    - a paper would be nice that could be cited by … zsophia? is that a good idea?
+
+# Optional
 
  - optional (load private settings from separate settings file, add it to gitignore)
  - at some point: results
@@ -100,6 +87,15 @@ Here is a quick overview of the framework I wrote. It features:
 # Done
 
 ~~~
+ - share information (increase the bus factor). give zsophia:
+     - the uberspace credentials
+     - the study testing credentials
+     - the study data access credentials
+ - i gave all the experiments names that contain the number (and a random noun so it is harder to guess a study): z: alright!
+ - experiment 1b) has a 50/50 split between filler and target-items, but 15 questions. This is not possible.: z: 16 works
+ - clarification: experiment 1b) will have the same taskorder than 1a), right? (probably right)
+ - limitation: a task can only have one label, since it is a string and not a list
+    - implement conj/disj as explicit combined labels
  x tasks have an extra id field
  x check if the prolific id already did the study (before saving and before the study loads)
  x separate hostname based db config for uberspace
