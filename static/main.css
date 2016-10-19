@@ -5,6 +5,10 @@
                font-style: italic;
  }
 
+.first-submit {
+    margin-top: 1em;
+}
+
 div.form-content, div.answer, div.situation, div.sentence { margin:1em; }
 
 div.answer {
@@ -62,4 +66,12 @@ form.scale.inline > input {
   top: 50%;
   transform: translateY(-50%);
 
+}
+
+span.text-bold {
+    font-weight: bold;
+}
+
+span.text-italic {
+    font-style: italic;
 }
