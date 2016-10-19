@@ -29,19 +29,11 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Valentin Todo
 
- - use introductions per experiment
- - include heading for consent
  - explicit types (restrictions, task labels) (conj, disj)
+
  - kontierungsblatt uberspace
- - write documentation a paper and maybe some more tests
+ - write documentation and a paper and maybe some more tests
     - a paper describing the workflow would be nice and would be cited by zsophia :)
- - use the correct introduction
-    - as to highlighting in the intro: a few things are already highlighted in
-    Exp. 1's instructions, but maybe we can highlight the following in addition:
-    Exp 1: "indicate on a scale of 1 to 5 how certain you are that the sentence is
-    true in that particular situation" Exp 2: "tell us whether you think it sounds
-    acceptable or not" Exp 3: "tell us whether you think it sounds acceptable or
-    not"
  - clean up uberspace (no mysql db needed, delete unnecessary data …)
  - deploy
     - create cronjob file from settings.json
@@ -87,6 +79,10 @@ Here is a quick overview of the framework I wrote. It features:
 # Done
 
 ~~~
+ x include heading for consent
+ x use the correct introduction
+ x highlight additional introduction parts
+ x use introductions per experiment
  - share information (increase the bus factor). give zsophia:
      - the uberspace credentials
      - the study testing credentials
