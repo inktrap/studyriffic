@@ -16,12 +16,6 @@ ch.setFormatter(formatter)
 logger.addHandler(ch)
 
 
-class TestTimeout(unittest.TestCase):
-    def test_timeout(self):
-        #def timeout(seconds=10, error_message=os.strerror(errno.ETIME)):
-        self.assertFalse()
-
-
 class TestCheckRestriction(unittest.TestCase):
     def test_check_restriction(self):
         #def check_restriction(settings, restriction):

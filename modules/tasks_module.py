@@ -90,7 +90,10 @@ def check_task(settings, task):
     assert 'id' in task.keys()
     assert len(task.keys()) == 5
     assert task['category'] in settings['categories'], "The category %s has to be in settings" % task['category']
-    assert task['type'] in settings['types'], "The type %s has to be in settings" % task['type']
+    assert isinstance(task['type'], list)
+    for t in task['type']:
+        assert isinstance(t, str), "A type is a list of strings. But the type %s is not a string." % t
+        assert t in settings['types'], "The type %s has to be in settings." % t
     assert isinstance(task['situation'], str)
     assert isinstance(task['sentence'], str)
 
@@ -105,24 +108,15 @@ def check_select(settings, select_restrictions):
     # check if the numbers of selects add up to 1
     assert sum([select_restriction['argument'] for select_restriction in select_restrictions]) == 1
 
-    select_types = []
     select_categories = []
 
     for select_restriction in select_restrictions:
         #print(math.modf(settings['questions'] * select_restriction['argument'])[0])
         assert (math.modf(settings['questions'] * select_restriction['argument']))[0] == 0.0, "selection arguments can not produce items less than 1 (F.e.: You can not split a question in half)."
-        if 'type' in select_restriction.keys():
-            select_types.append(select_restriction)['type']
-        elif 'category' in select_restriction.keys():
-            select_categories.append(select_restriction['category'])
-        else:
-            raise ValueError("Neither type nor category key present")
+        assert 'category' in select_restriction.keys(), "Category key not present"
+        select_categories.append(select_restriction['category'])
 
     # check if select has been specified more than once with the same argument
-    #select_types = [select_restriction['type'] for select_restriction in select_restrictions]
-    assert len(set(select_types)) == len(select_types), "A type can only be used once in a select statement, otherwise it contradicts the previous statements."
-
-    # same for categories
     #select_categories = [select_restriction['category'] for select_restriction in select_restrictions]
     #logger.debug(select_categories)
     assert len(set(select_categories)) == len(select_categories), "A category can only be used once in a select statement, otherwise it contradicts the previous statements."
@@ -143,20 +137,31 @@ def apply_successor(sample, successor_restrictions):
                 continue
 
             if 'category' in successor_restriction.keys():
-                restricted = 'category'
+                # map and lambda: extract all the unique categories form the given range into a list
+                # index
+                    # the range includes the current item (index)
+                    # and on top of that the items that are allowed
+                    # and on top of that the item that *might* be not allowed
+                    # and it is +2 because slices give an interval like [x,y)
+                # then make a set out of it to remove duplicates
+                # create a list from the set
+                # if there are other categories present, the length will be greater 1
+                # if not, it fails
+                successors = list(set(map(lambda x: x['category'], sample[index:index + successor_restriction['argument'] + 2])))
+                # found a sequence that contradicts the requirements
+                if len(successors) == 1 and (successors[0] == successor_restriction['category']):
+                    return False
             elif 'type' in successor_restriction.keys():
-                restricted = 'type'
-
-            # extract all the unique types form the given range into a list
-            # the range includes the current item (index)
-            # and on top of that the items that are allowed
-            # and on top of that the item that *might* be not allowed
-            # and it is +2 because slices give an interval like [x,y)
-            #print(successor_restriction)
-            #print(list(map(lambda x: x['type'], sample[index:index + successor_restriction['argument'] + 2])))
-            successors = list(set(map(lambda x: x[restricted], sample[index:index + successor_restriction['argument'] + 2])))
-            if len(successors) == 1 and (successors[0] == successor_restriction[restricted]):
-                return False
+                successors = sample[index:index + successor_restriction['argument'] + 2]
+                contradicts = True
+                for succ in successors:
+                    # check the following tasks
+                    if successor_restriction['type'] not in succ['type']:
+                        # we found a sequence that does not contradict the requirements
+                        contradicts = False
+                        break
+                if contradicts is True:
+                    return False
     return True
 
 

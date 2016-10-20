@@ -113,7 +113,11 @@ class baseConfig():
             settings['study'] = study
             # settings['template_lookup'] = os.path.join(template_path, study)
         with open(study_tasks, 'r') as fh:
-            this_tasks = json.load(fh)
+            try:
+                this_tasks = json.load(fh)
+            except json.decoder.JSONDecodeError as e:
+                logger.error("There is an error in one of your tasks.json files: %s" % study_tasks)
+                raise e
         assert len(this_tasks) >= settings[
             'questions'], 'Study %s: There are not enough tasks (or number of questions is greater.)' % study
 
