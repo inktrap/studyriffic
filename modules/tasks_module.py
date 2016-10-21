@@ -11,13 +11,20 @@ import signal
 
 import logging
 logger = logging.getLogger('tasks_module')
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 formatter = logging.Formatter(
     '[%(asctime)s] p%(process)s {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s', '%m-%d %H:%M:%S')
+
 ch = logging.StreamHandler()
-ch.setLevel(logging.DEBUG)
+ch.setLevel(logging.INFO)
 ch.setFormatter(formatter)
 logger.addHandler(ch)
+
+fh = logging.FileHandler('tasks_module.log')
+fh.setLevel(logging.INFO)
+fh.setFormatter(formatter)
+logger.addHandler(fh)
+
 
 ''' this modules
  - checks the config for the study, semantically, datatypes, missing stuff
@@ -60,13 +67,13 @@ def check_restriction(settings, restriction):
     assert restriction['action'] in settings['actions'], "the action of the restriction is not in the settings file."
 
     if 'type' in restriction.keys():
-        assert isinstance(restriction['type'], str), "a type has to be a string."
+        assert isinstance(restriction['type'], str), "a type of a restriction has to be a string."
     elif 'category' in restriction.keys():
-        assert isinstance(restriction['category'], str), "a category has to be a string."
+        assert isinstance(restriction['category'], str), "a category of a restriction has to be a string."
     # print(type(restriction['argument']))
     assert (isinstance(restriction['argument'], int) or
             eq('all', restriction['argument']) or
-            isinstance(restriction['argument'], float)), "the argument has to be an int or a float or 'all'."
+            isinstance(restriction['argument'], float)), "the argument of a restriction has to be an int or a float or 'all'."
 
     if restriction['action'] == 'max_successors':
         assert isinstance(restriction['argument'], int)
@@ -74,7 +81,7 @@ def check_restriction(settings, restriction):
         assert restriction['argument'] >= 0
     elif restriction['action'] == 'select':
         assert isinstance(restriction['argument'], float)
-        assert 'category' in restriction.keys() or 'type' in restriction.keys()
+        assert 'category' in restriction.keys()
         assert 0.0 < restriction['argument'] < 1.0
     else:
         raise ValueError("Unknown restriction action %s" % restriction['action'])
@@ -103,16 +110,16 @@ def get_select_restrictions(restrictions):
     return list(filter(lambda x: x['action'] == 'select', restrictions))
 
 
-def check_select(settings, select_restrictions):
+def check_select(questions, select_restrictions):
     # semantic checks for select restrictions
     # check if the numbers of selects add up to 1
-    assert sum([select_restriction['argument'] for select_restriction in select_restrictions]) == 1
+    assert sum([select_restriction['argument'] for select_restriction in select_restrictions]) == 1, "Select restrictions have to sum up to exactly 1"
 
     select_categories = []
 
     for select_restriction in select_restrictions:
         #print(math.modf(settings['questions'] * select_restriction['argument'])[0])
-        assert (math.modf(settings['questions'] * select_restriction['argument']))[0] == 0.0, "selection arguments can not produce items less than 1 (F.e.: You can not split a question in half)."
+        assert (math.modf(questions * select_restriction['argument']))[0] == 0.0, "selection arguments can not produce items less than 1 (F.e.: You can not split a question in half)."
         assert 'category' in select_restriction.keys(), "Category key not present"
         select_categories.append(select_restriction['category'])
 
@@ -128,40 +135,61 @@ def apply_successor(sample, successor_restrictions):
     ''' apply the successors and return true or false if the sample is valid'''
     assert len(sample) > 0
     assert len(successor_restrictions) > 0
+    logger.debug("applying successors")
+    logger.debug(sample)
+    logger.debug(successor_restrictions)
     # apply
     for index, item in enumerate(sample):
         # check every restriction
         for successor_restriction in successor_restrictions:
             # if there are not enough items, their order is not important
-            if (index + successor_restriction['argument'] + 2) >= len(sample):
+            # not enough means:
+            #   the current item: index
+            #   the number of allowed items: argument
+            #   including the last one f.e. if argument = 3: we need [index, 1, 2, 3]
+            #   but continue for [index, 1, 2]
+            if (index + successor_restriction['argument'] + 1) > len(sample):
+                logger.debug("continuing")
                 continue
 
             if 'category' in successor_restriction.keys():
                 # map and lambda: extract all the unique categories form the given range into a list
                 # index
                     # the range includes the current item (index)
-                    # and on top of that the items that are allowed
-                    # and on top of that the item that *might* be not allowed
-                    # and it is +2 because slices give an interval like [x,y)
+                    # and on top of that the items that are allowed (let's say we allow three items)
+                    # [index, 1, 2, 3]
+                    # so the slice should take [index, 1, 2, 3], including 3.
                 # then make a set out of it to remove duplicates
                 # create a list from the set
                 # if there are other categories present, the length will be greater 1
                 # if not, it fails
-                successors = list(set(map(lambda x: x['category'], sample[index:index + successor_restriction['argument'] + 2])))
+                successors = list(set(map(lambda x: x['category'], sample[index:index + successor_restriction['argument'] + 1])))
                 # found a sequence that contradicts the requirements
+                logger.debug("by category")
+                logger.debug(successors)
                 if len(successors) == 1 and (successors[0] == successor_restriction['category']):
+                    logger.debug("false")
                     return False
             elif 'type' in successor_restriction.keys():
                 successors = sample[index:index + successor_restriction['argument'] + 2]
+                logger.debug("by type")
+                logger.debug(successors)
+                # we assume that the sequence contradicts the requirements
                 contradicts = True
                 for succ in successors:
                     # check the following tasks
                     if successor_restriction['type'] not in succ['type']:
                         # we found a sequence that does not contradict the requirements
+                        # we are happy and can stop checking this part
+                        logger.debug("false")
                         contradicts = False
                         break
+                logger.debug("the sequence contradicts the requirements")
+                # the sequence contradicts the requirements
                 if contradicts is True:
                     return False
+                # otherwise we keep looking
+    logger.debug("the sequence is alright")
     return True
 
 
@@ -200,7 +228,7 @@ def main(settings, tasks):
     # (in the tests I did i never waited longer than 0.11s even with very strict
     # restrictions and a small number of tasks)
     select_restrictions = get_select_restrictions(settings['restrictions'])
-    check_select(settings, select_restrictions)
+    check_select(settings['questions'], select_restrictions)
     random_sample = apply_select(settings, select_restrictions, tasks)
     successor_restrictions = list(filter(lambda x: x['action'] == 'max_successors', settings['restrictions']))
     if len(successor_restrictions) > 0:
@@ -213,6 +241,7 @@ def main(settings, tasks):
             if iterations > 100000:
                 random_sample = "Could not get a valid sample."
                 break
+        logger.info("Getting the tasks took %i iterations" % iterations)
     return random_sample
 
 
@@ -228,7 +257,7 @@ def check_config(settings, tasks):
     assert len(tasks) > 0
     for this_restriction in settings['restrictions']:
         check_restriction(settings, this_restriction)
-    check_select(settings, get_select_restrictions(settings['restrictions']))
+    check_select(settings['questions'], get_select_restrictions(settings['restrictions']))
 
     for task in tasks:
         check_task(settings, task)

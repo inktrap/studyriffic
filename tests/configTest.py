@@ -21,10 +21,10 @@ pp = pprint.PrettyPrinter(indent=4)
 class TestConfigMethods(unittest.TestCase):
 
     def test_init(self):
-        logger.info("Starting test")
+        # logger.info("Starting test")
         thisConfig = baseConfig()
         #pp.pprint(vars(thisConfig))
-        logger.info(thisConfig.cookie_secret)
+        # logger.info(thisConfig.cookie_secret)
         #logger.debug(thisConfig.project_root)
 
 

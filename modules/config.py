@@ -39,7 +39,7 @@ class baseConfig():
 
         client = MongoClient(mongodb_uri, serverSelectionTimeoutMS=1)
         db_test = client.server_info()
-        logger.debug(db_test)
+        #logger.debug(db_test)
 
         self.db = client[database]
         self.project_root = os.path.abspath(os.path.dirname(os.path.realpath(os.path.join(__file__, '..'))))
@@ -142,7 +142,7 @@ class baseConfig():
                 if this_study is False:
                     continue
                 studies[study] = this_study
-        logger.debug(studies.keys())
+        #logger.debug(studies.keys())
         assert len(studies.keys()) > 0, "No studies configured."
         return studies
 
