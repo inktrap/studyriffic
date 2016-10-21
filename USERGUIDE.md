@@ -50,7 +50,7 @@ A ``tasks.json`` file consists of a list of tasks. A single task looks like this
     "situation": "", /* this is the situation. if it is non-empty (that means anything else than "") it will be displayed first, see: situation-sentence-example. */ TODO
     "category": "", /* the whole task has to have a category. typical categories are filler and target */
     "sentence": "", /* this is the sentence that the participant is going to rate/judge */
-    "type": "", /* the whole task can have a type which acts as a fine-grained labeling that is not as broad as categories */
+    "type": "", /* the whole task can have types which act as a fine-grained labeling that is not as broad as categories */
     "id": /* lastly a task has to have a sequential numerical id that is unique for this tasks file */
 }
 ~~~
@@ -65,21 +65,21 @@ And a ``tasks.json`` file might look like this:
     "situation": "Owls can hunt if it is dark.",
     "category": "filler",
     "sentence": "It was surprising that the owl saw the mouse even if it was dark.",
-    "type": "hunt",
+    "type": ["hunt", "owl"],
     "id": 0
 }, {
     "situation": "Owls are very good hunters.",
     "category": "target",
     "sentence": "The owl caught the mouse and ate it.",
-    "type": "hunt",
+    "type": ["hunt", "owl"],
     "id": 1
 }
 ]
 ~~~
 
 So, we have two tasks, one is a filler and one a target and both are of the
-type ``hunt``. We also have two different situations and sentences. The ids are
-how they should be: unique, numerical and sequential.
+type ``hunt`` and ``owl``. We also have two different situations and sentences.
+The ids are how they should be: unique, numerical and sequential.
 
 ## A tasks file that works
 
@@ -89,73 +89,67 @@ requirements -- there simply might not be enough items in each category or
 for each type. So, this is like the previous file, only with more tasks.
 
 ~~~
-[
-{
+[{
     "situation": "Owls can hunt if it is dark.",
     "category": "filler",
     "sentence": "It was surprising that the owl saw the mouse even if it was dark.",
-    "type": "hunt",
+    "type": ["hunt"],
     "id": 0
 }, {
     "situation": "Owls are very good hunters.",
     "category": "target",
     "sentence": "The owl caught the mouse and ate it.",
-    "type": "hunt",
+    "type": ["hunt"],
     "id": 1
-},
-{
+}, {
     "situation": "Owls can eat a lot of mice.",
     "category": "filler",
     "sentence": "It was surprising that the owl did not eat the mouse.",
-    "type": "fact",
+    "type": ["fact"],
     "id": 2
 }, {
     "situation": "Owls are not very good listeners.",
     "category": "target",
     "sentence": "Jimmy called the owl but the owl did not listen.",
-    "type": "fact",
+    "type": ["fact"],
     "id": 3
-},
-{
+}, {
     "situation": "Owls are awesome.",
     "category": "filler",
     "sentence": "It was surprising that the owl saw the mouse even if it was dark.",
-    "type": "fact",
+    "type": ["fact"],
     "id": 4
 }, {
     "situation": "Owls have a lot of feathers.",
     "category": "target",
     "sentence": "The owl caught the mouse and ate it.",
-    "type": "hunt",
+    "type": ["hunt"],
     "id": 5
-},
-{
+}, {
     "situation": "Owls have a lot of humor.",
     "category": "filler",
     "sentence": "It was surprising that the owl saw the mouse even if it was dark.",
-    "type": "fact",
+    "type": ["fact"],
     "id": 6
 }, {
     "situation": "Jimmy petted an owl once.",
     "category": "target",
     "sentence": "The owl caught the mouse and ate it.",
-    "type": "jimmy",
+    "type": ["jimmy"],
     "id": 7
-},
-{
+}, {
     "situation": "The owl caught a mouse and brought it to Jimmy.",
     "category": "filler",
     "sentence": "It was surprising that the owl saw the mouse even if it was dark.",
-    "type": "jimmy",
+    "type": ["jimmy"],
     "id": 8
 }, {
     "situation": "Jimmy is the best friend of an owl.",
     "category": "target",
     "sentence": "The owl caught the mouse and ate it.",
-    "type": "jimmy",
+    "type": ["jimmy"],
     "id": 9
-}
-]
+}]
 ~~~
 
 Here we have ten tasks, two categories (``filler, target``) and three types

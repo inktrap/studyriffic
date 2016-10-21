@@ -30,11 +30,6 @@ Here is a quick overview of the framework I wrote. It features:
 # Valentin Todo
 
 
- - deploy
-    - create cronjob file from settings.json
-        - cronjob with mongoexport and timestamps, (so we get backups!)
-        - study data  is accessible from pw protected dir (htaccess htuser, data.perigen …)
-        - ``mongoexport --db test --collection traffic --out traffic.json``
  - test run for all studies to check time assumptions. deadline: friday
 
  - run 1b as a test (new deadline?)
@@ -76,6 +71,11 @@ Here is a quick overview of the framework I wrote. It features:
 # Done
 
 ~~~
+ x deploy
+    - create cronjob file from settings.json
+        - cronjob with mongoexport and timestamps, (so we get backups!)
+        - study data  is accessible from pw protected dir (htaccess htuser, data.perigen …)
+        - ``mongoexport --db test --collection traffic --out traffic.json``
  x password protect the index for testing
  x clean up uberspace (no mysql db needed, delete unnecessary data …)
  x rewrote tasks so they can have multiple types
