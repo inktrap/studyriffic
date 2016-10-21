@@ -64,26 +64,45 @@ class TestCheckSelect(unittest.TestCase):
 
 class TestApplySuccessor(unittest.TestCase):
     def setUp(self):
+        # restrictions by category
         self.successor_restrictions_category = [{"action":"max_successors", "category":"filler", "argument":3}]
+        # samples with categories
         self.sample_category_filler = [{"category": "filler"}] * 5
-        self.sample_category_filler_first = [{"category": "target"}] + [{"category": "filler"}] * 4
-        self.sample_category_filler_perfect = [{"category": "filler"}] * 3
+        self.sample_category_filler_first = [{"category": "target"}] + [{"category": "filler"}] * 3
+        self.sample_category_filler_first_fail = [{"category": "target"}] + [{"category": "filler"}] * 4
+        self.sample_category_filler_continue = [{"category": "filler"}] * 3
+
+        # restrictions by type
         self.successor_restrictions_type = [{"action":"max_successors", "type":"foobar", "argument":3}]
+        # samples with types
         self.sample_type_foobar = [{"type": ["foobar", "barfoo"]}] * 5
         self.sample_type_first = [{"type": ["barfoo"]}] + [{"type": ["foobar", "barfoo"]}] * 3
-        self.sample_type_perfect = [{"type": ["foobar", "barfoo"]}] * 3
+        self.sample_type_first_fail = [{"type": ["barfoo"]}] + [{"type": ["foobar", "barfoo"]}] * 4
+        self.sample_type_continue = [{"type": ["foobar", "barfoo"]}] * 3
 
-    def test_apply_successor(self):
-        logger.info("Testing category restriction check")
+    def test_apply_successor_category(self):
+        # tests: #def apply_successor(sample, successor_restrictions):
+        # logger.info("Testing category restriction check")
+        # will fail because there are too many fillers
         self.assertEqual(tasks_module.apply_successor(self.sample_category_filler, self.successor_restrictions_category), False)
-        self.assertEqual(tasks_module.apply_successor(self.sample_category_filler_first, self.successor_restrictions_category), False)
-        self.assertEqual(tasks_module.apply_successor(self.sample_category_filler_perfect, self.successor_restrictions_category), True)
-        logger.info("Testing type restriction check")
+        # will pass the first iteration and then fail because there are too many fillers
+        self.assertEqual(tasks_module.apply_successor(self.sample_category_filler_first_fail, self.successor_restrictions_category), False)
+        # will pass the first iteration and then continue
+        self.assertEqual(tasks_module.apply_successor(self.sample_category_filler_first, self.successor_restrictions_category), True)
+        # will continue
+        self.assertEqual(tasks_module.apply_successor(self.sample_category_filler_continue, self.successor_restrictions_category), True)
+
+    def test_apply_successor_type(self):
+        # tests: #def apply_successor(sample, successor_restrictions):
+        # logger.info("Testing type restriction check")
+        # will fail because there are too many items that include the type
         self.assertEqual(tasks_module.apply_successor(self.sample_type_foobar, self.successor_restrictions_type), False)
-        self.assertEqual(tasks_module.apply_successor(self.sample_type_perfect, self.successor_restrictions_type), True)
+        # will pass at first then fail because there are too many items that include the type
+        self.assertEqual(tasks_module.apply_successor(self.sample_type_first_fail, self.successor_restrictions_type), False)
+        # will pass the first and then continue
         self.assertEqual(tasks_module.apply_successor(self.sample_type_first, self.successor_restrictions_type), True)
-        ##def apply_successor(sample, successor_restrictions):
-        # self.assertFalse()
+        # will continue
+        self.assertEqual(tasks_module.apply_successor(self.sample_type_continue, self.successor_restrictions_type), True)
 
 
 class TestApplySelect(unittest.TestCase):
