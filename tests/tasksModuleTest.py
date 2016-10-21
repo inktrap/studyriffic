@@ -16,38 +16,53 @@ ch.setFormatter(formatter)
 logger.addHandler(ch)
 
 
-class TestCheckRestriction(unittest.TestCase):
+# check that tasks and restriction checks work
+# they forbid a lot of things so it is easier to just check that they
+# letting the good settings/tasks through
+class TestChecks(unittest.TestCase):
     def setUp(self):
-        self.settings = ""
-        self.restriction = ""
+        self.settings = {
+            "actions": ["select", "max_successors"],
+            "types":["some", "types", "and", "more"],
+            "categories":["filler", "target"]
+        }
+        # these should all work
+        self.task_filler = {"id": 0, "sentence": "Foobar", "situation": "Barfoo", "type": ["some", "types"], "category": "filler"}
+        self.task_target = {"id": 0, "sentence": "Foobar", "situation": "Barfoo", "type": ["some", "types"], "category": "target"}
+        self.task_no_situation = {"id": 0, "sentence": "Foobar", "situation": "", "type": ["some", "types"], "category": "filler"}
+        self.task_no_type = {"id": 0, "sentence": "Foobar", "situation": "Barfoo", "type": [], "category": "filler"}
+
+        # syntactically well formed restrictions
+        self.restriction_successor_filler = {"action":"max_successors", "category":"filler", "argument":4}
+        self.restriction_successor_target = {"action":"max_successors", "category":"target", "argument":4}
+        self.restriction_successor_more = {"action":"max_successors", "type":"some", "argument":4}
+        self.restriction_successor_some = {"action":"max_successors", "type":"more", "argument":4}
+        self.restriction_successor_error = {"action":"max_successors", "type":"and", "argument":4}
+        self.restriction_select_filler = {"action":"select", "category":"filler", "argument":0.5}
+        self.restriction_select_target = {"action":"select", "category":"target", "argument":0.5}
 
     def test_check_restriction(self):
         #tests: def check_restriction(settings, restriction):
-        with self.assertRaises(AssertionError):
-            tasks_module.check_restriction(self.settings, self.restriction)
-        with self.assertRaises(AssertionError):
-            tasks_module.check_restriction(self.settings, self.restriction)
-        #self.assertFalse()
-        #pass
-
-
-class TestCheckTask(unittest.TestCase):
-    def setUp(self):
-        self.settings = ""
-        self.task = ""
+        self.assertEqual(tasks_module.check_restriction(self.settings, self.restriction_select_filler), True)
+        self.assertEqual(tasks_module.check_restriction(self.settings, self.restriction_select_target), True)
+        self.assertEqual(tasks_module.check_restriction(self.settings, self.restriction_successor_filler), True)
+        self.assertEqual(tasks_module.check_restriction(self.settings, self.restriction_successor_target), True)
+        self.assertEqual(tasks_module.check_restriction(self.settings, self.restriction_successor_more), True)
+        self.assertEqual(tasks_module.check_restriction(self.settings, self.restriction_successor_some), True)
+        self.assertEqual(tasks_module.check_restriction(self.settings, self.restriction_successor_error), True)
 
     def test_check_task(self):
         #tests: def check_task(settings, task):
-        with self.assertRaises(AssertionError):
-            tasks_module.check_task(self.settings, self.task)
-        with self.assertRaises(AssertionError):
-            tasks_module.check_task(self.settings, self.task)
+        self.assertEqual(tasks_module.check_task(self.settings, self.task_filler), True)
+        self.assertEqual(tasks_module.check_task(self.settings, self.task_target), True)
+        self.assertEqual(tasks_module.check_task(self.settings, self.task_no_situation), True)
+        self.assertEqual(tasks_module.check_task(self.settings, self.task_no_type), True)
 
 
 class TestGetSelectRestrictions(unittest.TestCase):
     def setUp(self):
         self.select_pass = [{"action":"select", "category":"filler", "argument":0.5}, {"action":"select", "category":"target", "argument":0.5}]
-        self.select_additional = [{"action":"max_successor", "type":"foobar", "argument":4}, {"action":"select", "category":"filler", "argument":0.5}, {"action":"select", "category":"target", "argument":0.5}]
+        self.select_additional = [{"action":"max_successors", "type":"foobar", "argument":4}, {"action":"select", "category":"filler", "argument":0.5}, {"action":"select", "category":"target", "argument":0.5}]
 
     def test_get_select_restrictions(self):
         self.assertEqual(tasks_module.get_select_restrictions(self.select_pass), self.select_pass)
@@ -55,6 +70,7 @@ class TestGetSelectRestrictions(unittest.TestCase):
 
 
 class TestCheckSelect(unittest.TestCase):
+    ''' these are semantic checks for select restrictions'''
     def setUp(self):
         self.select_pass = [{"action":"select", "category":"filler", "argument":0.5}, {"action":"select", "category":"target", "argument":0.5}]
         self.select_lesser = [{"action":"select", "category":"filler", "argument":-0.5}]

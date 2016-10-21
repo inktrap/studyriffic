@@ -29,33 +29,8 @@ logger.addHandler(fh)
 ''' this modules
  - checks the config for the study, semantically, datatypes, missing stuff
  - selects the tasks for ONE study, according to the restrictions
- - checks that the order fits the requirements and will fail with a
-   TimeoutError if the requirements can't be met.
+ - checks that the order fits the requirements and will fail if a lot of tries are not enough
 '''
-
-
-class TimeoutError(Exception):
-    pass
-
-
-def timeout(seconds=10, error_message=os.strerror(errno.ETIME)):
-    # source: <http://stackoverflow.com/a/2282656>
-    def decorator(func):
-        def _handle_timeout(signum, frame):
-            raise TimeoutError(error_message)
-
-        def wrapper(*args, **kwargs):
-            signal.signal(signal.SIGALRM, _handle_timeout)
-            signal.alarm(seconds)
-            try:
-                result = func(*args, **kwargs)
-            finally:
-                signal.alarm(0)
-            return result
-
-        return wraps(func)(wrapper)
-
-    return decorator
 
 
 def check_restriction(settings, restriction):
@@ -72,8 +47,7 @@ def check_restriction(settings, restriction):
         assert isinstance(restriction['category'], str), "a category of a restriction has to be a string."
     # print(type(restriction['argument']))
     assert (isinstance(restriction['argument'], int) or
-            eq('all', restriction['argument']) or
-            isinstance(restriction['argument'], float)), "the argument of a restriction has to be an int or a float or 'all'."
+            isinstance(restriction['argument'], float)), "the argument of a restriction has to be an int or a float"
 
     if restriction['action'] == 'max_successors':
         assert isinstance(restriction['argument'], int)
@@ -85,6 +59,7 @@ def check_restriction(settings, restriction):
         assert 0.0 < restriction['argument'] < 1.0
     else:
         raise ValueError("Unknown restriction action %s" % restriction['action'])
+    return True
 
 
 def check_task(settings, task):
@@ -103,6 +78,7 @@ def check_task(settings, task):
         assert t in settings['types'], "The type %s has to be in settings." % t
     assert isinstance(task['situation'], str)
     assert isinstance(task['sentence'], str)
+    return True
 
 
 def get_select_restrictions(restrictions):
@@ -220,15 +196,9 @@ def apply_select(questions, select_restrictions, tasks):
     return result
 
 
-# timeout gives: ValueError: signal only works in main thread
-# because cherrypy in deployment uses multiple threads
-#@timeout(5)
 def main(settings, tasks):
     check_config(settings, tasks)
     # returns a random sample
-    # apply the strictions and just to be save, do so with a timeout
-    # (in the tests I did i never waited longer than 0.11s even with very strict
-    # restrictions and a small number of tasks)
     select_restrictions = get_select_restrictions(settings['restrictions'])
     check_select(settings['questions'], select_restrictions)
     random_sample = apply_select(settings['questions'], select_restrictions, tasks)
