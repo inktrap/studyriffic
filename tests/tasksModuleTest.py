@@ -111,6 +111,7 @@ class TestApplySuccessor(unittest.TestCase):
         # samples with categories
         self.sample_category_filler = [{"category": "filler"}] * 5
         self.sample_category_filler_first = [{"category": "target"}] + [{"category": "filler"}] * 3
+        self.sample_category_mixed = [{"category": "target"}] * 2 + [{"category": "filler"}] * 3 + [{"category": "target"}] * 2
         self.sample_category_filler_first_fail = [{"category": "target"}] + [{"category": "filler"}] * 4
         self.sample_category_filler_continue = [{"category": "filler"}] * 3
 
@@ -121,6 +122,7 @@ class TestApplySuccessor(unittest.TestCase):
         self.sample_type_first = [{"type": ["barfoo"]}] + [{"type": ["foobar", "barfoo"]}] * 3
         self.sample_type_first_fail = [{"type": ["barfoo"]}] + [{"type": ["foobar", "barfoo"]}] * 4
         self.sample_type_continue = [{"type": ["foobar", "barfoo"]}] * 3
+        self.sample_type_mixed = [{"type": ["barfoo"]}] * 2 + [{"type": ["foobar", "barfoo"]}] * 3 + [{"type": ["barfoo"]}] * 2
 
     def test_apply_successor_category(self):
         # tests: #def apply_successor(sample, successor_restrictions):
@@ -133,6 +135,8 @@ class TestApplySuccessor(unittest.TestCase):
         self.assertEqual(tasks_module.apply_successor(self.sample_category_filler_first, self.successor_restrictions_category), True)
         # will continue
         self.assertEqual(tasks_module.apply_successor(self.sample_category_filler_continue, self.successor_restrictions_category), True)
+        # will pass
+        self.assertEqual(tasks_module.apply_successor(self.sample_category_mixed, self.successor_restrictions_category), True)
 
     def test_apply_successor_type(self):
         # tests: #def apply_successor(sample, successor_restrictions):
