@@ -121,6 +121,8 @@ def check_select(questions, select_restrictions):
         #print(math.modf(settings['questions'] * select_restriction['argument'])[0])
         assert (math.modf(questions * select_restriction['argument']))[0] == 0.0, "selection arguments can not produce items less than 1 (F.e.: You can not split a question in half)."
         assert 'category' in select_restriction.keys(), "Category key not present"
+        assert select_restriction['argument'] > 0, "The argument of a select restriction must be greater 0 (it has to select something)"
+        assert select_restriction['argument'] <= 1, "The argument of a select restriction must be <= 1 (you can't select more than 100%)"
         select_categories.append(select_restriction['category'])
 
     # check if select has been specified more than once with the same argument
@@ -193,7 +195,7 @@ def apply_successor(sample, successor_restrictions):
     return True
 
 
-def apply_select(settings, select_restrictions, tasks):
+def apply_select(questions, select_restrictions, tasks):
     result = []
     # apply
     for select_restriction in select_restrictions:
@@ -203,7 +205,7 @@ def apply_select(settings, select_restrictions, tasks):
         category_tasks = list(filter(lambda x: x['category'] == select_restriction['category'], tasks))
         assert len(category_tasks) > 0, "There are no tasks for the category %s" % select_restriction['category']
         # get number of entities the current restriction takes
-        take_restrictions = settings['questions'] * select_restriction['argument']
+        take_restrictions = questions * select_restriction['argument']
         # print(take_restrictions)
         # print(len(category_tasks))
         assert take_restrictions <= len(category_tasks), "You want to take more questions than there are questions"
@@ -229,14 +231,14 @@ def main(settings, tasks):
     # restrictions and a small number of tasks)
     select_restrictions = get_select_restrictions(settings['restrictions'])
     check_select(settings['questions'], select_restrictions)
-    random_sample = apply_select(settings, select_restrictions, tasks)
+    random_sample = apply_select(settings['questions'], select_restrictions, tasks)
     successor_restrictions = list(filter(lambda x: x['action'] == 'max_successors', settings['restrictions']))
     if len(successor_restrictions) > 0:
         iterations = 0
         is_restricted = apply_successor(random_sample, successor_restrictions)
         while (is_restricted is False):
             iterations += 1
-            random_sample = apply_select(settings, select_restrictions, tasks)
+            random_sample = apply_select(settings['questions'], select_restrictions, tasks)
             is_restricted = apply_successor(random_sample, successor_restrictions)
             if iterations > 100000:
                 random_sample = "Could not get a valid sample."

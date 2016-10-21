@@ -17,32 +17,49 @@ logger.addHandler(ch)
 
 
 class TestCheckRestriction(unittest.TestCase):
+    def setUp(self):
+        self.settings = ""
+        self.restriction = ""
+
     def test_check_restriction(self):
-        #def check_restriction(settings, restriction):
+        #tests: def check_restriction(settings, restriction):
+        with self.assertRaises(AssertionError):
+            tasks_module.check_restriction(self.settings, self.restriction)
+        with self.assertRaises(AssertionError):
+            tasks_module.check_restriction(self.settings, self.restriction)
         #self.assertFalse()
-        pass
+        #pass
 
 
 class TestCheckTask(unittest.TestCase):
+    def setUp(self):
+        self.settings = ""
+        self.task = ""
+
     def test_check_task(self):
-        #def check_task(settings, task):
-        # self.assertFalse()
-        pass
+        #tests: def check_task(settings, task):
+        with self.assertRaises(AssertionError):
+            tasks_module.check_task(self.settings, self.task)
+        with self.assertRaises(AssertionError):
+            tasks_module.check_task(self.settings, self.task)
 
 
 class TestGetSelectRestrictions(unittest.TestCase):
     def setUp(self):
-        self.select_perfect = [{"action":"select", "category":"filler", "argument":0.5}, {"action":"select", "category":"target", "argument":0.5}]
+        self.select_pass = [{"action":"select", "category":"filler", "argument":0.5}, {"action":"select", "category":"target", "argument":0.5}]
         self.select_additional = [{"action":"max_successor", "type":"foobar", "argument":4}, {"action":"select", "category":"filler", "argument":0.5}, {"action":"select", "category":"target", "argument":0.5}]
 
     def test_get_select_restrictions(self):
-        self.assertEqual(tasks_module.get_select_restrictions(self.select_perfect), self.select_perfect)
-        self.assertEqual(tasks_module.get_select_restrictions(self.select_additional), self.select_perfect)
+        self.assertEqual(tasks_module.get_select_restrictions(self.select_pass), self.select_pass)
+        self.assertEqual(tasks_module.get_select_restrictions(self.select_additional), self.select_pass)
 
 
 class TestCheckSelect(unittest.TestCase):
     def setUp(self):
-        self.select_perfect = [{"action":"select", "category":"filler", "argument":0.5}, {"action":"select", "category":"target", "argument":0.5}]
+        self.select_pass = [{"action":"select", "category":"filler", "argument":0.5}, {"action":"select", "category":"target", "argument":0.5}]
+        self.select_lesser = [{"action":"select", "category":"filler", "argument":-0.5}]
+        self.select_zero = [{"action":"select", "category":"filler", "argument":0.0}]
+        self.select_greater = [{"action":"select", "category":"filler", "argument":1.5}]
         self.select_duplicate = [{"action":"select", "category":"filler", "argument":0.3}, {"action":"select", "category":"filler", "argument":0.2}, {"action":"select", "category":"target", "argument":0.5}]
         self.select_percentage_less = [{"action":"select", "category":"filler", "argument":0.3}, {"action":"select", "category":"target", "argument":0.5}]
         self.select_percentage_more = [{"action":"select", "category":"filler", "argument":0.8}, {"action":"select", "category":"target", "argument":0.5}]
@@ -57,9 +74,18 @@ class TestCheckSelect(unittest.TestCase):
         # selections can not contain contradicting statements
         with self.assertRaises(AssertionError):
             tasks_module.check_select(20, self.select_duplicate)
+        # selections must be greater then 0
+        with self.assertRaises(AssertionError):
+            tasks_module.check_select(20, self.select_zero)
+        # selections must be greater then 0
+        with self.assertRaises(AssertionError):
+            tasks_module.check_select(20, self.select_lesser)
+        # selections must be smaller then 1
+        with self.assertRaises(AssertionError):
+            tasks_module.check_select(20, self.select_greater)
         # selections can't divide a question
         with self.assertRaises(AssertionError):
-            tasks_module.check_select(1, self.select_perfect)
+            tasks_module.check_select(1, self.select_pass)
 
 
 class TestApplySuccessor(unittest.TestCase):
@@ -106,15 +132,54 @@ class TestApplySuccessor(unittest.TestCase):
 
 
 class TestApplySelect(unittest.TestCase):
+    def setUp(self):
+        self.select_50_50 = [{"action":"select", "category":"filler", "argument":0.5}, {"action":"select", "category":"target", "argument":0.5}]
+        self.select_80_20 = [{"action":"select", "category":"filler", "argument":0.8}, {"action":"select", "category":"target", "argument":0.2}]
+        self.select_20_80 = [{"action":"select", "category":"filler", "argument":0.2}, {"action":"select", "category":"target", "argument":0.8}]
+        self.select_100 = [{"action":"select", "category":"filler", "argument":1}]
+        self.select_category_fail = [{"action":"select", "category":"filler", "argument":0.2}, {"action":"select", "category":"foobar", "argument":0.8}]
+        self.tasks = [{"category": "filler"}] * 50 + [{"category": "target"}] * 50
+        self.questions_fail = len(self.tasks) + 1
+        self.questions_pass = 10
+
     def test_apply_select(self):
-        pass
-        #def apply_select(settings, select_restrictions, tasks):
-        # self.assertFalse()
+        # tests: def apply_select(questions, select_restrictions, tasks):
+        tasks_module.apply_select(self.questions_pass, self.select_50_50, self.tasks)
+        with self.assertRaises(AssertionError):
+            tasks_module.apply_select(self.questions_pass, self.select_category_fail, self.tasks)
+        with self.assertRaises(AssertionError):
+            tasks_module.apply_select(self.questions_fail, self.select_50_50, self.tasks)
 
+        # subsequent calls should select different results:
+        #logger.debug(tasks_module.apply_select(self.questions_pass, self.select_50_50, self.tasks))
+        #logger.debug(tasks_module.apply_select(self.questions_pass, self.select_50_50, self.tasks))
 
-class TestCheckConfig(unittest.TestCase):
-    def test_check_config(self):
-        pass
-        #check_config(settings, tasks):
-        # self.assertFalse()
+        # it is improbable that two runs produce the exact same sequence
+        self.assertNotEqual(tasks_module.apply_select(self.questions_pass, self.select_50_50, self.tasks),
+                            tasks_module.apply_select(self.questions_pass, self.select_50_50, self.tasks))
+
+        self.assertEqual(len(tasks_module.apply_select(self.questions_pass, self.select_50_50, self.tasks)), self.questions_pass)
+        self.assertEqual(len(tasks_module.apply_select(self.questions_pass, self.select_80_20, self.tasks)), self.questions_pass)
+        self.assertEqual(len(tasks_module.apply_select(self.questions_pass, self.select_20_80, self.tasks)), self.questions_pass)
+        self.assertEqual(len(tasks_module.apply_select(self.questions_pass, self.select_100, self.tasks)), self.questions_pass)
+        #logger.debug(tasks_module.apply_select(self.questions_pass, self.select_100, self.tasks))
+        #logger.debug(tasks_module.apply_select(self.questions_pass, self.select_80_20, self.tasks))
+        #logger.debug(tasks_module.apply_select(self.questions_pass, self.select_80_20, self.tasks))
+
+        # lets count the result items for the 20_80 test
+        result = tasks_module.apply_select(self.questions_pass, self.select_20_80, self.tasks)
+        count_filler = 0
+        count_target = 0
+        for r in result:
+            if r['category'] == 'filler':
+                count_filler += 1
+            elif r['category'] == 'target':
+                count_target += 1
+        # the checks make sure that a category can only occur once, so it has to be the first
+        filler = [r for r in self.select_20_80 if r['category'] == 'filler'][0]
+        target = [r for r in self.select_20_80 if r['category'] == 'target'][0]
+        # now the counts have to match what's in that particular select restriction
+        self.assertEqual(count_filler, int(filler['argument'] * self.questions_pass))
+        self.assertEqual(count_target, int(target['argument'] * self.questions_pass))
+
 
