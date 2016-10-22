@@ -231,7 +231,8 @@ def check_config(settings, tasks):
         check_restriction(settings, this_restriction)
     check_select(settings['questions'], get_select_restrictions(settings['restrictions']))
 
-    for task in tasks:
+    for index, task in enumerate(tasks):
+        assert index == task['id'], "A task needs an explicit numerical ID, but %s is not %i" % (str(task['id']), index)
         check_task(settings, task)
     return True
 

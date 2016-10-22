@@ -32,6 +32,44 @@ Json does not allow comments, so you probably want to download the complete
 [settings.json]() file without comments.
 
 ~~~
+{
+    "active" : true, /* if this setting is true, his study is active */
+    "question":"Do you think the following sentence is “Owly” or “Not Owly” in the above situation?", /* this is the question you would like to ask the participant */
+    "situation":"Please consider the following situation:", /* This is an (optional) situation (or context) you would like to give. If it is empty, the task is displayed differently */
+    "questions": 4, /* the numbers of questions. Also depends on the criteria for select restrictions (or vice-versa, depends on you) */
+    "min_scale": 1, /* minimal value of the scale (is included) */
+    "max_scale": 5, /* maximal value of the scale (is included) */
+    "min_scale_desc" : "Definitely Not Owly", /* description of the minimal value */
+    "max_scale_desc" : "Definitely Owly", /* description of the maximal value */
+    "university": "Great Owl University", /* the university or affiliation that is responsible. Will be displayed in the footer */
+    "investigator": "Dr. Owly Mc Owlface", /* the name of the person responsible for the study */
+    "contact" : "Owly.Owlface@owl-university.owl", /* the e-mail of the person responsible for the study */
+    "time" : 5, /* the time that you think is needed for the study. Used in the consent form */
+    "link" : "https://example.org", /* the link that will appear in the end were participants are payed */
+    "actions": ["select", "max_successors"], /* a list of possible values for actions. If you are not adding new actions, you don't have to change this */
+    "types":["hunt", "fact", "jimmy"], /* a complete list of the types that appear in your tasks file */
+    "categories":["filler", "target"], /* a complete list of categories that appear in your tasks file */
+    "templates": ["first.tpl"], /* the custom templates you are going to use. By default this would be the template that shows the introductions and gives examples */
+    "restrictions":[ /* this is a list of restrictions */
+        {"action":"select", "category":"filler", "argument":0.5}, /* a select restriction that selects 50% of the tasks to be of the type "filler" */
+        {"action":"select", "category":"target", "argument":0.5}, /* a select restriction that selects 50% of the tasks to be of the type "target" */
+                                                                  /* PLEASE NOTE:
+                                                                     all select restrictions have to sum up to exactly 1 (100%) 
+                                                                     also you can only select tasks by category (that is what categories are for
+                                                                   */
+        {"action":"max_successors", "category":"filler", "argument":3}, /* a sequence of three tasks of the category filler is allowed, more is forbidden */
+        {"action":"max_successors", "category":"target", "argument":3}, /* a sequence of three tasks of the category target is allowed, more is forbidden */
+        {"action":"max_successors", "type":"hunt", "argument":2},  /* a sequence of two tasks with the type hunt is allowed, more is forbidden */
+        {"action":"max_successors", "type":"jimmy", "argument":2}  /* a sequence of two tasks of the type jimmy is allowed, more is forbidden */
+                                                                  /* PLEASE NOTE:
+                                                                     if a sequence that is not allowed is recognized the sample will be drawn again
+                                                                     that means that if you have a lot of restrictions and a very small list of tasks
+                                                                     it might be impossible or close to impossible to find a sample that fits your requirements
+                                                                     (and we can't realisticly find a solution).
+                                                                     In that case the user will be confronted with an error.
+                                                                   */
+    ]
+}
 ~~~
 
 
@@ -40,7 +78,7 @@ Json does not allow comments, so you probably want to download the complete
 Your tasks are living in a file called ``tasks.json`` and it also has a pretty
 strict format. Some values here affect ``settings.json``, so they have to fit
 together. Again, json does not allow comments, so download the whole
-[tasks.json]() file without comments.
+[tasks.json]() file (which is introduced at the bottom) without comments.
 
 ## A single task
 
@@ -156,6 +194,10 @@ Here we have ten tasks, two categories (``filler, target``) and three types
 (``jimmy, hunt, fact``). This should be enough for a small study with
 four questions.
 
+So set the ``active`` key in ``ROOT/studies/owl/settings.xml`` to ``true``.
+Then run ``./main.py``. The debugging output tells you to go to
+``http://127.0.0.1:63536/studies/owl/`` to participate in the owl study.
+
 
 ## Inline HTML and newlines
 
@@ -204,9 +246,61 @@ intentions right. So there are two broad categories of errors:
  - **structural errors:** a file or a key or a value is missing -- it does not
  matter what -- something is missing or has not the structure that I expect.
 
+If you think another error needs more explanations or is not justified, please
+open a [GitHub issue]().
+
 
 ## Logical
 
+There are a lot more assertion, but I think I should explain these:
+
+### AssertionError: "Select restrictions have to sum up to exactly 1"
+
+Selection restrictions have to sum up to one. Otherwise I don't know what
+I should select for you to get 100% of the tasks.
+
+### AssertionError: "selection arguments can not produce items less than 1 (F.e.: You can not split a question in half)."
+
+This happens if your selection restrictions would split a question. The number
+of tasks you want to use has to be divideable without a remainder by all the
+select restrictions. Otherwise I would have to guess or to round and that is
+not something I want to do.
+
+### AssertionError: "You want to take more questions than there are questions"
+
+The number of tasks you specified is too high. So either you should get more
+tasks or reduce the number of tasks you want to display (this happens via the
+``questions`` variable in your ``settings.json`` file.
+
+### AssertionError: "A task needs an explicit numerical ID, but %s is not %i"
+
+Honestly, giving each task an index it would had anyway seems like a burdon.
+But the thing is: I don't want to rely on implicit ids. There are two reasons for that:
+
+ - The tasks file might change: Maybe someone decides to update the tasks file
+ and changes the order? That way every index would shift.
+
+ - The second reason is that explicit indexes allow you to know immediately
+ which task and which results are related.
+
+And: you always can use the small script I put in the ``ROOT/studies``
+directory, which does exactly that: ``add_sequential_id.py``.
+It expects a list of dictionaries in json format (like a tasks list) and then
+inserts a key with a numerical id into each dictionary. Voilá problem solved,
+just check that everything worked as intended and move it into your studies folder
+and rename it to ``tasks.json``.
+
 ## Structural
+
+### AssertionError: "Study %s needs the templates %s in %s"
+
+You have to create a directory named like your study in the ``ROOT/views`` and
+have to place the template file there. Which templates you have to place there
+is defined in your ``settings.json`` file, for example for the owl study that
+would be ``first.tpl``:
+
+~~~
+    "templates": ["first.tpl"],
+~~~
 
 
