@@ -20,10 +20,10 @@ ch.setLevel(logging.INFO)
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
-fh = logging.FileHandler('tasks_module.log')
-fh.setLevel(logging.INFO)
-fh.setFormatter(formatter)
-logger.addHandler(fh)
+#fh = logging.FileHandler('tasks_module.log')
+#fh.setLevel(logging.INFO)
+#fh.setFormatter(formatter)
+#logger.addHandler(fh)
 
 
 ''' this modules

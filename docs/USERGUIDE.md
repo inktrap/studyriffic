@@ -3,9 +3,11 @@
 “Or: I am getting ``AssertionError``s, how does this thing work?”
 
 Studyriffic is a simple tool to create and host multiple studies, especially on
-[prolific](). This is the [user guide](), but [developers]() should read it as well,
-because I am going to explain the ideas and concepts while I create our first
-study. Let's start!
+[prolific](). This is the [user guide]() (that means: you want to setup your
+own instance of studyriffic), but [developers]() and [admins]() should read it
+as well, because I am going to explain the ideas and concepts while I create
+our first study and then we are going to collect the results. If anything goes
+wrong during the setup, have a look at the errors. Let's start!
 
 
 # Create a new study
@@ -20,7 +22,7 @@ The first thing you have to do, is to create a folder, like this: ``ROOT/studies
 This folder gives your study it's name and will contain the settings and tasks files.
 
 
-# Settings
+## Settings
 
 Our settings are living in a file called ``settings.json`` in the folder we just created.
 
@@ -73,14 +75,14 @@ Json does not allow comments, so you probably want to download the complete
 ~~~
 
 
-# Tasks
+## Tasks
 
 Your tasks are living in a file called ``tasks.json`` and it also has a pretty
 strict format. Some values here affect ``settings.json``, so they have to fit
 together. Again, json does not allow comments, so download the whole
 [tasks.json]() file (which is introduced at the bottom) without comments.
 
-## A single task
+### A single task
 
 A ``tasks.json`` file consists of a list of tasks. A single task looks like this:
 ~~~
@@ -93,7 +95,7 @@ A ``tasks.json`` file consists of a list of tasks. A single task looks like this
 }
 ~~~
 
-## An example tasks file
+### An example tasks file
 
 And a ``tasks.json`` file might look like this:
 
@@ -119,7 +121,7 @@ So, we have two tasks, one is a filler and one a target and both are of the
 type ``hunt`` and ``owl``. We also have two different situations and sentences.
 The ids are how they should be: unique, numerical and sequential.
 
-## A tasks file that works
+### A tasks file that works
 
 Typicly you have a lot of questions and this is pretty important, otherwise the
 task selection algorithm might not be able to produce results according to your
@@ -188,7 +190,9 @@ for each type. So, this is like the previous file, only with more tasks.
     "type": ["jimmy"],
     "id": 9
 }]
+
 ~~~
+
 
 Here we have ten tasks, two categories (``filler, target``) and three types
 (``jimmy, hunt, fact``). This should be enough for a small study with
@@ -199,7 +203,7 @@ Then run ``./main.py``. The debugging output tells you to go to
 ``http://127.0.0.1:63536/studies/owl/`` to participate in the owl study.
 
 
-## Inline HTML and newlines
+### Inline HTML and newlines
 
 The value of a ``"sentence"`` and ``"situation"``-key might contain a newline.
 As per the JSON-standard, newlines have to be written as `\n`. The newline will
@@ -219,13 +223,21 @@ token. On the other hand: the prolifc id is stored in the cookie, which has
 a signature.)
 
 
-# Views
+## Views
 
  - if you want to use a custom template, create a directory that is named like
  your study in the views directory. Then put the template file you want to use
- in it. F.e.: to use a custom ``first.tpl`` in our owls-study, create
- we would have to create ``ROOT/views/owls/first.tpl``. But if you forget it,
- don't worry, Studyriffic will remind you with an ``AssertionError``.
+ in it. F.e.: to use a custom ``first.tpl`` in our owls-study, create we would
+ have to create ``ROOT/views/owls/first.tpl``. But if you forget it, don't
+ worry, Studyriffic will remind you with an ``AssertionError`` (see structural
+ errors below).
+
+
+# Results
+
+I am going to explain the format of the results now and I'll show you how you
+can process them with R.
+
 
 # Errors
 
@@ -252,7 +264,8 @@ open a [GitHub issue]().
 
 ## Logical
 
-There are a lot more assertion, but I think I should explain these:
+There are a lot more assertions, but I think I should explain at least the
+following ones.
 
 ### AssertionError: "Select restrictions have to sum up to exactly 1"
 
