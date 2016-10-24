@@ -72,12 +72,16 @@ def check_task(settings, task):
     assert 'id' in task.keys()
     assert len(task.keys()) == 5
     assert task['category'] in settings['categories'], "The category %s has to be in settings" % task['category']
+    assert len(task['category']) > 0, "A category can not be empty"
     assert isinstance(task['type'], list)
     for t in task['type']:
         assert isinstance(t, str), "A type is a list of strings. But the type %s is not a string." % t
         assert t in settings['types'], "The type %s has to be in settings." % t
+        assert len(t) > 0, "A type, if given, can not be empty. (Id: %i)" % task['id']
     assert isinstance(task['situation'], str)
     assert isinstance(task['sentence'], str)
+    assert isinstance(task['id'], int)
+    assert len(task['sentence']) > 0, "A sentence can not be empty. (Id: %i)" % task['id']
     return True
 
 

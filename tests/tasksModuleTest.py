@@ -31,6 +31,9 @@ class TestChecks(unittest.TestCase):
         self.task_target = {"id": 0, "sentence": "Foobar", "situation": "Barfoo", "type": ["some", "types"], "category": "target"}
         self.task_no_situation = {"id": 0, "sentence": "Foobar", "situation": "", "type": ["some", "types"], "category": "filler"}
         self.task_no_type = {"id": 0, "sentence": "Foobar", "situation": "Barfoo", "type": [], "category": "filler"}
+        self.task_no_sentence = {"id": 0, "sentence": "", "situation": "Barfoo", "type": [], "category": "filler"}
+        self.task_no_id = {"id": "", "sentence": "", "situation": "Barfoo", "type": [], "category": "filler"}
+        self.task_no_category = {"id": 0, "sentence": "Foobar", "situation": "Barfoo", "type": [], "category": ""}
 
         # syntactically well formed restrictions
         self.restriction_successor_filler = {"action":"max_successors", "category":"filler", "argument":4}
@@ -57,6 +60,12 @@ class TestChecks(unittest.TestCase):
         self.assertEqual(tasks_module.check_task(self.settings, self.task_target), True)
         self.assertEqual(tasks_module.check_task(self.settings, self.task_no_situation), True)
         self.assertEqual(tasks_module.check_task(self.settings, self.task_no_type), True)
+        with self.assertRaises(AssertionError):
+            tasks_module.check_task(self.settings, self.task_no_id)
+        with self.assertRaises(AssertionError):
+            tasks_module.check_task(self.settings, self.task_no_category)
+        with self.assertRaises(AssertionError):
+            tasks_module.check_task(self.settings, self.task_no_sentence)
 
 
 class TestGetSelectRestrictions(unittest.TestCase):

@@ -29,8 +29,18 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Valentin Todo
 
+ - major
+    - increase task number (after other fixes, test timing again)
+    - IE problem (either fix it or forbid IE!)
+ - change introduction texts (see: TESTREPORT 2)
+    - shorter
+    - remove important! exclamation mark
+    - scale description in quotes (or different styling?)
+    - remove numbers or change scale and include numbers
+ - tasks
+    - typo in Alex and Bill: "both of their ratings"
+    - remove latex style quotes
 
- - test run for all studies to check time assumptions. deadline: friday
 
  - run 1b as a test (new deadline?)
  - run main experiment
@@ -71,6 +81,10 @@ Here is a quick overview of the framework I wrote. It features:
 # Done
 
 ~~~
+ x test run for all studies to check timing assumptions
+ x fix empty sentences
+ x assert empty sentences are forbidden
+ x test assertion
  x deploy
     - create cronjob file from settings.json
         - cronjob with mongoexport and timestamps, (so we get backups!)
