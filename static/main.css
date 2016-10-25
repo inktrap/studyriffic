@@ -19,6 +19,12 @@ div.answer {
     padding: 1%;
     display: inline-block;
     word-wrap: break-word !important;
+    font-family: monospace;
+    /*padding: 2px 4px;*/
+    font-size: 90%;
+    color: #c7254e;
+    background-color: #f9f2f4;
+    border-radius: 4px;
 }
 
 .progress{
@@ -33,12 +39,21 @@ div.answer {
     display: block;
 }
 
-form.scale.inline > input {
-    margin-left: 1%;
-    margin-right: 1%;
+.scaleitem {
+  display: inline-block;
+  text-align: center;
+  margin-left: 1%;
+  margin-right: 1%;
 }
 
+.scaleitem label {
+  display: block;
+}
 
+/*
+form.scale.inline > input {
+}
+*/
 
 .vertical-center {
   min-height: 100%;  /* Fallback for browsers do NOT support vh unit */

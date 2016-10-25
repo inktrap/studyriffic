@@ -34,12 +34,7 @@ Here is a quick overview of the framework I wrote. It features:
     - IE problem (either fix it or forbid IE!)
  - change introduction texts (see: TESTREPORT 2)
     - shorter
-    - remove important! exclamation mark
     - scale description in quotes (or different styling?)
-    - remove numbers or change scale and include numbers
- - tasks
-    - remove latex style quotes
-
 
  - run 1b as a test (new deadline?)
  - run main experiment
@@ -80,10 +75,14 @@ Here is a quick overview of the framework I wrote. It features:
 # Done
 
 ~~~
+ x remove important! exclamation mark
+ x remove numbers or change scale and include numbers
+ x typo in Alex and Bill: "both of their ratings"
+ x remove latex style quotes
  x test run for all studies to check timing assumptions
  x fix empty sentences
  x assert empty sentences are forbidden
- x test assertion
+ x test empty sentences assertion
  x deploy
     - create cronjob file from settings.json
         - cronjob with mongoexport and timestamps, (so we get backups!)
