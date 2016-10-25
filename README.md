@@ -34,7 +34,6 @@ Here is a quick overview of the framework I wrote. It features:
     - IE problem (either fix it or forbid IE!)
  - change introduction texts (see: TESTREPORT 2)
     - shorter
-    - scale description in quotes (or different styling?)
 
  - run 1b as a test (new deadline?)
  - run main experiment
@@ -75,6 +74,7 @@ Here is a quick overview of the framework I wrote. It features:
 # Done
 
 ~~~
+ x scale description in quotes (or different styling?)
  x remove important! exclamation mark
  x remove numbers or change scale and include numbers
  x typo in Alex and Bill: "both of their ratings"
