@@ -38,7 +38,6 @@ Here is a quick overview of the framework I wrote. It features:
     - scale description in quotes (or different styling?)
     - remove numbers or change scale and include numbers
  - tasks
-    - typo in Alex and Bill: "both of their ratings"
     - remove latex style quotes
 
 
