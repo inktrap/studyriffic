@@ -26,14 +26,11 @@ Here is a quick overview of the framework I wrote. It features:
  - A study with the likert scale: <https://perigen.diphda.uberspace.de/study/demo_binary?prolific_pid=123&session_id=foobar>
  - meeting: monday 16:30 office 23.32.02.65.
 
-
 # Valentin Todo
 
  - major
     - increase task number (after other fixes, test timing again)
     - IE problem (either fix it or forbid IE!)
- - change introduction texts (see: TESTREPORT 2)
- - fix wrong info output for available studies
 
  - run 1b as a test (new deadline?)
  - run main experiment
@@ -74,6 +71,8 @@ Here is a quick overview of the framework I wrote. It features:
 # Done
 
 ~~~
+ x change introduction texts (see: TESTREPORT 2)
+ x fix wrong info output for available studies
  x scale description in quotes (or different styling?)
  x remove important! exclamation mark
  x remove numbers or change scale and include numbers
