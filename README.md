@@ -33,7 +33,7 @@ Here is a quick overview of the framework I wrote. It features:
     - increase task number (after other fixes, test timing again)
     - IE problem (either fix it or forbid IE!)
  - change introduction texts (see: TESTREPORT 2)
-    - shorter
+ - fix wrong info output for available studies
 
  - run 1b as a test (new deadline?)
  - run main experiment
