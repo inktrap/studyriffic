@@ -72,7 +72,7 @@ Here is a quick overview of the framework I wrote. It features:
 
 ~~~
  x changed number of questions for 1b) to 20 (see: TESTREPORT 3)
- x change demographic form text (see: TESTREPORT 3)
+ x changed demographic form text (see: TESTREPORT 3)
  x questions with 2 or less choices don't have a number (see: TESTREPORT 3)
  x change introduction texts (see: TESTREPORT 2)
  x fix wrong info output for available studies

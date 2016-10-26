@@ -220,6 +220,61 @@ def main(settings, tasks):
         logger.info("Getting the tasks took %i iterations" % iterations)
     return random_sample
 
+def check_settings(settings):
+    assert "active" in settings.keys()
+    assert "questions" in settings.keys()
+    assert "min_scale" in settings.keys()
+    assert "max_scale" in settings.keys()
+    assert "time" in settings.keys()
+
+    assert isinstance(settings["active"], bool)
+    assert isinstance(settings["questions"], int)
+    assert isinstance(settings["min_scale"], int)
+    assert isinstance(settings["max_scale"], int)
+    assert isinstance(settings["time"], int)
+
+    assert "situation" in settings.keys()
+    assert "question" in settings.keys()
+    assert "min_scale_desc" in settings.keys()
+    assert "max_scale_desc" in settings.keys()
+    assert "university" in settings.keys()
+    assert "investigator" in settings.keys()
+    assert "contact" in settings.keys()
+    assert "link" in settings.keys()
+
+    assert isinstance(settings["situation"], str)
+    assert isinstance(settings["question"], str)
+    assert isinstance(settings["min_scale_desc"], str)
+    assert isinstance(settings["max_scale_desc"], str)
+    assert isinstance(settings["university"], str)
+    assert isinstance(settings["investigator"], str)
+    assert isinstance(settings["contact"], str)
+    assert isinstance(settings["link"], str)
+
+    assert 'restrictions' in settings.keys()
+    assert "actions" in settings.keys()
+    assert "types" in settings.keys()
+    assert "categories" in settings.keys()
+    assert "templates" in settings.keys()
+
+    assert isinstance(settings["restrictions"], list)
+    assert isinstance(settings["actions"], list)
+    assert isinstance(settings["types"], list)
+    assert isinstance(settings["categories"], list)
+    assert isinstance(settings["templates"], list)
+
+    for this_restriction in settings['restrictions']:
+        check_restriction(settings, this_restriction)
+    assert check_select(settings['questions'], get_select_restrictions(settings['restrictions'])) is True
+    return True
+
+def check_tasks(settings, tasks):
+    assert isinstance(tasks, list)
+    assert len(tasks) > 0
+    for index, task in enumerate(tasks):
+        assert index == task['id'], "A task needs an explicit numerical ID, but %s is not %i" % (str(task['id']), index)
+        assert check_task(settings, task) is True
+    return True
 
 def check_config(settings, tasks):
     '''
@@ -228,15 +283,8 @@ def check_config(settings, tasks):
         selections have semantical contradictions
         restrictions have the allowed datatypes
     '''
-    assert 'restrictions' in settings.keys()
-    assert isinstance(tasks, list)
-    assert len(tasks) > 0
-    for this_restriction in settings['restrictions']:
-        check_restriction(settings, this_restriction)
-    check_select(settings['questions'], get_select_restrictions(settings['restrictions']))
+    assert check_tasks(settings, tasks) is True
+    assert check_settings(settings) is True
 
-    for index, task in enumerate(tasks):
-        assert index == task['id'], "A task needs an explicit numerical ID, but %s is not %i" % (str(task['id']), index)
-        check_task(settings, task)
     return True
 
