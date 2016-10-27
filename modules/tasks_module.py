@@ -46,17 +46,16 @@ def check_restriction(settings, restriction):
     elif 'category' in restriction.keys():
         assert isinstance(restriction['category'], str), "a category of a restriction has to be a string."
     # print(type(restriction['argument']))
-    assert (isinstance(restriction['argument'], int) or
-            isinstance(restriction['argument'], float)), "the argument of a restriction has to be an int or a float"
+    assert ((isinstance(restriction['argument'], int) or
+            isinstance(restriction['argument'], float)) is True), "the argument of a restriction has to be an int or a float"
 
     if restriction['action'] == 'max_successors':
         assert isinstance(restriction['argument'], int)
         assert 'category' in restriction.keys() or 'type' in restriction.keys()
         assert restriction['argument'] >= 0
     elif restriction['action'] == 'select':
-        assert isinstance(restriction['argument'], float)
         assert 'category' in restriction.keys()
-        assert 0.0 < restriction['argument'] < 1.0
+        assert 0.0 < restriction['argument'] <= 1.0, "The argument for a select restriction x has to have the following property: 0 < x <= 1"
     else:
         raise ValueError("Unknown restriction action %s" % restriction['action'])
     return True
@@ -91,6 +90,8 @@ def get_select_restrictions(restrictions):
 
 
 def check_select(questions, select_restrictions):
+    assert len(select_restrictions) > 0, "You have to specify at least one select restriction"
+
     # semantic checks for select restrictions
     # check if the numbers of selects add up to 1
     assert sum([select_restriction['argument'] for select_restriction in select_restrictions]) == 1, "Select restrictions have to sum up to exactly 1"
@@ -222,12 +223,14 @@ def main(settings, tasks):
 
 def check_settings(settings):
     assert "active" in settings.keys()
+    assert "labels" in settings.keys()
     assert "questions" in settings.keys()
     assert "min_scale" in settings.keys()
     assert "max_scale" in settings.keys()
     assert "time" in settings.keys()
 
     assert isinstance(settings["active"], bool)
+    assert isinstance(settings["labels"], bool)
     assert isinstance(settings["questions"], int)
     assert isinstance(settings["min_scale"], int)
     assert isinstance(settings["max_scale"], int)
@@ -244,6 +247,9 @@ def check_settings(settings):
 
     assert isinstance(settings["situation"], str)
     assert isinstance(settings["question"], str)
+    assert len(settings["question"]) > 0, "The default question can't be empty, \
+because a task has to have a question."
+
     assert isinstance(settings["min_scale_desc"], str)
     assert isinstance(settings["max_scale_desc"], str)
     assert isinstance(settings["university"], str)

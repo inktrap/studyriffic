@@ -26,6 +26,27 @@ class TestChecks(unittest.TestCase):
             "types":["some", "types", "and", "more"],
             "categories":["filler", "target"]
         }
+        self. complete_settings = {}
+        self.complete_settings["active"] = True
+        self.complete_settings["labels"] = False
+        self.complete_settings["questions"] = 10
+        self.complete_settings["min_scale"] = 0
+        self.complete_settings["max_scale"] = 1
+        self.complete_settings["time"] = 10
+        self.complete_settings["situation"] = "Situation"
+        self.complete_settings["question"] = "Question"
+        self.complete_settings["min_scale_desc"] = "Min"
+        self.complete_settings["max_scale_desc"] = "Max"
+        self.complete_settings["university"] = "Uni"
+        self.complete_settings["investigator"] = "Investigator"
+        self.complete_settings["contact"] = "contact"
+        self.complete_settings["link"] = "link"
+        self.complete_settings["restrictions"] = [{"action":"select", "category":"filler", "argument":1}]
+        self.complete_settings["actions"] = ["select"]
+        self.complete_settings["types"] = []
+        self.complete_settings["categories"] = []
+        self.complete_settings["templates"] = []
+
         # these should all work
         self.task_filler = {"id": 0, "sentence": "Foobar", "situation": "Barfoo", "type": ["some", "types"], "category": "filler"}
         self.task_target = {"id": 0, "sentence": "Foobar", "situation": "Barfoo", "type": ["some", "types"], "category": "target"}
@@ -44,15 +65,20 @@ class TestChecks(unittest.TestCase):
         self.restriction_select_filler = {"action":"select", "category":"filler", "argument":0.5}
         self.restriction_select_target = {"action":"select", "category":"target", "argument":0.5}
 
+    def test_check_settings(self):
+        self.assertTrue(tasks_module.check_settings(self.complete_settings))
+        #with self.assertRaises(AssertionError):
+        #    tasks_module.check_settings(self.complete_settings)
+
     def test_check_restriction(self):
         #tests: def check_restriction(settings, restriction):
-        self.assertEqual(tasks_module.check_restriction(self.settings, self.restriction_select_filler), True)
-        self.assertEqual(tasks_module.check_restriction(self.settings, self.restriction_select_target), True)
-        self.assertEqual(tasks_module.check_restriction(self.settings, self.restriction_successor_filler), True)
-        self.assertEqual(tasks_module.check_restriction(self.settings, self.restriction_successor_target), True)
-        self.assertEqual(tasks_module.check_restriction(self.settings, self.restriction_successor_more), True)
-        self.assertEqual(tasks_module.check_restriction(self.settings, self.restriction_successor_some), True)
-        self.assertEqual(tasks_module.check_restriction(self.settings, self.restriction_successor_error), True)
+        self.assertTrue(tasks_module.check_restriction(self.settings, self.restriction_select_filler))
+        self.assertTrue(tasks_module.check_restriction(self.settings, self.restriction_select_target))
+        self.assertTrue(tasks_module.check_restriction(self.settings, self.restriction_successor_filler))
+        self.assertTrue(tasks_module.check_restriction(self.settings, self.restriction_successor_target))
+        self.assertTrue(tasks_module.check_restriction(self.settings, self.restriction_successor_more))
+        self.assertTrue(tasks_module.check_restriction(self.settings, self.restriction_successor_some))
+        self.assertTrue(tasks_module.check_restriction(self.settings, self.restriction_successor_error))
 
     def test_check_task(self):
         #tests: def check_task(settings, task):
@@ -76,7 +102,10 @@ class TestGetSelectRestrictions(unittest.TestCase):
     def test_get_select_restrictions(self):
         self.assertEqual(tasks_module.get_select_restrictions(self.select_pass), self.select_pass)
         self.assertEqual(tasks_module.get_select_restrictions(self.select_additional), self.select_pass)
-
+        with self.assertRaises(AssertionError):
+            tasks_module.check_select(10, tasks_module.get_select_restrictions([]))
+        with self.assertRaises(AssertionError):
+            tasks_module.check_select(10, tasks_module.get_select_restrictions([{"action":"max_successors", "type":"foobar", "argument":4}]))
 
 class TestCheckSelect(unittest.TestCase):
     ''' these are semantic checks for select restrictions'''
