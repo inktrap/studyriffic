@@ -29,11 +29,7 @@ Here is a quick overview of the framework I wrote. It features:
 # Valentin Todo
 
  - major
-    - increase task number (after other fixes, test timing again)
     - IE problem (either fix it or forbid IE!)
- - introduce a setting if labels should be present
- - set setting if labels should be present to false
- - remove numerical labels from introductions
 
  - run 1b as a test (new deadline?)
  - run main experiment
@@ -74,6 +70,12 @@ Here is a quick overview of the framework I wrote. It features:
 # Done
 
 ~~~
+ x increase task number (after other fixes, test timing again)
+ x reworded error message
+ x implemented settings unittest
+ x introduce a setting if labels should be present
+ x set setting if labels should be present to false
+ x remove numerical labels from introductions
  x changed 2) 3) to 20 and 1b) to 12 questions
  x changed number of questions for 1b) to 20 (see: TESTREPORT 3)
  x changed demographic form text (see: TESTREPORT 3)

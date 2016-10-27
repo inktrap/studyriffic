@@ -39,7 +39,8 @@ class baseConfig():
 
         client = MongoClient(mongodb_uri, serverSelectionTimeoutMS=1)
         db_test = client.server_info()
-        #logger.debug(db_test)
+        assert(isinstance(db_test, dict))
+        logger.debug(db_test)
 
         self.db = client[database]
         self.project_root = os.path.abspath(os.path.dirname(os.path.realpath(os.path.join(__file__, '..'))))
@@ -126,6 +127,9 @@ class baseConfig():
         except AssertionError as e:
             logger.error("There is an error in either settings.json or tasks.json for: %s" % study)
             raise e
+
+        # this is just a check if it is possible to get tasks
+        assert isinstance(tasks_module.main(settings, this_tasks), list)
 
         return {'settings': settings,
                 'tasks': this_tasks,

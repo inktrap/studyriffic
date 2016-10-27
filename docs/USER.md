@@ -36,6 +36,7 @@ Json does not allow comments, so you probably want to download the complete
 ~~~
 {
     "active" : true, /* if this setting is true, his study is active */
+    "labels" : false, /* should we label the scale? scales will be labeled if this setting is active and the scale is consists of 3 or more values */
     "question":"Do you think the following sentence is “Owly” or “Not Owly” in the above situation?", /* this is the question you would like to ask the participant */
     "situation":"Please consider the following situation:", /* This is an (optional) situation (or context) you would like to give. If it is empty, the task is displayed differently */
     "questions": 4, /* the numbers of questions. Also depends on the criteria for select restrictions (or vice-versa, depends on you) */
@@ -202,6 +203,10 @@ So set the ``active`` key in ``ROOT/studies/owl/settings.xml`` to ``true``.
 Then run ``./main.py``. The debugging output tells you to go to
 ``http://127.0.0.1:63536/studies/owl/`` to participate in the owl study.
 
+**You should complete your study at least once yourself. Some errors
+that way you can be sure everything looks like it should and you
+get the results you like.**
+
 
 ### Inline HTML and newlines
 
@@ -302,6 +307,14 @@ It expects a list of dictionaries in json format (like a tasks list) and then
 inserts a key with a numerical id into each dictionary. Voilá problem solved,
 just check that everything worked as intended and move it into your studies folder
 and rename it to ``tasks.json``.
+
+## AssertionError: You want to select X tasks of the category C but there are only Y tasks of that category
+
+For a category ``C`` it X has must be ``X <= Y``. So:
+
+ - increase the number of tasks of category ``C`` or
+ - change the selection or
+ - use less questions
 
 ## Structural
 

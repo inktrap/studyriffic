@@ -189,7 +189,7 @@ def apply_select(questions, select_restrictions, tasks):
         take_restrictions = questions * select_restriction['argument']
         # print(take_restrictions)
         # print(len(category_tasks))
-        assert take_restrictions <= len(category_tasks), "You want to take more questions than there are questions"
+        assert take_restrictions <= len(category_tasks), "You want to select %i tasks of the category %s but there are only %i tasks of that category" % (take_restrictions, select_restriction["category"], len(category_tasks))
         # create a list of the indices
         # we can use int here, because I checked this with math.modf before
         random_sample = random.sample(category_tasks, int(take_restrictions))
@@ -218,7 +218,7 @@ def main(settings, tasks):
             if iterations > 100000:
                 random_sample = "Could not get a valid sample."
                 break
-        logger.info("Getting the tasks took %i iterations" % iterations)
+        logger.debug("Getting the tasks took %i iterations" % iterations)
     return random_sample
 
 def check_settings(settings):
