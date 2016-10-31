@@ -128,7 +128,7 @@ class baseConfig():
             logger.error("There is an error in either settings.json or tasks.json for: %s" % study)
             raise e
 
-        # this is just a check if it is possible to get tasks
+        # this is just a check if it is possible to get tasks (this is done once per study!)
         assert isinstance(tasks_module.main(settings, this_tasks), list)
 
         return {'settings': settings,
