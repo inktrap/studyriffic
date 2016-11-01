@@ -28,8 +28,6 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Valentin Todo
 
- - major
-    - IE problem (either fix it or forbid IE!)
 
  - run 1b as a test (new deadline?)
  - run main experiment
@@ -70,6 +68,8 @@ Here is a quick overview of the framework I wrote. It features:
 # Done
 
 ~~~
+
+ x major: IE problem (either fix it or forbid IE!) (comment: could not fix in reasonable time. IE and edge are forbidden for now, reopen if relevant)
  x Continue button in the middle of the scale
  x 1b) Charlie-David should be one sentence (2 times)
  x new fillers for 3)

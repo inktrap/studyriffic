@@ -38,9 +38,9 @@ def main(user_agent):
     req['chrome'] = 24
     req['firefox'] = 15
     req['safari'] = 8
-    req['ie'] = 10
-    req['edge'] = 12
-    default_error = "We could not determine the version of your browser. Please use a browser like: %s. " % ', '.join(
+    #req['ie'] = 10
+    #req['edge'] = 12
+    default_error = "We could not determine the version of your browser. Please use a browser like: %s. (Unfortunately IE and Edge are not supported)." % ', '.join(
         [r.capitalize() for r in req.keys()])
     ua = parse_useragent(user_agent)
     if not ua:
@@ -54,10 +54,10 @@ def main(user_agent):
         min_major = req['firefox']
     elif 'safari' in family:
         min_major = req['safari']
-    elif 'ie' in family:
-        min_major = req['ie']
-    elif 'edge' in family:
-        min_major = req['edge']
+    #elif 'ie' in family:
+    #    min_major = req['ie']
+    #elif 'edge' in family:
+    #    min_major = req['edge']
     else:
         return default_error
 
