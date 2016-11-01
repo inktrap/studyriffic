@@ -199,9 +199,9 @@ Here we have ten tasks, two categories (``filler, target``) and three types
 (``jimmy, hunt, fact``). This should be enough for a small study with
 four questions.
 
-So set the ``active`` key in ``ROOT/studies/owl/settings.xml`` to ``true``.
+So set the ``active`` key in ``ROOT/studies/owls/settings.xml`` to ``true``.
 Then run ``./main.py``. The debugging output tells you to go to
-``http://127.0.0.1:63536/studies/owl/`` to participate in the owl study.
+``http://127.0.0.1:63536/studies/owls/`` to participate in the owls study.
 
 **You should complete your study at least once yourself. Some errors
 that way you can be sure everything looks like it should and you
@@ -322,7 +322,7 @@ For a category ``C`` it X has must be ``X <= Y``. So:
 
 You have to create a directory named like your study in the ``ROOT/views`` and
 have to place the template file there. Which templates you have to place there
-is defined in your ``settings.json`` file, for example for the owl study that
+is defined in your ``settings.json`` file, for example for the owls study that
 would be ``first.tpl``:
 
 ~~~
