@@ -30,7 +30,6 @@ Here is a quick overview of the framework I wrote. It features:
 
  - major
     - IE problem (either fix it or forbid IE!)
- - Continue button in the middle of the scale
 
  - run 1b as a test (new deadline?)
  - run main experiment
@@ -71,6 +70,7 @@ Here is a quick overview of the framework I wrote. It features:
 # Done
 
 ~~~
+ x Continue button in the middle of the scale
  x 1b) Charlie-David should be one sentence (2 times)
  x new fillers for 3)
  x increase task number (after other fixes, test timing again)
