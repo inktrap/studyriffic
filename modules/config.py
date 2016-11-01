@@ -46,7 +46,7 @@ class baseConfig():
         self.project_root = os.path.abspath(os.path.dirname(os.path.realpath(os.path.join(__file__, '..'))))
         # logger.debug(self.project_root)
         # customize these
-        self.cookie_secret = 'ajkbkjnkvnklrkvlkbgjknjkls'
+        self.cookie_secret = 'WOkY1WWxxBECSlXIOemPzIXLt9UGpqfBsk19VwYRvPDeMlmWyKZQvFPNRdzplOj2UrbUaRozkuJLQuIjM7s07l31SGptnTzMXliR'
         self.this_port = 63536
         # study directories have to match this regex
         self.study_regex = "[a-z,A-Z,0-9,-]+"
