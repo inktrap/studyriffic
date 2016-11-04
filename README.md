@@ -68,7 +68,13 @@ Here is a quick overview of the framework I wrote. It features:
 # Done
 
 ~~~
-
+ x run study 1b)
+     x test everything one more time and wait for okay
+     x clear the database and remove the backups that accumulated while testing
+     x create the study on prolific
+     x remove password protection from the studies
+     x change the url so subjects get paid
+     x study is live
  x major: IE problem (either fix it or forbid IE!) (comment: could not fix in reasonable time. IE and edge are forbidden for now, reopen if relevant)
  x Continue button in the middle of the scale
  x 1b) Charlie-David should be one sentence (2 times)
