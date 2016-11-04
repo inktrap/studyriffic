@@ -128,7 +128,7 @@ class csvResults():
                 del(content[key])
             except KeyError:
                 pass
-        header = content.keys()
+        header = sorted(list(content.keys()))
         rows = []
         # settings are a dictionary so this table only has one row
         for item in header:
@@ -145,26 +145,28 @@ class csvResults():
 
     def writeTasks(self, results):
         # maybe later: get the categories and types from settings, create one column per category and type
+        settings = self.loadJson('settings', results)
+        type_keys = settings['types']
         items = self.loadJson('tasks', results)
-        logger.debug(items[0].keys())
         item_keys = items[0].keys()
-        listKeys = ['type']
-        data = [list(item_keys)]
+        item_keys = sorted([item_key for item_key in item_keys if item_key != 'type'])
+        data = [list(item_keys) + type_keys]
         for item in items:
             row = []
+            row_types = [0] * len(type_keys)
             for key in item_keys:
-                if key in listKeys:
-                    row.append(self._joinList(item[key]))
-                else:
-                    row.append(item[key])
+                row.append(item[key])
+            for this_type in item['type']:
+                row_types[type_keys.index(this_type)] = 1
+            row = row + row_types[:]
             data.append(row)
         assert self.write(data, os.path.join(results['csv'], 'tasks.csv')) is True
         return True
 
     def writeResults(self, results):
         items = self.loadJson('db', results)
-        result_keys = items[0]['results'][0].keys()
-        header = [['pid'] + list(result_keys)]
+        result_keys = sorted(list(items[0]['results'][0].keys()))
+        header = [['pid'] + result_keys]
         data = header
         for item in items:
             for this_result in item['results']:
@@ -183,8 +185,8 @@ class csvResults():
     def writeDemographics(self, results):
         listKeys = ['languages']
         items = self.loadJson('db', results)
-        demographics_keys = items[0]['demographics'].keys()
-        header = [['pid'] + list(demographics_keys)]
+        demographics_keys = sorted(list(items[0]['demographics'].keys()))
+        header = [['pid'] + demographics_keys]
         data = header
         for item in items:
             row = []
