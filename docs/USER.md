@@ -240,8 +240,63 @@ a signature.)
 
 # Results
 
-I am going to explain the format of the results now and I'll show you how you
-can process them with R.
+I am going to explain how you get your results and how you can interpret the
+format. Then I'll show you how you can read them with R (which is basic R knowledge
+but included for the sake of completeness).
+
+## From Mongodb's JSON to CSV that R can read
+
+Results are saved on your server in MongoDB. If you used the cronjob to backup
+the data, you should get a json file with the results of your study. Let's
+download it with scp and put it into the right results directory. For the owls
+study this would be: ``ROOT/results/owls/db.json`` where I used the same
+convention again: the folder is the name of the study and the results are in
+a file with a fixed name: ``db.json``.
+
+You **have** to use the same name that you used in ``ROOT/studies``.
+You **have** to name your results ``db.json``. And you have to make
+sure your study is well-configured, which means it has a ``tasks.json`` and
+a ``settings.json`` and the assumption is that those are the files **that you
+actually used in production**.
+
+If you are going to run ``results.py`` now, it will check for all of that,
+except for the assumption mentioned above. ``results.py`` then will produce:
+
+~~~
+RESULTS/owls/csv/demographics.csv
+RESULTS/owls/csv/settings.csv
+RESULTS/owls/csv/tasks.csv
+RESULTS/owls/csv/results.csv
+~~~
+
+That way you can simply copy the csv folder wherever you do your analysis.
+There you can read the data into R with:
+
+~~~
+demographics = read.csv("./csv/demographics.csv")
+settings = read.csv("./csv/settings.csv")
+tasks = read.csv("./csv/tasks.csv")
+results = read.csv("./csv/results.csv")
+~~~
+
+Then you'll get 4 dataframes and can easily connect the results with f.e. the
+actual data used in the task. And you can check what your answers actually mean
+by comparing ``results.csv`` with ``settings.csv``.
+
+My intention is to make the step from the database to the results transparent. In
+addition I would reccomend using something like Sweave or Rmarkdown to make the
+relationship between the results and the published results transparent:
+
+ - if you publish the ``task.json``, ``settings.json`` and ``db.json`` everyone
+ can reproduce the csv files, because studyriffic and ``results.py`` is open
+ source and (I hope) well documented.
+
+ - if you are using [Sweave](http://www.statistik.lmu.de/~leisch/Sweave/) in
+ your TeX-files or Rmarkdown, you can be sure that you are using the data from
+ the csv files (and it is easy to check if two files are the same).
+
+If you know a better and easier way, please leave some feedback, I would love
+to hear about it!
 
 
 # Errors

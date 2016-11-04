@@ -64,6 +64,7 @@ class baseConfig():
                                        "investigator",
                                        "contact",
                                        "active",
+                                       "labels",
                                        "time",
                                        "link",
                                        "actions",
