@@ -5,6 +5,7 @@ import json
 import os
 import re
 import csv
+import sys
 
 import logging
 logger = logging.getLogger('results.py')
@@ -97,11 +98,13 @@ class baseConfig():
 class csvResults():
     def __init__(self, results):
         for result in results:
-            #csvResults.writeSettings(self, result)
+            csvResults.writeSettings(self, result)
             csvResults.writeDemographics(self, result)
+            csvResults.writeTasks(self, result)
+            csvResults.writeResults(self, result)
 
     def loadJson(self, name, results):
-        logger.debug(results[name])
+        #logger.debug(results[name])
         assert isinstance(name, str)
         assert isinstance(results, dict)
         with open(results[name], 'r') as fh:
@@ -132,23 +135,72 @@ class csvResults():
             rows.append(content[item])
         data = [header, rows]
         assert self.write(data, os.path.join(results['csv'], 'settings.csv')) is True
+        return True
+
+    def _joinList(self, this_list):
+        assert isinstance(this_list, list)
+        # do not modify strings that were entered by the user
+        #return ' '.join([l.lower().strip() for l in this_list]).strip()
+        return ' '.join([l.strip() for l in this_list]).strip()
+
+    def writeTasks(self, results):
+        # maybe later: get the categories and types from settings, create one column per category and type
+        items = self.loadJson('tasks', results)
+        logger.debug(items[0].keys())
+        item_keys = items[0].keys()
+        listKeys = ['type']
+        data = [list(item_keys)]
+        for item in items:
+            row = []
+            for key in item_keys:
+                if key in listKeys:
+                    row.append(self._joinList(item[key]))
+                else:
+                    row.append(item[key])
+            data.append(row)
+        assert self.write(data, os.path.join(results['csv'], 'tasks.csv')) is True
+        return True
+
+    def writeResults(self, results):
+        items = self.loadJson('db', results)
+        result_keys = items[0]['results'][0].keys()
+        header = [['pid'] + list(result_keys)]
+        data = header
+        for item in items:
+            for this_result in item['results']:
+                row = []
+                row.append(item['pid'])
+                for key in result_keys:
+                    try:
+                        row.append(this_result[key])
+                    except KeyError:
+                        logger.error(this_result)
+                        sys.exit(1)
+                data.append(row)
+        assert self.write(data, os.path.join(results['csv'], 'results.csv')) is True
+        return True
 
     def writeDemographics(self, results):
+        listKeys = ['languages']
         items = self.loadJson('db', results)
         demographics_keys = items[0]['demographics'].keys()
         header = [['pid'] + list(demographics_keys)]
-        rows = header
+        data = header
         for item in items:
             row = []
             row.append(item['pid'])
             for key in demographics_keys:
-                row.append(item['demographics'][key])
-            rows.append(row)
-        logger.debug(rows)
+                if key in listKeys:
+                    row.append(self._joinList(item['demographics'][key]))
+                else:
+                    row.append(item['demographics'][key])
+            data.append(row)
+        assert self.write(data, os.path.join(results['csv'], 'demographics.csv')) is True
+        return True
 
     def write(self, data, outfile):
         u''' write the rows to a file called name'''
-        logger.debug(data)
+        #logger.debug(data)
         with open(outfile, 'w') as f:
             writer = csv.writer(f)
             writer.writerows(data)
