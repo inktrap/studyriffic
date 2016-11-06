@@ -16,7 +16,7 @@ formatter = logging.Formatter(
     '[%(asctime)s] p%(process)s {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s', '%m-%d %H:%M:%S')
 
 ch = logging.StreamHandler()
-ch.setLevel(logging.INFO)
+ch.setLevel(logging.DEBUG)
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
@@ -39,55 +39,98 @@ def check_restriction(settings, restriction):
     assert (not('type' in restriction.keys() and 'category' in restriction.keys())), "a restriction operates on a type or a category, not both."
     assert 'argument' in restriction.keys(), "a restriction has to have an argument."
     assert len(restriction.keys()) == 3, "a restriction has to have 3 keys."
-    assert restriction['action'] in settings['actions'], "the action of the restriction is not in the settings file."
+    assert restriction['action'] in settings['actions'], 'the action "%s" of a restriction is not in the settings file.' % restriction['action']
 
     if 'type' in restriction.keys():
         assert isinstance(restriction['type'], str), "a type of a restriction has to be a string."
     elif 'category' in restriction.keys():
         assert isinstance(restriction['category'], str), "a category of a restriction has to be a string."
-    # print(type(restriction['argument']))
-    assert ((isinstance(restriction['argument'], int) or
-            isinstance(restriction['argument'], float)) is True), "the argument of a restriction has to be an int or a float"
 
     if restriction['action'] == 'max_successors':
         assert isinstance(restriction['argument'], int)
-        assert 'category' in restriction.keys() or 'type' in restriction.keys()
-        assert restriction['argument'] >= 0
+        assert 'category' in restriction.keys() or 'type' in restriction.keys(), "A max_successors restriction has to operate on either a type or a category"
+        assert restriction['argument'] >= 0, "For the argument a of a max_successors restriction it has to hold that 0 <= a"
+        assert restriction['argument'] < settings['questions'], "For the argument a of a max_successors restriction it is probably a mistake if a >= the number of questions."
     elif restriction['action'] == 'select':
+        assert isinstance(restriction['argument'], float)
         assert 'category' in restriction.keys()
         assert 0.0 < restriction['argument'] <= 1.0, "The argument for a select restriction x has to have the following property: 0 < x <= 1"
+    elif restriction['action'] == 'not_positions':
+        assert isinstance(restriction['argument'], list)
+        assert 'category' in restriction.keys(), "A not_positions restriction has to operate on a category"
+        for a in restriction['argument']:
+            assert isinstance(a, int), "A position in a list handed to not_positions has to be an integer"
+        #print(settings['questions'])
+        assert (max(restriction['argument']) < settings['questions']), "For a position p it has to hold that p <= N, where N is the number of the positions|questions available."
+        assert (0 <= min(restriction['argument'])), "For a position p it has to hold that 0 <= p"
     else:
         raise ValueError("Unknown restriction action %s" % restriction['action'])
     return True
 
 
+def _check_task_check(task):
+    ''' check that the checks are correct '''
+    assert 'check' in task.keys(), "A filler or a check has to check for an expected value"
+    assert isinstance(task['check'], list), "A check has to be a list"
+    for c in task['check']:
+        assert isinstance(c, float), "A check has to specify a list of either one or two floating point numbers"
+        assert (0 <= c <= 1), "The value c of a check has to be a floating point number 0.0 <= c <= 1"
+    assert (1 <= len(task['check']) <= 2), "A check has to specify either one or two floating point numbers, not %i" % len(task['check'])
+    if len(task['check']) == 2:
+        assert task['check'][0] < task['check'][1], "If there are two floating point numbers c1 and c2 it has to hold that c1 < c2"
+    return True
+
+
 def check_task(settings, task):
-    assert isinstance(task, dict), 'A task has to be a dictionary'
-    assert len(task.keys()) == 5, 'A task has to have 5 keys.'
+    assert isinstance(task, dict), "A task has to be a dictionary"
+
+    # check that all the keys are there
     assert 'category' in task.keys()
     assert 'type' in task.keys()
     assert 'situation' in task.keys()
     assert 'sentence' in task.keys()
     assert 'id' in task.keys()
-    assert len(task.keys()) == 5
+    assert len(task['category']) > 0, "A category can not be empty."
     assert task['category'] in settings['categories'], "The category %s has to be in settings" % task['category']
-    assert len(task['category']) > 0, "A category can not be empty"
+
+    # if the task is a filler or a check, check the checks
+    if (task['category'] == "check") or (task['category'] == "filler"):
+        assert len(task.keys()) == 6, "A filler or a check has to have 6 keys."
+        _check_task_check(task)
+    else:
+        assert len(task.keys()) == 5, 'A task that is not a filler or a check has to have 5 keys.'
+
+    # check the types
     assert isinstance(task['type'], list)
     for t in task['type']:
         assert isinstance(t, str), "A type is a list of strings. But the type %s is not a string." % t
         assert t in settings['types'], "The type %s has to be in settings." % t
         assert len(t) > 0, "A type, if given, can not be empty. (Id: %i)" % task['id']
+
+    # this is one of to checks for the ids (ids have to start with 0 and have to be ints 0,1,2,3 aso.)
+    assert isinstance(task['id'], int)
+
     assert isinstance(task['situation'], str)
     assert isinstance(task['sentence'], str)
-    assert isinstance(task['id'], int)
     assert len(task['sentence']) > 0, "A sentence can not be empty. (Id: %i)" % task['id']
+
     return True
 
 
-def get_select_restrictions(restrictions):
-    #logger.debug(restrictions)
-    return list(filter(lambda x: x['action'] == 'select', restrictions))
+def check_notpos(notpos_restrictions):
+    ''' check all the notpos-restrictions'''
+    notpos_categories = []
+    for notpos_restriction in notpos_restrictions:
+        if 'category' in notpos_restriction.keys():
+            notpos_categories.append(notpos_restriction['category'])
+        else:
+            raise AssertionError('''not_positions restrictions have to operate on
+                    either a type or a category. This also means that sadly a
+                    previous check failed, which should never happen.''')
 
+    assert len(set(notpos_categories)) == len(notpos_categories), "A category can only be used once in a not_positions statement, please merge the restrictions."
+
+    return True
 
 def check_select(questions, select_restrictions):
     assert len(select_restrictions) > 0, "You have to specify at least one select restriction"
@@ -113,6 +156,19 @@ def check_select(questions, select_restrictions):
 
     return True
 
+def apply_not_positions(sample, notpos_restrictions):
+    assert len(sample) > 0
+    assert len(notpos_restrictions) > 0
+    for notpos_restriction in notpos_restrictions:
+        # filter the positions that are forbidden
+        restricted = [item for index, item in enumerate(sample) if index in notpos_restriction['argument']]
+        #logger.debug("Going to check the following items")
+        #logger.debug(restricted)
+        for item in restricted:
+            # logger.debug("Checking for equality: %s == %s?" % (item['category'], notpos_restriction['category']))
+            if item['category'] == notpos_restriction['category']:
+                return False
+    return True
 
 def apply_successor(sample, successor_restrictions):
     ''' apply the successors and return true or false if the sample is valid'''
@@ -132,7 +188,6 @@ def apply_successor(sample, successor_restrictions):
             #   including the last one f.e. if argument = 3: we need [index, 1, 2, 3]
             #   but continue for [index, 1, 2]
             if (index + successor_restriction['argument'] + 1) > len(sample):
-                logger.debug("continuing")
                 continue
 
             if 'category' in successor_restriction.keys():
@@ -189,7 +244,7 @@ def apply_select(questions, select_restrictions, tasks):
         take_restrictions = questions * select_restriction['argument']
         # print(take_restrictions)
         # print(len(category_tasks))
-        assert take_restrictions <= len(category_tasks), "You want to select %i tasks of the category %s but there are only %i tasks of that category" % (take_restrictions, select_restriction["category"], len(category_tasks))
+        assert take_restrictions <= len(category_tasks), "You want to select %i task(s) of the category %s but there are only %i tasks of that category" % (take_restrictions, select_restriction["category"], len(category_tasks))
         # create a list of the indices
         # we can use int here, because I checked this with math.modf before
         random_sample = random.sample(category_tasks, int(take_restrictions))
@@ -198,27 +253,39 @@ def apply_select(questions, select_restrictions, tasks):
 
     # shuffle, because the *selections* were applied in order
     random.shuffle(result)
+    assert len(result) == questions, "The number of the sample does not equal the number of questions"
     return result
 
 
 def main(settings, tasks):
     check_config(settings, tasks)
     # returns a random sample
-    select_restrictions = get_select_restrictions(settings['restrictions'])
+    select_restrictions = list(filter(lambda x: x['action'] == 'select', settings['restrictions']))
+    # select restrictions have to be checked individually and together
     check_select(settings['questions'], select_restrictions)
-    random_sample = apply_select(settings['questions'], select_restrictions, tasks)
     successor_restrictions = list(filter(lambda x: x['action'] == 'max_successors', settings['restrictions']))
-    if len(successor_restrictions) > 0:
-        iterations = 0
-        is_restricted = apply_successor(random_sample, successor_restrictions)
-        while (is_restricted is False):
-            iterations += 1
-            random_sample = apply_select(settings['questions'], select_restrictions, tasks)
-            is_restricted = apply_successor(random_sample, successor_restrictions)
-            if iterations > 100000:
-                random_sample = "Could not get a valid sample."
-                break
-        logger.debug("Getting the tasks took %i iterations" % iterations)
+    # notpos restrictions have to be checked individually and together
+    notpos_restrictions = list(filter(lambda x: x['action'] == 'not_positions', settings['restrictions']))
+    check_notpos(notpos_restrictions)
+    iterations = 0
+    status = False
+    while (status is False):
+        iterations += 1
+        if iterations > 100000:
+            random_sample = "Could not get a valid sample despite trying desperately."
+            break
+        # get a sample
+        random_sample = apply_select(settings['questions'], select_restrictions, tasks)
+        # check the sample
+        status = apply_not_positions(random_sample, notpos_restrictions)
+        if status is False:
+            continue
+        status = apply_successor(random_sample, successor_restrictions)
+        if status is False:
+            continue
+        # everything went well and we can successfully leave the loop
+        status = True
+    logger.debug("Getting the tasks took %i iterations" % iterations)
     return random_sample
 
 def check_settings(settings):
@@ -271,11 +338,11 @@ because a task has to have a question."
 
     for this_restriction in settings['restrictions']:
         check_restriction(settings, this_restriction)
-    assert check_select(settings['questions'], get_select_restrictions(settings['restrictions'])) is True
     return True
 
 def check_tasks(settings, tasks):
     assert isinstance(tasks, list)
+    # this is one of two checks for ids
     assert len(tasks) > 0
     for index, task in enumerate(tasks):
         assert index == task['id'], "A task needs an explicit numerical ID, but %s is not %i" % (str(task['id']), index)

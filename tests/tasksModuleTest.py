@@ -22,11 +22,12 @@ logger.addHandler(ch)
 class TestChecks(unittest.TestCase):
     def setUp(self):
         self.settings = {
-            "actions": ["select", "max_successors"],
+            "questions": 10,
+            "actions": ["select", "max_successors", "not_positions"],
             "types":["some", "types", "and", "more"],
             "categories":["filler", "target"]
         }
-        self. complete_settings = {}
+        self.complete_settings = {}
         self.complete_settings["active"] = True
         self.complete_settings["labels"] = False
         self.complete_settings["questions"] = 10
@@ -41,20 +42,24 @@ class TestChecks(unittest.TestCase):
         self.complete_settings["investigator"] = "Investigator"
         self.complete_settings["contact"] = "contact"
         self.complete_settings["link"] = "link"
-        self.complete_settings["restrictions"] = [{"action":"select", "category":"filler", "argument":1}]
+        self.complete_settings["restrictions"] = [{"action":"select", "category":"filler", "argument":1.0}]
         self.complete_settings["actions"] = ["select"]
         self.complete_settings["types"] = []
         self.complete_settings["categories"] = []
         self.complete_settings["templates"] = []
 
         # these should all work
-        self.task_filler = {"id": 0, "sentence": "Foobar", "situation": "Barfoo", "type": ["some", "types"], "category": "filler"}
+        self.task_filler = {"id": 0, "sentence": "Foobar", "situation": "Barfoo", "type": ["some", "types"], "category": "filler", "check": [0.0]}
         self.task_target = {"id": 0, "sentence": "Foobar", "situation": "Barfoo", "type": ["some", "types"], "category": "target"}
-        self.task_no_situation = {"id": 0, "sentence": "Foobar", "situation": "", "type": ["some", "types"], "category": "filler"}
-        self.task_no_type = {"id": 0, "sentence": "Foobar", "situation": "Barfoo", "type": [], "category": "filler"}
-        self.task_no_sentence = {"id": 0, "sentence": "", "situation": "Barfoo", "type": [], "category": "filler"}
-        self.task_no_id = {"id": "", "sentence": "", "situation": "Barfoo", "type": [], "category": "filler"}
-        self.task_no_category = {"id": 0, "sentence": "Foobar", "situation": "Barfoo", "type": [], "category": ""}
+        self.task_no_situation = {"id": 0, "sentence": "Foobar", "situation": "", "type": ["some", "types"], "category": "filler", "check": [0.0]}
+        self.task_no_type = {"id": 0, "sentence": "Foobar", "situation": "Barfoo", "type": [], "category": "filler", "check": [0.0]}
+        self.task_no_sentence = {"id": 0, "sentence": "", "situation": "Barfoo", "type": [], "category": "filler", "check": [0.0]}
+
+        # these should not work
+        self.task_no_id = {"id": "", "sentence": "", "situation": "Barfoo", "type": [], "category": "filler", "check": [0.0]}
+        self.task_no_category = {"id": 0, "sentence": "Foobar", "situation": "Barfoo", "type": [], "category": "", "check": [0.0]}
+        self.task_no_check_check = {"id": 0, "sentence": "Foobar", "situation": "Barfoo", "type": [], "category": "check"}
+        self.task_no_check_filler = {"id": 0, "sentence": "Foobar", "situation": "Barfoo", "type": [], "category": "filler"}
 
         # syntactically well formed restrictions
         self.restriction_successor_filler = {"action":"max_successors", "category":"filler", "argument":4}
@@ -64,6 +69,9 @@ class TestChecks(unittest.TestCase):
         self.restriction_successor_error = {"action":"max_successors", "type":"and", "argument":4}
         self.restriction_select_filler = {"action":"select", "category":"filler", "argument":0.5}
         self.restriction_select_target = {"action":"select", "category":"target", "argument":0.5}
+        self.restriction_position_fine = {"action":"not_positions", "category":"check", "argument":[1, 3]}
+        self.restriction_position_error_value = {"action":"not_positions", "category":"check", "argument":[0, "a"]}
+        self.restriction_position_error_argument = {"action":"not_positions", "category":"check", "argument":"a"}
 
     def test_check_settings(self):
         self.assertTrue(tasks_module.check_settings(self.complete_settings))
@@ -78,7 +86,11 @@ class TestChecks(unittest.TestCase):
         self.assertTrue(tasks_module.check_restriction(self.settings, self.restriction_successor_target))
         self.assertTrue(tasks_module.check_restriction(self.settings, self.restriction_successor_more))
         self.assertTrue(tasks_module.check_restriction(self.settings, self.restriction_successor_some))
-        self.assertTrue(tasks_module.check_restriction(self.settings, self.restriction_successor_error))
+        self.assertTrue(tasks_module.check_restriction(self.settings, self.restriction_position_fine))
+        with self.assertRaises(AssertionError):
+            tasks_module.check_restriction(self.settings, self.restriction_position_error_value)
+        with self.assertRaises(AssertionError):
+            tasks_module.check_restriction(self.settings, self.restriction_position_error_argument)
 
     def test_check_task(self):
         #tests: def check_task(settings, task):
@@ -92,20 +104,48 @@ class TestChecks(unittest.TestCase):
             tasks_module.check_task(self.settings, self.task_no_category)
         with self.assertRaises(AssertionError):
             tasks_module.check_task(self.settings, self.task_no_sentence)
+        with self.assertRaises(AssertionError):
+            tasks_module.check_task(self.settings, self.task_no_check_check)
+        with self.assertRaises(AssertionError):
+            tasks_module.check_task(self.settings, self.task_no_check_filler)
 
 
-class TestGetSelectRestrictions(unittest.TestCase):
+class TestCheckNotPositions(unittest.TestCase):
+    ''' test if not positions checks work '''
     def setUp(self):
-        self.select_pass = [{"action":"select", "category":"filler", "argument":0.5}, {"action":"select", "category":"target", "argument":0.5}]
-        self.select_additional = [{"action":"max_successors", "type":"foobar", "argument":4}, {"action":"select", "category":"filler", "argument":0.5}, {"action":"select", "category":"target", "argument":0.5}]
+        self.restriction_position_fine = [{"action":"not_positions", "category":"check", "argument":[1, 3]}]
+        self.restriction_position_error = [{"action":"not_positions", "category":"check", "argument":[0]}] * 2
+        self.restriction_position_error_later = [{"action":"not_positions", "category":"filler", "argument":[0]},
+                                                 {"action":"not_positions", "category":"check", "argument":[0]},
+                                                 {"action":"not_positions", "category":"filler", "argument":[2]}]
 
-    def test_get_select_restrictions(self):
-        self.assertEqual(tasks_module.get_select_restrictions(self.select_pass), self.select_pass)
-        self.assertEqual(tasks_module.get_select_restrictions(self.select_additional), self.select_pass)
+    def test_check_notpos(self):
+        # def check_notpos(notpos_restrictions):
+        self.assertEqual(tasks_module.check_notpos(self.restriction_position_fine), True)
         with self.assertRaises(AssertionError):
-            tasks_module.check_select(10, tasks_module.get_select_restrictions([]))
+            tasks_module.check_notpos(self.restriction_position_error)
         with self.assertRaises(AssertionError):
-            tasks_module.check_select(10, tasks_module.get_select_restrictions([{"action":"max_successors", "type":"foobar", "argument":4}]))
+            tasks_module.check_notpos(self.restriction_position_error_later)
+
+
+class TestApplyNotPositions(unittest.TestCase):
+    ''' test if not positions do what they should '''
+    def setUp(self):
+        self.restriction_position_fine = [{"action":"not_positions", "category":"check", "argument":[1, 3]}]
+        self.restriction_position_error_0 = [{"action":"not_positions", "category":"check", "argument":[0]}]
+        self.restriction_position_error_2 = [{"action":"not_positions", "category":"check", "argument":[2]}]
+        self.restriction_position_error_later = self.restriction_position_fine + self.restriction_position_error_2
+        self.task_check = [{"category": "check"}, {"category": "filler"},{"category": "check"}, {"category": "filler"}]
+
+    def test_apply_not_positions(self):
+        # def apply_not_positions(sample, notpos_restrictions):
+        # this will work
+        self.assertEqual(tasks_module.apply_not_positions(self.task_check, self.restriction_position_fine), True)
+        # this will not work
+        self.assertEqual(tasks_module.apply_not_positions(self.task_check, self.restriction_position_error_0), False)
+        self.assertEqual(tasks_module.apply_not_positions(self.task_check, self.restriction_position_error_2), False)
+        self.assertEqual(tasks_module.apply_not_positions(self.task_check, self.restriction_position_error_later), False)
+
 
 class TestCheckSelect(unittest.TestCase):
     ''' these are semantic checks for select restrictions'''

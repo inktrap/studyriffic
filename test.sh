@@ -6,5 +6,9 @@ else
     for i in ./tests/*.py; do
         #echo "$i"
         python -m unittest -v -f "${i/\.\//}"
+        RET=$?
+        if [[ ! $RET -eq 0 ]]; then
+            exit $RET
+        fi
     done
 fi
