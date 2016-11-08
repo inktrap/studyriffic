@@ -291,6 +291,7 @@ def main(settings, tasks):
 def check_settings(settings):
     assert "active" in settings.keys()
     assert "labels" in settings.keys()
+    assert "max_check_fail" in settings.keys()
     assert "questions" in settings.keys()
     assert "min_scale" in settings.keys()
     assert "max_scale" in settings.keys()
@@ -302,6 +303,7 @@ def check_settings(settings):
     assert isinstance(settings["min_scale"], int)
     assert isinstance(settings["max_scale"], int)
     assert isinstance(settings["time"], int)
+    assert isinstance(settings["max_check_fail"], int)
 
     assert "situation" in settings.keys()
     assert "question" in settings.keys()

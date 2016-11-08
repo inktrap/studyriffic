@@ -28,15 +28,21 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Valentin Todo
 
+ - do not include participant: 57acfa4dbd4ee2000111d379 in new study
+ - feature to exclude participants
+ - export prolific ids to csv?
+ - include attention checks: 2 (short studies) 3 (longer studies)
+ - include expected values for fillers in data
+ - finish abort setting and TODOs
+ - abort if a participant fails 2
+ - change consent form to include attention checks and fails
 
- - run 1b as a test (new deadline?)
  - run main experiment
  - participant selection criteria
     - english speaking
     - > 18
     - for 1a) exclude 1b)
 
- - kontierungsblatt uberspace
  - write documentation and a paper
     - a paper describing the workflow would be nice and would be cited by zsophia :)
 
@@ -68,6 +74,12 @@ Here is a quick overview of the framework I wrote. It features:
 # Done
 
 ~~~
+ x tests for the new attributes and the new restriction
+ x included not_positions restrictions (forbid a task of a certain category to occur at a list of positions)
+ x included new attribute for fillers and checks: "check" (expected value between [0,1] that can be mapped to every scale)
+ x kontierungsblatt uberspace
+ x write message to participants
+ x pay participants
  x run study 1b)
      x test everything one more time and wait for okay
      x clear the database and remove the backups that accumulated while testing

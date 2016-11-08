@@ -31,6 +31,7 @@ class TestChecks(unittest.TestCase):
         self.complete_settings["active"] = True
         self.complete_settings["labels"] = False
         self.complete_settings["questions"] = 10
+        self.complete_settings["max_check_fail"] = 0
         self.complete_settings["min_scale"] = 0
         self.complete_settings["max_scale"] = 1
         self.complete_settings["time"] = 10
