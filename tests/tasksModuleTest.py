@@ -120,13 +120,13 @@ class TestCheckNotPositions(unittest.TestCase):
                                                  {"action":"not_positions", "category":"check", "argument":[0]},
                                                  {"action":"not_positions", "category":"filler", "argument":[2]}]
 
-    def test_check_notpos(self):
-        # def check_notpos(notpos_restrictions):
-        self.assertEqual(tasks_module.check_notpos(self.restriction_position_fine), True)
+    def test_check_notpositions(self):
+        # def check_notpositions(notpos_restrictions):
+        self.assertEqual(tasks_module.check_notpositions(self.restriction_position_fine), True)
         with self.assertRaises(AssertionError):
-            tasks_module.check_notpos(self.restriction_position_error)
+            tasks_module.check_notpositions(self.restriction_position_error)
         with self.assertRaises(AssertionError):
-            tasks_module.check_notpos(self.restriction_position_error_later)
+            tasks_module.check_notpositions(self.restriction_position_error_later)
 
 
 class TestApplyNotPositions(unittest.TestCase):

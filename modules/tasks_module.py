@@ -117,7 +117,7 @@ def check_task(settings, task):
     return True
 
 
-def check_notpos(notpos_restrictions):
+def check_notpositions(notpos_restrictions):
     ''' check all the notpos-restrictions'''
     notpos_categories = []
     for notpos_restriction in notpos_restrictions:
@@ -266,7 +266,7 @@ def main(settings, tasks):
     successor_restrictions = list(filter(lambda x: x['action'] == 'max_successors', settings['restrictions']))
     # notpos restrictions have to be checked individually and together
     notpos_restrictions = list(filter(lambda x: x['action'] == 'not_positions', settings['restrictions']))
-    check_notpos(notpos_restrictions)
+    check_notpositions(notpos_restrictions)
     iterations = 0
     status = False
     while (status is False):
