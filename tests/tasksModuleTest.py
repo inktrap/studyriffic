@@ -128,7 +128,6 @@ class TestCheckNotPositions(unittest.TestCase):
         with self.assertRaises(AssertionError):
             tasks_module.check_notpositions(self.restriction_position_error_later)
 
-
 class TestApplyNotPositions(unittest.TestCase):
     ''' test if not positions do what they should '''
     def setUp(self):
@@ -281,4 +280,21 @@ class TestApplySelect(unittest.TestCase):
         self.assertEqual(count_filler, int(filler['argument'] * self.questions_pass))
         self.assertEqual(count_target, int(target['argument'] * self.questions_pass))
 
+
+class TestCheckExpected(unittest.TestCase):
+
+    def setUp(self):
+        self.filler = {'id': 11, 'category': 'filler', 'type': ['owl'], 'check': [1.0], 'sentence': 'He loves the way how fillers look like.', 'situation': 'Jimmy is the best friend of an owl.'}
+        self.check = {'id': 11, 'category': 'check', 'type': ['owl'], 'check': [1.0], 'sentence': 'Please select the minimum.', 'situation': 'This is a check that you are paying attention.'}
+        self.target = {'id': 11, 'category': 'target', 'type': ['owl'], 'sentence': 'He loves the way how fillers look like.', 'situation': 'Jimmy is the best friend of an owl.'}
+
+    def test__map_expected(self):
+        #def _map_expected(expected, min_scale, max_scale):
+        tasks_module._map_expected(self.expected, self.min_scale, self.max_scale)
+        self.assertFalse()
+
+    def test_check_expected(self):
+        #def check_expected(expected, real, min_scale, max_scale):
+        tasks_module.check_expected(self.expected, self.real, self.min_scale, self.max_scale)
+        self.assertFalse()
 

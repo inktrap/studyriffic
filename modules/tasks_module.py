@@ -11,7 +11,7 @@ import signal
 
 import logging
 logger = logging.getLogger('tasks_module')
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 formatter = logging.Formatter(
     '[%(asctime)s] p%(process)s {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s', '%m-%d %H:%M:%S')
 
@@ -83,6 +83,8 @@ def _check_task_check(task):
 
 def check_task(settings, task):
     assert isinstance(task, dict), "A task has to be a dictionary"
+
+    logger.debug(task)
 
     # check that all the keys are there
     assert 'category' in task.keys()
@@ -158,7 +160,7 @@ def check_select(questions, select_restrictions):
 
 def apply_not_positions(sample, notpos_restrictions):
     assert len(sample) > 0
-    assert len(notpos_restrictions) > 0
+    #assert len(notpos_restrictions) > 0
     for notpos_restriction in notpos_restrictions:
         # filter the positions that are forbidden
         restricted = [item for index, item in enumerate(sample) if index in notpos_restriction['argument']]
@@ -173,7 +175,7 @@ def apply_not_positions(sample, notpos_restrictions):
 def apply_successor(sample, successor_restrictions):
     ''' apply the successors and return true or false if the sample is valid'''
     assert len(sample) > 0
-    assert len(successor_restrictions) > 0
+    #assert len(successor_restrictions) > 0
     logger.debug("applying successors")
     logger.debug(sample)
     logger.debug(successor_restrictions)
@@ -256,6 +258,36 @@ def apply_select(questions, select_restrictions, tasks):
     assert len(result) == questions, "The number of the sample does not equal the number of questions"
     return result
 
+def _map_expected(expected, min_scale, max_scale):
+    # TODO: test
+    # map the expected value to the scale
+    logger.debug(expected)
+    assert isinstance(expected, float)
+    assert 0 <= expected <= 1
+    assert (max_scale - min_scale) > 0
+    result = expected * (max_scale - min_scale)
+    logger.debug("mapped %f to %i" % (expected, result))
+    return result
+
+def check_expected(expected, real, min_scale, max_scale):
+    # TODO: test
+    ''' check if the real value matches the expected value (for a scale)'''
+    # todo: check if the expected value matches the real value
+    assert isinstance(expected, list)
+    assert len(expected) in [1,2]
+    # unfortunately we have to do type juggling here :(
+    # but let's do this the paranoid way and check that the value is an int as a string
+    assert real in [str(i) for i in range(min_scale, max_scale + 1)]
+    real = int(real)
+    assert isinstance(real, int)
+    logger.debug("Judging answer %i" % real)
+    if len(expected) == 1:
+        return real == _map_expected(expected[0], min_scale, max_scale)
+    elif len(expected) == 2:
+        return _map_expected(expected[0], min_scale, max_scale) <= real <= _map_expected(expected[1], min_scale, max_scale)
+    # this code should never be reached:
+    raise AssertionError("An expected value has to be a list")
+    return False
 
 def main(settings, tasks):
     check_config(settings, tasks)
