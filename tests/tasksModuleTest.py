@@ -281,20 +281,38 @@ class TestApplySelect(unittest.TestCase):
         self.assertEqual(count_target, int(target['argument'] * self.questions_pass))
 
 
-class TestCheckExpected(unittest.TestCase):
+class TestCheckCheck(unittest.TestCase):
 
     def setUp(self):
         self.filler = {'id': 11, 'category': 'filler', 'type': ['owl'], 'check': [1.0], 'sentence': 'He loves the way how fillers look like.', 'situation': 'Jimmy is the best friend of an owl.'}
         self.check = {'id': 11, 'category': 'check', 'type': ['owl'], 'check': [1.0], 'sentence': 'Please select the minimum.', 'situation': 'This is a check that you are paying attention.'}
         self.target = {'id': 11, 'category': 'target', 'type': ['owl'], 'sentence': 'He loves the way how fillers look like.', 'situation': 'Jimmy is the best friend of an owl.'}
+        # the value val is check to map on the different scales (scale 01 is
+        # from 0 to 1 aso.) to these results (and a range is just multiple
+        # calls to map_check so the only thing that might be unwanted is the
+        # not so strict comparison ( min <= x <= max )
+        # TODO: describe that 0.5 will be 0 (depends on python3 rounding behaviour)
+        self.check = {
+            0   : {'check': 0.0, 'scale_01':0, 'scale_05':0, 'scale_010':0},
+            20  : {'check': 0.2, 'scale_01':0, 'scale_05':1, 'scale_010':2},
+            40  : {'check': 0.4, 'scale_01':0, 'scale_05':2, 'scale_010':4},
+            50  : {'check': 0.5, 'scale_01':0, 'scale_05':2, 'scale_010':5},
+            60  : {'check': 0.6, 'scale_01':1, 'scale_05':3, 'scale_010':6},
+            80  : {'check': 0.8, 'scale_01':1, 'scale_05':4, 'scale_010':8},
+            100 : {'check': 1.0, 'scale_01':1, 'scale_05':5, 'scale_010':10}
+        }
 
-    def test__map_expected(self):
-        #def _map_expected(expected, min_scale, max_scale):
-        tasks_module._map_expected(self.expected, self.min_scale, self.max_scale)
-        self.assertFalse()
+    def test__map_check(self):
+        #def _map_check(check, min_scale, max_scale):
+        for k,v in self.check.items():
+            logger.debug("testing %i percent\n" % k)
+            self.assertEqual(tasks_module._map_check(v['check'], 0, 1),  v['scale_01'])
+            self.assertEqual(tasks_module._map_check(v['check'], 0, 5),  v['scale_05'])
+            self.assertEqual(tasks_module._map_check(v['check'], 0, 10), v['scale_010'])
 
-    def test_check_expected(self):
-        #def check_expected(expected, real, min_scale, max_scale):
-        tasks_module.check_expected(self.expected, self.real, self.min_scale, self.max_scale)
-        self.assertFalse()
+    def test_check_check(self):
+        #def check_check(check, real, min_scale, max_scale):
+        #tasks_module.check_check(self.check, self.real, self.min_scale, self.max_scale)
+        #self.assertFalse()
+        pass
 

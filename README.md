@@ -32,10 +32,19 @@ Here is a quick overview of the framework I wrote. It features:
  - feature to exclude participants
  - export prolific ids to csv?
  - include attention checks: 2 (short studies) 3 (longer studies)
+
  - include expected values for fillers in data
  - finish abort setting and TODOs
  - abort if a participant fails 2
  - change consent form to include attention checks and fails
+
+ - check that all the values from demographics are written into the db
+ - other todos from the mail
+
+ - misc:
+     - include python rounding behaviour notice in docs
+     - describe different restrictions in detail
+     - maybe: implement interval setting and rounding setting
 
  - run main experiment
  - participant selection criteria

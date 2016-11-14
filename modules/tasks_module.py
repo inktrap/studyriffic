@@ -258,35 +258,40 @@ def apply_select(questions, select_restrictions, tasks):
     assert len(result) == questions, "The number of the sample does not equal the number of questions"
     return result
 
-def _map_expected(expected, min_scale, max_scale):
+def _map_check(check, min_scale, max_scale):
     # TODO: test
-    # map the expected value to the scale
-    logger.debug(expected)
-    assert isinstance(expected, float)
-    assert 0 <= expected <= 1
+    # map the check value to the scale (which means: the closest integer)
+    logger.debug(check)
+    assert isinstance(check, float)
+    assert 0 <= check <= 1
     assert (max_scale - min_scale) > 0
-    result = expected * (max_scale - min_scale)
-    logger.debug("mapped %f to %i" % (expected, result))
+    result = check * (max_scale - min_scale)
+    result = int(round(result))
+    logger.debug("mapped %f to %i" % (check, result))
     return result
 
-def check_expected(expected, real, min_scale, max_scale):
+def check_check(check, real, min_scale, max_scale):
     # TODO: test
-    ''' check if the real value matches the expected value (for a scale)'''
-    # todo: check if the expected value matches the real value
-    assert isinstance(expected, list)
-    assert len(expected) in [1,2]
+    ''' check if the real value matches the check value (for a scale)'''
+    # todo: check if the check value matches the real value
+    assert isinstance(check, list)
+    assert len(check) in [1,2]
     # unfortunately we have to do type juggling here :(
     # but let's do this the paranoid way and check that the value is an int as a string
     assert real in [str(i) for i in range(min_scale, max_scale + 1)]
     real = int(real)
     assert isinstance(real, int)
     logger.debug("Judging answer %i" % real)
-    if len(expected) == 1:
-        return real == _map_expected(expected[0], min_scale, max_scale)
-    elif len(expected) == 2:
-        return _map_expected(expected[0], min_scale, max_scale) <= real <= _map_expected(expected[1], min_scale, max_scale)
+    if len(check) == 1:
+        # if there is one value check for equality
+        return real == _map_check(check[0], min_scale, max_scale)
+    elif len(check) == 2:
+        # if we specified a range specify how should the check should be done?
+        # TODO: use check_range_interval, which specified one of: [] () [) (]
+        # this is [] where both values are included
+        return _map_check(check[0], min_scale, max_scale) <= real <= _map_check(check[1], min_scale, max_scale)
     # this code should never be reached:
-    raise AssertionError("An expected value has to be a list")
+    raise AssertionError("A check value has to be a list")
     return False
 
 def main(settings, tasks):
