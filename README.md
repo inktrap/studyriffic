@@ -86,6 +86,9 @@ Here is a quick overview of the framework I wrote. It features:
 # Done
 
 ~~~
+ x fixed a bug with check
+ x fixed a bug with demographic-form values
+ x wrote tests for map_check
  x tests for the new attributes and the new restriction
  x included not_positions restrictions (forbid a task of a certain category to occur at a list of positions)
  x included new attribute for fillers and checks: "check" (expected value between [0,1] that can be mapped to every scale)
