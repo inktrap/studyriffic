@@ -50,7 +50,7 @@ def check_restriction(settings, restriction):
         assert isinstance(restriction['argument'], int)
         assert 'category' in restriction.keys() or 'type' in restriction.keys(), "A max_successors restriction has to operate on either a type or a category"
         assert restriction['argument'] >= 0, "For the argument a of a max_successors restriction it has to hold that 0 <= a"
-        assert restriction['argument'] < settings['questions'], "For the argument a of a max_successors restriction it is probably a mistake if a >= the number of questions."
+        # assert restriction['argument'] < settings['questions'], "For the argument a of a max_successors restriction it is probably a mistake if a >= the number of questions."
     elif restriction['action'] == 'select':
         assert isinstance(restriction['argument'], float)
         assert 'category' in restriction.keys()
@@ -61,7 +61,7 @@ def check_restriction(settings, restriction):
         for a in restriction['argument']:
             assert isinstance(a, int), "A position in a list handed to not_positions has to be an integer"
         #print(settings['questions'])
-        assert (max(restriction['argument']) < settings['questions']), "For a position p it has to hold that p <= N, where N is the number of the positions|questions available."
+        assert (max(restriction['argument']) < settings['questions']), "For a position p (starting with 0) it has to hold that p < N, where N is the number of the positions|questions available."
         assert (0 <= min(restriction['argument'])), "For a position p it has to hold that 0 <= p"
     else:
         raise ValueError("Unknown restriction action %s" % restriction['action'])
@@ -139,12 +139,15 @@ def check_select(questions, select_restrictions):
 
     # semantic checks for select restrictions
     # check if the numbers of selects add up to 1
-    assert sum([select_restriction['argument'] for select_restriction in select_restrictions]) == 1, "Select restrictions have to sum up to exactly 1"
+    select_sum = sum([select_restriction['argument'] for select_restriction in select_restrictions])
+    # TODO this is stupid for three thirds that are written as 0.33333333 each.
+    #assert select_sum == 1, "Select restrictions have to sum up to (exactly?) 1, these sum up to: %s" % str(select_sum)
+    assert 1 - select_sum < 0.00001, "Select restrictions have to sum up to (exactly?) 1, these sum up to: %s" % str(select_sum)
 
     select_categories = []
 
     for select_restriction in select_restrictions:
-        #print(math.modf(settings['questions'] * select_restriction['argument'])[0])
+        logging.debug(math.modf(questions * select_restriction['argument'])[0])
         assert (math.modf(questions * select_restriction['argument']))[0] == 0.0, "selection arguments can not produce items less than 1 (F.e.: You can not split a question in half)."
         assert 'category' in select_restriction.keys(), "Category key not present"
         assert select_restriction['argument'] > 0, "The argument of a select restriction must be greater 0 (it has to select something)"

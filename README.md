@@ -28,29 +28,32 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Valentin Todo
 
- - do not include participant: 57acfa4dbd4ee2000111d379 in new study
  - feature to exclude participants
  - export prolific ids to csv?
  - include attention checks: 2 (short studies) 3 (longer studies)
-
  - include expected values for fillers in data
+
  - finish abort setting and TODOs
  - abort if a participant fails 2
  - change consent form to include attention checks and fails
+ - change format of results to include different types
 
- - check that all the values from demographics are written into the db
- - other todos from the mail
+ - check that all the values from demographics-form are processed correctly (unittest this assumption)
+ - prolific attention checks (unittest this)
 
  - misc:
      - include python rounding behaviour notice in docs
+     - include a setting to specify the type of interval for ranges in the check field
      - describe different restrictions in detail
      - maybe: implement interval setting and rounding setting
+     - maybe: specify select restrictions as fractions instead of floats?
 
  - run main experiment
  - participant selection criteria
     - english speaking
     - > 18
     - for 1a) exclude 1b)
+    - for all exclude: 57acfa4dbd4ee2000111d379
 
  - write documentation and a paper
     - a paper describing the workflow would be nice and would be cited by zsophia :)
