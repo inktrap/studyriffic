@@ -140,10 +140,9 @@ def check_select(questions, select_restrictions):
     # semantic checks for select restrictions
     # check if the numbers of selects add up to 1
     select_sum = sum([select_restriction['argument'] for select_restriction in select_restrictions])
-    # TODO this is stupid for three thirds that are written as 0.33333333 each.
+    # TODO this is stupid for three thirds that are written as 0.33333333 each. Do this as fractions.
     #assert select_sum == 1, "Select restrictions have to sum up to (exactly?) 1, these sum up to: %s" % str(select_sum)
     logger.debug(select_sum)
-    # TODO: do this is fractions
     assert 0 <= (1 - select_sum) < 0.00001, "Select restrictions have to sum up to (exactly?) 1, these sum up to: %s" % str(select_sum)
 
     select_categories = []
@@ -264,7 +263,8 @@ def apply_select(questions, select_restrictions, tasks):
     return result
 
 def _map_check(check, min_scale, max_scale):
-    # map the check value to the scale (which means: the closest integer)
+    # map the percentage specified by check to the scale
+    # (0.0: min_scale, 1.0: max_scale)
     logger.debug(check)
     assert isinstance(check, float)
     assert 0 <= check <= 1
@@ -276,9 +276,7 @@ def _map_check(check, min_scale, max_scale):
     return result
 
 def check_check(check, real, min_scale, max_scale):
-    # TODO: test
     ''' check if the real value matches the check value (for a scale)'''
-    # todo: check if the check value matches the real value
     assert isinstance(check, list)
     assert len(check) in [1,2]
     # unfortunately we have to do type juggling here :(

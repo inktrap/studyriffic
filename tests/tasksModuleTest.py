@@ -308,7 +308,12 @@ class TestCheckCheck(unittest.TestCase):
         # from 0 to 1 aso.) to these results (and a range is just multiple
         # calls to map_check so the only thing that might be unwanted is the
         # not so strict comparison ( min <= x <= max )
-        # TODO: describe that 0.5 will be 0 (depends on python3 rounding behaviour)
+        # these values depend on python3.5's rounding behaviour
+        # if the distance is equal (.5) python favors the even value, so
+        # 0.5 is 0
+        # 1.5 is 2
+        # 2.5 is 2
+        # 3.5 is 4
         self.check = {
             0   : {'check': 0.0, 'scale_01':0, 'scale_04':0, 'scale_110':1},
             20  : {'check': 0.2, 'scale_01':0, 'scale_04':1, 'scale_110':2},

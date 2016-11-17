@@ -29,17 +29,21 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Valentin Todo
 
- - grep for TODOs
+ - priorities
+     - grep for TODOs
+     - finish attention feature
+     - results
+     - configure studies
 
 
 ## features
 
- - exclude
-     - feature to exclude participants
-     - test feature to exclude participants
  - attention
      - prolific attention checks
      - unittest prolific attention checks
+ - exclude
+     - feature to exclude participants
+     - test feature to exclude participants
 
 
 ## results
@@ -53,16 +57,18 @@ Here is a quick overview of the framework I wrote. It features:
  - include attention checks: 2 (short studies) 3 (longer studies)
  - abort if a participant fails 2
  - change consent form to include attention checks and fails
- - change format of results to include different types
 
 
-## misc:
+## maybe/sometimes:
 
  - sometimes/maybe include expected values for fillers in data
  - include a setting to specify the type of interval for ranges in the check field
  - describe different restrictions in detail
- - maybe: implement interval setting and rounding setting
- - maybe: specify select restrictions as fractions instead of floats?
+ - implement interval setting and rounding setting
+ - specify select restrictions as fractions instead of floats?
+
+
+# documentation
 
  - run main experiment
  - participant selection criteria
