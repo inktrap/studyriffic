@@ -142,7 +142,9 @@ def check_select(questions, select_restrictions):
     select_sum = sum([select_restriction['argument'] for select_restriction in select_restrictions])
     # TODO this is stupid for three thirds that are written as 0.33333333 each.
     #assert select_sum == 1, "Select restrictions have to sum up to (exactly?) 1, these sum up to: %s" % str(select_sum)
-    assert 1 - select_sum < 0.00001, "Select restrictions have to sum up to (exactly?) 1, these sum up to: %s" % str(select_sum)
+    logger.debug(select_sum)
+    # TODO: do this is fractions
+    assert 0 <= (1 - select_sum) < 0.00001, "Select restrictions have to sum up to (exactly?) 1, these sum up to: %s" % str(select_sum)
 
     select_categories = []
 
@@ -380,6 +382,14 @@ because a task has to have a question."
 
     for this_restriction in settings['restrictions']:
         check_restriction(settings, this_restriction)
+
+    check_max_check_fail(settings)
+    return True
+
+def check_max_check_fail(settings):
+    # assert that max_check_fail is configured correctly
+    assert isinstance(settings['max_check_fail'], int), "max_check_fail has to be an integer"
+    assert settings['max_check_fail'] >= 0, "max_check_fail has to be >= 0"
     return True
 
 def check_tasks(settings, tasks):

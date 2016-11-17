@@ -79,6 +79,23 @@ class TestChecks(unittest.TestCase):
         #with self.assertRaises(AssertionError):
         #    tasks_module.check_settings(self.complete_settings)
 
+    def test_max_check_fail_setting(self):
+        # check the max_check_fail setting
+        # yes, I know, this still points to the same dict
+        complete_settings = self.complete_settings
+        complete_settings['max_check_fail'] = -1
+        with self.assertRaises(AssertionError):
+            tasks_module.check_settings(complete_settings)
+
+        complete_settings['max_check_fail'] = "1"
+        with self.assertRaises(AssertionError):
+            tasks_module.check_settings(complete_settings)
+
+        complete_settings['max_check_fail'] = 1.0
+        with self.assertRaises(AssertionError):
+            tasks_module.check_settings(complete_settings)
+        return True
+
     def test_check_restriction(self):
         #tests: def check_restriction(settings, restriction):
         self.assertTrue(tasks_module.check_restriction(self.settings, self.restriction_select_filler))
