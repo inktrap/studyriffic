@@ -310,26 +310,32 @@ class TestCheckCheck(unittest.TestCase):
         # not so strict comparison ( min <= x <= max )
         # TODO: describe that 0.5 will be 0 (depends on python3 rounding behaviour)
         self.check = {
-            0   : {'check': 0.0, 'scale_01':0, 'scale_05':0, 'scale_010':0},
-            20  : {'check': 0.2, 'scale_01':0, 'scale_05':1, 'scale_010':2},
-            40  : {'check': 0.4, 'scale_01':0, 'scale_05':2, 'scale_010':4},
-            50  : {'check': 0.5, 'scale_01':0, 'scale_05':2, 'scale_010':5},
-            60  : {'check': 0.6, 'scale_01':1, 'scale_05':3, 'scale_010':6},
-            80  : {'check': 0.8, 'scale_01':1, 'scale_05':4, 'scale_010':8},
-            100 : {'check': 1.0, 'scale_01':1, 'scale_05':5, 'scale_010':10}
+            0   : {'check': 0.0, 'scale_01':0, 'scale_04':0, 'scale_110':1},
+            20  : {'check': 0.2, 'scale_01':0, 'scale_04':1, 'scale_110':2},
+            40  : {'check': 0.4, 'scale_01':0, 'scale_04':2, 'scale_110':4},
+            50  : {'check': 0.5, 'scale_01':0, 'scale_04':2, 'scale_110':5},
+            60  : {'check': 0.6, 'scale_01':1, 'scale_04':2, 'scale_110':6},
+            80  : {'check': 0.8, 'scale_01':1, 'scale_04':3, 'scale_110':8},
+            100 : {'check': 1.0, 'scale_01':1, 'scale_04':4, 'scale_110':10}
         }
+        self.min_scale = 0
+        self.max_scale = 4
 
     def test__map_check(self):
         #def _map_check(check, min_scale, max_scale):
         for k,v in self.check.items():
             logger.debug("testing %i percent\n" % k)
             self.assertEqual(tasks_module._map_check(v['check'], 0, 1),  v['scale_01'])
-            self.assertEqual(tasks_module._map_check(v['check'], 0, 5),  v['scale_05'])
-            self.assertEqual(tasks_module._map_check(v['check'], 0, 10), v['scale_010'])
+            self.assertEqual(tasks_module._map_check(v['check'], 0, 4),  v['scale_04'])
+            self.assertEqual(tasks_module._map_check(v['check'], 1, 10), v['scale_110'])
 
     def test_check_check(self):
         #def check_check(check, real, min_scale, max_scale):
-        #tasks_module.check_check(self.check, self.real, self.min_scale, self.max_scale)
+        self.assertTrue(tasks_module.check_check([0.0], '0', self.min_scale, self.max_scale))
+        self.assertTrue(tasks_module.check_check([0.25], '1', self.min_scale, self.max_scale))
+        self.assertTrue(tasks_module.check_check([0.5], '2', self.min_scale, self.max_scale))
+        self.assertTrue(tasks_module.check_check([0.75], '3', self.min_scale, self.max_scale))
+        self.assertTrue(tasks_module.check_check([1.0], '4', self.min_scale, self.max_scale))
         #self.assertFalse()
         pass
 

@@ -385,3 +385,20 @@ would be ``first.tpl``:
 ~~~
 
 
+# Restrictions
+
+
+# Special attributes for tasks
+
+ - tasks of the category ``filler`` or the category ``check`` have to have an attribute called ``check``, which is a list. This list can contain either one (``[0.0]``) or two (``[0.0, 0.5]``) values.
+
+ - The values are mapped to the scale and are used to check if participants gave the expected answers. F.e.: a ``check`` value like ``[0.0]`` on a scale from ``0`` to ``4`` means: The participant has to select the lowest value on the scale, in this example that would be ``0``. On a scale from ``1`` to ``5`` it would be ``1``. This is approach ensures that you can switch scales easily. Because the answer of an attention check that wants you to select the minimum always wants the lowest value on your scale.
+
+ - If two values are specified, you are providing a closed interval for the answer: On a scale from ``0`` to ``4`` the check value of ``[0.0, 0.75]`` would include ``0, 1, 2, 3``, because they are included in the 0% - 75% range of your scale.
+
+## Caveats 
+
+This behaviour might be configurable by options later.
+
+ - Python3.5 rounds to the next even number if the distance to two number is the same. So ``1.5`` becomes ``2`` and ``2.5`` becomes ``2`` as well, even if most people would expect the last example to be ``3``. This is the default behaviour of Python3.5. See: [IEEE Rounding Rules](https://en.wikipedia.org/wiki/IEEE_floating_point#Rounding_rules) and [round()](https://docs.python.org/3/library/functions.html#round).
+ - the interval is defined as closed, that means a ``check`` value of ``[MIN, MAX]`` for a value ``VALUE`` would be checked as: ``MIN`` <= ``VALUE`` <= ``MAX``. The reasoning here is that you are specifying a list and a list includes the values that are specified.That is why it seemed a reasonable assumption that the user expects these values to be included.

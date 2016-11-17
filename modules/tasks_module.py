@@ -264,13 +264,13 @@ def apply_select(questions, select_restrictions, tasks):
     return result
 
 def _map_check(check, min_scale, max_scale):
-    # TODO: test
     # map the check value to the scale (which means: the closest integer)
     logger.debug(check)
     assert isinstance(check, float)
     assert 0 <= check <= 1
     assert (max_scale - min_scale) > 0
-    result = check * (max_scale - min_scale)
+    result = max([check * max_scale, min_scale])
+    #result = check * max_scale
     result = int(round(result))
     logger.debug("mapped %f to %i" % (check, result))
     return result
@@ -292,7 +292,7 @@ def check_check(check, real, min_scale, max_scale):
         return real == _map_check(check[0], min_scale, max_scale)
     elif len(check) == 2:
         # if we specified a range specify how should the check should be done?
-        # TODO: use check_range_interval, which specified one of: [] () [) (]
+        # TODO (feature): use check_range_interval, which specified one of: [] () [) (]
         # this is [] where both values are included
         return _map_check(check[0], min_scale, max_scale) <= real <= _map_check(check[1], min_scale, max_scale)
     # this code should never be reached:

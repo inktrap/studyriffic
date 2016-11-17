@@ -26,27 +26,43 @@ Here is a quick overview of the framework I wrote. It features:
  - A study with the likert scale: <https://perigen.diphda.uberspace.de/study/demo_binary?prolific_pid=123&session_id=foobar>
  - meeting: monday 16:30 office 23.32.02.65.
 
+
 # Valentin Todo
 
- - feature to exclude participants
- - export prolific ids to csv?
- - include attention checks: 2 (short studies) 3 (longer studies)
- - include expected values for fillers in data
+ - grep for TODOs
 
- - finish abort setting and TODOs
+
+## features
+
+ - exclude
+     - feature to exclude participants
+     - test feature to exclude participants
+ - attention
+     - prolific attention checks
+     - unittest prolific attention checks
+
+
+## results
+
+ - export prolific ids to csv
+ - add columns for all the types, like type1 type2 aso
+
+
+## configure studies:
+
+ - include attention checks: 2 (short studies) 3 (longer studies)
  - abort if a participant fails 2
  - change consent form to include attention checks and fails
  - change format of results to include different types
 
- - check that all the values from demographics-form are processed correctly (unittest this assumption)
- - prolific attention checks (unittest this)
 
- - misc:
-     - include python rounding behaviour notice in docs
-     - include a setting to specify the type of interval for ranges in the check field
-     - describe different restrictions in detail
-     - maybe: implement interval setting and rounding setting
-     - maybe: specify select restrictions as fractions instead of floats?
+## misc:
+
+ - sometimes/maybe include expected values for fillers in data
+ - include a setting to specify the type of interval for ranges in the check field
+ - describe different restrictions in detail
+ - maybe: implement interval setting and rounding setting
+ - maybe: specify select restrictions as fractions instead of floats?
 
  - run main experiment
  - participant selection criteria
@@ -86,6 +102,10 @@ Here is a quick overview of the framework I wrote. It features:
 # Done
 
 ~~~
+ x include open interval behaviour notice in docs
+ x include python rounding behaviour notice in docs
+ x fixed demographic forms and made it skip empty values (this case should never happen but it is cleaner anyway)
+ x check that all the values from demographics-form are processed correctly (unittest this assumption)
  x fixed a bug with check
  x fixed a bug with demographic-form values
  x wrote tests for map_check
