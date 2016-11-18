@@ -30,45 +30,52 @@ Here is a quick overview of the framework I wrote. It features:
 # Valentin Todo
 
  - priorities
-     - grep for TODOs
      - finish attention feature
      - results
      - configure studies
+     - grep for TODOs
 
 
-## features
+### features
 
  - attention
      - prolific attention checks
      - unittest prolific attention checks
+     - if too many attention checks failed the situation and sentence is there but empty. this could be improved.
+        - this raises the subject of displaying errors
+        - how to encapsulate js properly?
  - exclude
      - feature to exclude participants
      - test feature to exclude participants
 
 
-## results
+### results
 
  - export prolific ids to csv
  - add columns for all the types, like type1 type2 aso
 
 
-## configure studies:
+### configure studies:
 
  - include attention checks: 2 (short studies) 3 (longer studies)
  - abort if a participant fails 2
  - change consent form to include attention checks and fails
 
 
+### documentation:
+
+ - describe different restrictions in detail
+
+
 ## maybe/sometimes:
 
  - sometimes/maybe include expected values for fillers in data
  - include a setting to specify the type of interval for ranges in the check field
- - describe different restrictions in detail
  - implement interval setting and rounding setting
  - specify select restrictions as fractions instead of floats?
 
 
-# documentation
+## documentation
 
  - run main experiment
  - participant selection criteria
@@ -91,7 +98,6 @@ Here is a quick overview of the framework I wrote. It features:
  - optional/maybe: documentation?
  - optional/maybe: autopep8?
  - optional/maybe: publish?? (blogpost, pr)
- - known limitation: no newlines in tasks.
  - info needed (if ie has this weird behaviour i am going to exclude it as well as edge):
      - bug: ie: skips back to 0% and first question, then after Continue, skips to the next new question after the last position before break-off (e.g., 50%).
      - bug: ie 11: does not work (endless loop after two questions)
