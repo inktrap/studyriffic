@@ -29,40 +29,15 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Valentin Todo
 
- - priorities
-     - finish attention feature
-     - configure studies
-     - grep for TODOs
-
-
-### features
-
- - attention
-     - prolific attention checks
-     - unittest prolific attention checks
- - exclude
-     - feature to exclude participants
-     - test feature to exclude participants
-        - test if excluded_pids is present in settings
-        - populate excluded_pids from a file if present (append to config value)
-        - check that pass_exclusion check works
-        - check other pass_ … checks
-        -  excluded pids are a set
-
-### results
-
- - export prolific ids to csv
-
-
-### configure studies:
-
- - include attention checks: 2 (short studies) 3 (longer studies)
- - abort if a participant fails 2
- - change consent form to include attention checks and fails
+ - configure studies
+     - include attention checks: 2 (short studies) 3 (longer studies)
+     - abort if a participant fails 2
+     - change consent form to include attention checks and fails
 
 
 ### documentation:
 
+ - have another look at the documentation
  - describe different restrictions in detail
 
 
@@ -70,7 +45,7 @@ Here is a quick overview of the framework I wrote. It features:
 
  - if too many attention checks failed the situation and sentence is
  there but empty. this could be improved.
- - of displaying errors
+ - how to display errors?
  - how to encapsulate js properly?
  - sometimes/maybe include expected values for fillers in data
  - include a setting to specify the type of interval for ranges in the check field
@@ -132,6 +107,13 @@ Here is a quick overview of the framework I wrote. It features:
 # Done
 
 ~~~
+ x check other pass_ … checks
+ x feature to exclude participants
+ x test feature to exclude participants
+ x populate excluded_pids from a file if present (append to config value)
+ x check that pass_exclusion check works
+ x prolific attention checks
+ x unittest prolific attention checks
  x add columns for all the types, like type1 type2 aso
  x include open interval behaviour notice in docs
  x include python rounding behaviour notice in docs
