@@ -120,9 +120,10 @@ class csvResults():
         # - studyriffic configuration data (labels, active, aso.)
         # - study metadata (investigator or affiliation, or contact, aso.)
         # - study configuration data (time, question, questions, situation, aso.)
-        unnecessary_keys = ['time', 'templates', 'university', 'question',
+        unnecessary_keys = ['time', 'templates', 'question',
                             'situation', 'restrictions', 'actions', 'categories', 'types',
-                            'active', 'labels', 'investigator', 'contact', 'link']
+                            'active', 'labels', 'max_check_fail', 'check_range_interval', 'link']
+        # publishing_keys = ['university', 'investigator', 'contact']
         for key in unnecessary_keys:
             try:
                 del(content[key])
@@ -148,16 +149,23 @@ class csvResults():
         settings = self.loadJson('settings', results)
         type_keys = settings['types']
         items = self.loadJson('tasks', results)
-        item_keys = items[0].keys()
+        item_keys = list(items[0].keys())
+        # exclude the check key because only fillers and checks have it
+        if 'check' in item_keys:
+            item_keys.remove('check')
         item_keys = sorted([item_key for item_key in item_keys if item_key != 'type'])
-        data = [list(item_keys) + type_keys]
+        # append the types after the end of the columns and rename each type (f.e. foobar becomes TypeFoobar)
+        data = [list(item_keys) + [t + 'Type' for t in type_keys]]
         for item in items:
             row = []
-            row_types = [0] * len(type_keys)
+            row_types = [''] * len(type_keys)
             for key in item_keys:
                 row.append(item[key])
             for this_type in item['type']:
-                row_types[type_keys.index(this_type)] = 1
+                # this is the most fragile step: setting 1 for each type that is true in the predefined list
+                # redundant and duplicate behaviour would be
+                row_types[type_keys.index(this_type)] = this_type
+                #row_types[type_keys.index(this_type)] = 1
             row = row + row_types[:]
             data.append(row)
         assert self.write(data, os.path.join(results['csv'], 'tasks.csv')) is True

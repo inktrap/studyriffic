@@ -31,7 +31,6 @@ Here is a quick overview of the framework I wrote. It features:
 
  - priorities
      - finish attention feature
-     - results
      - configure studies
      - grep for TODOs
 
@@ -41,18 +40,18 @@ Here is a quick overview of the framework I wrote. It features:
  - attention
      - prolific attention checks
      - unittest prolific attention checks
-     - if too many attention checks failed the situation and sentence is there but empty. this could be improved.
-        - this raises the subject of displaying errors
-        - how to encapsulate js properly?
  - exclude
      - feature to exclude participants
      - test feature to exclude participants
-
+        - test if excluded_pids is present in settings
+        - populate excluded_pids from a file if present (append to config value)
+        - check that pass_exclusion check works
+        - check other pass_ … checks
+        -  excluded pids are a set
 
 ### results
 
  - export prolific ids to csv
- - add columns for all the types, like type1 type2 aso
 
 
 ### configure studies:
@@ -69,11 +68,30 @@ Here is a quick overview of the framework I wrote. It features:
 
 ## maybe/sometimes:
 
+ - if too many attention checks failed the situation and sentence is
+ there but empty. this could be improved.
+ - of displaying errors
+ - how to encapsulate js properly?
  - sometimes/maybe include expected values for fillers in data
  - include a setting to specify the type of interval for ranges in the check field
  - implement interval setting and rounding setting
  - specify select restrictions as fractions instead of floats?
+ - refactoring
+     - try out rope
+     - rename (as NOUN_SPECIFIER, where noun is the type of thing):
+        - min_scale -> scale_min
+        - max_scale -> scale_max
+        - min_scale_desc -> scale_min_desc
+        - max_scale_desc -> scale_max_desc
+        - max_check_fail -> check_max_fail
+        - excluded_pids -> pids_excluded
 
+        - link -> link_finish
+        - investigator -> investigator_name
+        - contact -> investigator_contact
+        - labels -> scale_labels
+        - question -> task_question
+        - situation -> task_situation
 
 ## documentation
 
@@ -114,6 +132,7 @@ Here is a quick overview of the framework I wrote. It features:
 # Done
 
 ~~~
+ x add columns for all the types, like type1 type2 aso
  x include open interval behaviour notice in docs
  x include python rounding behaviour notice in docs
  x fixed demographic forms and made it skip empty values (this case should never happen but it is cleaner anyway)

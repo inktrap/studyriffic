@@ -30,50 +30,47 @@ A settings file looks like the example below, and the keys that are described
 below are mandatory. Studyriffic is checking this pretty strictly, so you
 probably will get a lot of complaints (which is a good thing!).
 
-Json does not allow comments, so you probably want to download the complete
-[settings.json]() file without comments.
+ - ``"active" : true,``  if this setting is true, his study is active
+ - ``"labels" : false,``  should we label the scale? scales will be labeled if this setting is active and the scale is consists of 3 or more values 
+ - ``"question":"Do you think the following sentence is “Owly” or “Not Owly” in the above situation?",``  this is the question you would like to ask the participant 
+ - ``"situation":"Please consider the following situation:",``  This is an (optional) situation (or context) you would like to give. If it is empty, the task is displayed differently 
+ - ``"questions": 4,``  the numbers of questions. Also depends on the criteria for select restrictions (or vice-versa, depends on you) 
+ - ``"min_scale": 1,``  minimal value of the scale (is included) 
+ - ``"max_scale": 5,``  maximal value of the scale (is included) 
+ - ``"min_scale_desc" : "Definitely Not Owly",``  description of the minimal value 
+ - ``"max_scale_desc" : "Definitely Owly",``  description of the maximal value 
+ - ``"university": "Great Owl University",``  the university or affiliation that is responsible. Will be displayed in the footer 
+ - ``"investigator": "Dr. Owly Mc Owlface",``  the name of the person responsible for the study 
+ - ``"contact" : "Owly.Owlface@owl-university.owl",``  the e-mail of the person responsible for the study 
+ - ``"time" : 5,``  the time that you think is needed for the study. Used in the consent form 
+ - ``"link" : "https://example.org",`` the link that will appear in the end were participants are payed
+ - ``"actions": ["select", "max_successors"],``  a list of possible values for actions. If you are not adding new actions, you don't have to change this 
+ - ``"types":["hunt", "fact", "jimmy"],`` a complete list of the types that appear in your tasks file
+ - ``"categories":["filler", "target"],`` a complete list of categories that appear in your tasks file
+ - ``"templates": ["first.tpl"],`` the custom templates you are going to use. By default this would be the template that shows the introductions and gives examples
+ - ``"restrictions":[]`` this is a list of restrictions. More on that later.
 
-~~~
-{
-    "active" : true, /* if this setting is true, his study is active */
-    "labels" : false, /* should we label the scale? scales will be labeled if this setting is active and the scale is consists of 3 or more values */
-    "question":"Do you think the following sentence is “Owly” or “Not Owly” in the above situation?", /* this is the question you would like to ask the participant */
-    "situation":"Please consider the following situation:", /* This is an (optional) situation (or context) you would like to give. If it is empty, the task is displayed differently */
-    "questions": 4, /* the numbers of questions. Also depends on the criteria for select restrictions (or vice-versa, depends on you) */
-    "min_scale": 1, /* minimal value of the scale (is included) */
-    "max_scale": 5, /* maximal value of the scale (is included) */
-    "min_scale_desc" : "Definitely Not Owly", /* description of the minimal value */
-    "max_scale_desc" : "Definitely Owly", /* description of the maximal value */
-    "university": "Great Owl University", /* the university or affiliation that is responsible. Will be displayed in the footer */
-    "investigator": "Dr. Owly Mc Owlface", /* the name of the person responsible for the study */
-    "contact" : "Owly.Owlface@owl-university.owl", /* the e-mail of the person responsible for the study */
-    "time" : 5, /* the time that you think is needed for the study. Used in the consent form */
-    "link" : "https://example.org", /* the link that will appear in the end were participants are payed */
-    "actions": ["select", "max_successors"], /* a list of possible values for actions. If you are not adding new actions, you don't have to change this */
-    "types":["hunt", "fact", "jimmy"], /* a complete list of the types that appear in your tasks file */
-    "categories":["filler", "target"], /* a complete list of categories that appear in your tasks file */
-    "templates": ["first.tpl"], /* the custom templates you are going to use. By default this would be the template that shows the introductions and gives examples */
-    "restrictions":[ /* this is a list of restrictions */
-        {"action":"select", "category":"filler", "argument":0.5}, /* a select restriction that selects 50% of the tasks to be of the type "filler" */
-        {"action":"select", "category":"target", "argument":0.5}, /* a select restriction that selects 50% of the tasks to be of the type "target" */
-                                                                  /* PLEASE NOTE:
-                                                                     all select restrictions have to sum up to exactly 1 (100%) 
-                                                                     also you can only select tasks by category (that is what categories are for
-                                                                   */
-        {"action":"max_successors", "category":"filler", "argument":3}, /* a sequence of three tasks of the category filler is allowed, more is forbidden */
-        {"action":"max_successors", "category":"target", "argument":3}, /* a sequence of three tasks of the category target is allowed, more is forbidden */
-        {"action":"max_successors", "type":"hunt", "argument":2},  /* a sequence of two tasks with the type hunt is allowed, more is forbidden */
-        {"action":"max_successors", "type":"jimmy", "argument":2}  /* a sequence of two tasks of the type jimmy is allowed, more is forbidden */
-                                                                  /* PLEASE NOTE:
-                                                                     if a sequence that is not allowed is recognized the sample will be drawn again
-                                                                     that means that if you have a lot of restrictions and a very small list of tasks
-                                                                     it might be impossible or close to impossible to find a sample that fits your requirements
-                                                                     (and we can't realisticly find a solution).
-                                                                     In that case the user will be confronted with an error.
-                                                                   */
-    ]
-}
-~~~
+## Optional settings
+
+ - ``excluded_pids`` is a list of excluded pids. If you want to exclude one a few users from your study, you may want to list them here. If you want to exclude a lot of users, place a file called ``EXCLUDED_PIDS.txt`` in your study dir, it will be appended (internally) to this list. ``EXCLUDED_PIDS.txt`` has to contain one pid per line.
+
+## Restrictions
+
+ - ``{"action":"select", "category":"filler", "argument":0.5},`` a select restriction that selects 50% of the tasks to be of the type "filler"
+ - ``{"action":"select", "category":"target", "argument":0.5},`` a select restriction that selects 50% of the tasks to be of the type "target"
+
+**PLEASE NOTE:** all select restrictions have to sum up to exactly 1 (100%) also you can only select tasks by category (that is what categories are for).
+
+ - ``{"action":"max_successors", "category":"filler", "argument":3},`` a sequence of three tasks of the category filler is allowed, more is forbidden
+ - ``{"action":"max_successors", "category":"target", "argument":3},`` a sequence of three tasks of the category target is allowed, more is forbidden
+ - ``{"action":"max_successors", "type":"hunt", "argument":2},`` a sequence of two tasks with the type hunt is allowed, more is forbidden
+ - ``{"action":"max_successors", "type":"jimmy", "argument":2}`` a sequence of two tasks of the type jimmy is allowed, more is forbidden
+
+**PLEASE NOTE:** if a sequence that is not allowed is recognized the sample will be
+drawn again that means that if you have a lot of restrictions and a very small
+list of tasks it might be impossible or close to impossible to find a sample
+that fits your requirements (and we can't realisticly find a solution). In that
+case the user will be confronted with an error.
 
 
 ## Tasks
@@ -260,14 +257,34 @@ a ``settings.json`` and the assumption is that those are the files **that you
 actually used in production**.
 
 If you are going to run ``results.py`` now, it will check for all of that,
-except for the assumption mentioned above. ``results.py`` then will produce:
+except for the assumption mentioned above.
+
+
+## The csv files
+
+``results.py`` then will produce several csv files:
 
 ~~~
-RESULTS/owls/csv/demographics.csv
-RESULTS/owls/csv/settings.csv
-RESULTS/owls/csv/tasks.csv
-RESULTS/owls/csv/results.csv
+ROOT/results/owls/csv/settings.csv
+ROOT/results/owls/csv/demographics.csv
+ROOT/results/owls/csv/tasks.csv
+ROOT/results/owls/csv/results.csv
 ~~~
+
+What are they? ``RESULTS/owls/csv/demographics.csv`` is a file with the data
+from the demographics form. ``RESULTS/owls/csv/settings.csv`` contains the
+settings from the experiment. It might be important to interpret your results,
+because it also lists the scale you used. Secondly ``university,
+investigator``, and ``contact`` might be used to automatically publish your
+data or results.
+
+Your results file (``RESULTS/owls/csv/results.csv``) lists the results for each
+participant (and their prolific id) together with a task-``id`` which is the
+same as in ``RESULTS/owls/csv/tasks.csv``, the later telling you which result
+originated from which task.
+
+
+## R
 
 That way you can simply copy the csv folder wherever you do your analysis.
 There you can read the data into R with:
@@ -283,13 +300,20 @@ Then you'll get 4 dataframes and can easily connect the results with f.e. the
 actual data used in the task. And you can check what your answers actually mean
 by comparing ``results.csv`` with ``settings.csv``.
 
+## Publish your data
+
 My intention is to make the step from the database to the results transparent. In
 addition I would reccomend using something like Sweave or Rmarkdown to make the
 relationship between the results and the published results transparent:
 
- - if you publish the ``task.json``, ``settings.json`` and ``db.json`` everyone
+ - by using your ``settings.csv`` file which lists the authors of the study,
+ you (or I) can write a script to export your ``csv``-files to a designated
+ platform.
+
+ - if you publish the ``task.json``, ``settings.json`` and ``db.json``, everyone
  can reproduce the csv files, because studyriffic and ``results.py`` is open
- source and (I hope) well documented.
+ source and (I hope) well documented. **TODO:** what about spam if the contact
+ mail is included?
 
  - if you are using [Sweave](http://www.statistik.lmu.de/~leisch/Sweave/) in
  your TeX-files or Rmarkdown, you can be sure that you are using the data from

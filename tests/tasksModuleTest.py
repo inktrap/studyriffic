@@ -7,11 +7,11 @@ import os
 
 import logging
 logger = logging.getLogger('getTasksTest.py')
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 formatter = logging.Formatter(
     '[%(asctime)s] p%(process)s {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s', '%m-%d %H:%M:%S')
 ch = logging.StreamHandler()
-ch.setLevel(logging.DEBUG)
+ch.setLevel(logging.INFO)
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
@@ -48,6 +48,7 @@ class TestChecks(unittest.TestCase):
         self.complete_settings["types"] = []
         self.complete_settings["categories"] = []
         self.complete_settings["templates"] = []
+        # self.complete_settings["excluded_pids"] = []
 
         # these should all work
         self.task_filler = {"id": 0, "sentence": "Foobar", "situation": "Barfoo", "type": ["some", "types"], "category": "filler", "check": [0.0]}
@@ -341,6 +342,4 @@ class TestCheckCheck(unittest.TestCase):
         self.assertTrue(tasks_module.check_check([0.5], '2', self.min_scale, self.max_scale))
         self.assertTrue(tasks_module.check_check([0.75], '3', self.min_scale, self.max_scale))
         self.assertTrue(tasks_module.check_check([1.0], '4', self.min_scale, self.max_scale))
-        #self.assertFalse()
-        pass
 
