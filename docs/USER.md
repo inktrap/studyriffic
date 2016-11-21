@@ -52,7 +52,13 @@ probably will get a lot of complaints (which is a good thing!).
 
 ## Optional settings
 
- - ``excluded_pids`` is a list of excluded pids. If you want to exclude one a few users from your study, you may want to list them here. If you want to exclude a lot of users, place a file called ``EXCLUDED_PIDS.txt`` in your study dir, it will be appended (internally) to this list. ``EXCLUDED_PIDS.txt`` has to contain one pid per line.
+ - ``excluded_pids`` is a list of excluded pids. If you want to exclude one
+ a few users from your study, you may want to list them here. If you want to
+ exclude a lot of users, place a file called ``EXCLUDED_PIDS.txt`` in your
+ study dir, it will be appended (internally) to this list.
+ ``EXCLUDED_PIDS.txt`` has to contain one pid per line. In general it does not
+ matter if you specify something as a number or a string or have duplicate
+ values. In the end, every value will be turned into a string and then into a set.
 
 ## Restrictions
 

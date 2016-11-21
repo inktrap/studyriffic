@@ -113,7 +113,15 @@ class baseConfig():
             #    assert all([restriction in restrictions for restriction in settings['restrictions']]), "Study %s uses a restriction that is not one of: %s" % (study, ', '.join(restrictions))
             settings['name'] = study.capitalize()
             settings['study'] = study
-            # settings['template_lookup'] = os.path.join(template_path, study)
+            if 'excluded_pids' not in settings.keys():
+                settings['excluded_pids'] = []
+            excluded_file = os.path.join(study_path, 'EXCLUDED_PIDS.txt')
+            if os.path.isfile(excluded_file):
+                with open(excluded_file, 'r') as fh:
+                    excluded_pids = filter(lambda x: x != '', map(str.strip, fh.read().splitlines()))
+                settings['excluded_pids'] += excluded_pids
+            # turn into a set of strings
+            settings['excluded_pids'] = set(map(str, settings['excluded_pids']))
         with open(study_tasks, 'r') as fh:
             try:
                 this_tasks = json.load(fh)

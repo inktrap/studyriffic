@@ -48,7 +48,7 @@ class TestChecks(unittest.TestCase):
         self.complete_settings["types"] = []
         self.complete_settings["categories"] = []
         self.complete_settings["templates"] = []
-        # self.complete_settings["excluded_pids"] = []
+        self.complete_settings["excluded_pids"] = []
 
         # these should all work
         self.task_filler = {"id": 0, "sentence": "Foobar", "situation": "Barfoo", "type": ["some", "types"], "category": "filler", "check": [0.0]}

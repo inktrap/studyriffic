@@ -371,14 +371,14 @@ because a task has to have a question."
     assert "types" in settings.keys()
     assert "categories" in settings.keys()
     assert "templates" in settings.keys()
-    # assert "excluded_pids" in settings.keys()
+    assert "excluded_pids" in settings.keys(), "excluded_pids is optional but **has to be appended automatically** if it is not present"
 
     assert isinstance(settings["restrictions"], list)
     assert isinstance(settings["actions"], list)
     assert isinstance(settings["types"], list)
     assert isinstance(settings["categories"], list)
     assert isinstance(settings["templates"], list)
-    # assert isinstance(settings["excluded_pids"], list)
+    assert isinstance(settings["excluded_pids"], set)
 
     for this_restriction in settings['restrictions']:
         check_restriction(settings, this_restriction)
