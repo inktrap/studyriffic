@@ -50,6 +50,34 @@ class TestMainAttention(unittest.TestCase):
             self.assertTrue(main.pass_attention_check(1.0, 1))
 
 
+class TestMainExclusion(unittest.TestCase):
+    def setUp(self):
+        # def pass_exclusion_check(pid, excluded_pids):
+        self.excluded_pids = set(map(str, list(range(1,10)) + list(range(5,20))))
+        self.excluded = map(str, range(1,20))
+        self.not_excluded_pids = set(map(str, list(range(20 + 1, 20 + 10 + 1))))
+
+    def test_pass_exclusion_check(self):
+
+        # these are false
+        for this_excluded in self.excluded_pids:
+            self.assertFalse(main.pass_exclusion_check(this_excluded, self.excluded_pids))
+
+        # these are false
+        for this_not_excluded in self.not_excluded_pids:
+            self.assertTrue(main.pass_exclusion_check(this_not_excluded, self.excluded_pids))
+
+        # every item is not in the empty set
+        for this_item in self.excluded_pids.union(self.not_excluded_pids):
+            self.assertTrue(main.pass_exclusion_check(this_item, set()))
+
+        # pass_exclusion should not work on the wrong formats
+        with self.assertRaises(AssertionError):
+            main.pass_exclusion_check(434, self.excluded_pids)
+        with self.assertRaises(AssertionError):
+            main.pass_exclusion_check("434", [])
+
+
 class TestMainDemographics(unittest.TestCase):
 
     def setUp(self):
