@@ -22,29 +22,29 @@ Here is a quick overview of the framework I wrote. It features:
 
 ## Demo
 
- - A study with the likert scale: <https://perigen.diphda.uberspace.de/study/demo_likert?prolific_pid=123&session_id=foobar>
- - A study with the likert scale: <https://perigen.diphda.uberspace.de/study/demo_binary?prolific_pid=123&session_id=foobar>
- - meeting: monday 16:30 office 23.32.02.65.
+ - owls
 
 
 # Valentin Todo
 
+ - if too many attention checks failed the situation and sentence is
+ there but empty. this could be improved.
  - configure studies
      - include attention checks: 2 (short studies) 3 (longer studies)
-     - abort if a participant fails 2
-     - change consent form to include attention checks and fails
+     - Z: change consent form to include attention checks and fails
+     - Z: are the attention checks alright? or are they too “deceptive/confusing”?
 
 
 ### documentation:
 
- - have another look at the documentation
+ - before publishing, have another look at the documentation
  - describe different restrictions in detail
+ - add a license or a way to quote the documentation
 
 
 ## maybe/sometimes:
 
- - if too many attention checks failed the situation and sentence is
- there but empty. this could be improved.
+ - flash message if the participant is going really fast (configurable)
  - how to display errors?
  - how to encapsulate js properly?
  - sometimes/maybe include expected values for fillers in data
@@ -107,6 +107,7 @@ Here is a quick overview of the framework I wrote. It features:
 # Done
 
 ~~~
+ x abort if a participant fails 2 attention checks
  x fixed logging output, removed duplicates
  x check other pass_ … checks
  x feature to exclude participants

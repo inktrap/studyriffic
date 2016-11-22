@@ -30,24 +30,25 @@ A settings file looks like the example below, and the keys that are described
 below are mandatory. Studyriffic is checking this pretty strictly, so you
 probably will get a lot of complaints (which is a good thing!).
 
- - ``"active" : true,``  if this setting is true, his study is active
- - ``"labels" : false,``  should we label the scale? scales will be labeled if this setting is active and the scale is consists of 3 or more values 
- - ``"question":"Do you think the following sentence is “Owly” or “Not Owly” in the above situation?",``  this is the question you would like to ask the participant 
- - ``"situation":"Please consider the following situation:",``  This is an (optional) situation (or context) you would like to give. If it is empty, the task is displayed differently 
- - ``"questions": 4,``  the numbers of questions. Also depends on the criteria for select restrictions (or vice-versa, depends on you) 
- - ``"min_scale": 1,``  minimal value of the scale (is included) 
- - ``"max_scale": 5,``  maximal value of the scale (is included) 
- - ``"min_scale_desc" : "Definitely Not Owly",``  description of the minimal value 
- - ``"max_scale_desc" : "Definitely Owly",``  description of the maximal value 
- - ``"university": "Great Owl University",``  the university or affiliation that is responsible. Will be displayed in the footer 
- - ``"investigator": "Dr. Owly Mc Owlface",``  the name of the person responsible for the study 
- - ``"contact" : "Owly.Owlface@owl-university.owl",``  the e-mail of the person responsible for the study 
- - ``"time" : 5,``  the time that you think is needed for the study. Used in the consent form 
- - ``"link" : "https://example.org",`` the link that will appear in the end were participants are payed
- - ``"actions": ["select", "max_successors"],``  a list of possible values for actions. If you are not adding new actions, you don't have to change this 
- - ``"types":["hunt", "fact", "jimmy"],`` a complete list of the types that appear in your tasks file
- - ``"categories":["filler", "target"],`` a complete list of categories that appear in your tasks file
- - ``"templates": ["first.tpl"],`` the custom templates you are going to use. By default this would be the template that shows the introductions and gives examples
+ - ``"active": true,``  if this setting is true, his study is active, if it is false, the study is not active.
+ - ``"max_check_fail": 1``, the maximum number of attention checks a user is allowed to fail before the study will be aborted.
+ - ``"labels": false,``  should we label the scale? scales will be labeled if this setting is active and the scale consists of 3 or more values.
+ - ``"question": "Do you think the following sentence is “Owly” or “Not Owly” in the above situation?",``  this is the question you would like to ask the participant.
+ - ``"situation":"Please consider the following situation:",``  This is an (optional) situation (or context) you would like to give. If it is empty, the task is displayed differently.
+ - ``"questions": 4,``  the numbers of questions. Also depends on the criteria for select restrictions (or vice-versa, depends on you).
+ - ``"min_scale": 1,``  minimal value of the scale (is included).
+ - ``"max_scale": 5,``  maximal value of the scale (is included).
+ - ``"min_scale_desc" : "Definitely Not Owly",``  description of the minimal value.
+ - ``"max_scale_desc" : "Definitely Owly",``  description of the maximal value.
+ - ``"university": "Great Owl University",``  the university or affiliation that is responsible. Will be displayed in the footer.
+ - ``"investigator": "Dr. Owly Mc Owlface",``  the name of the person responsible for the study.
+ - ``"contact" : "Owly.Owlface@owl-university.owl",``  the e-mail of the person responsible for the study.
+ - ``"time" : 5,``  the time that you think is needed for the study. Used in the consent form.
+ - ``"link" : "https://example.org",`` the link that will appear in the end were participants are payed.
+ - ``"actions": ["select", "max_successors"],``  a list of possible values for actions. If you are not adding new actions, you don't have to change this.
+ - ``"types":["hunt", "fact", "jimmy"],`` a complete list of the types that appear in your tasks file.
+ - ``"categories":["filler", "target"],`` a complete list of categories that appear in your tasks file.
+ - ``"templates": ["first.tpl"],`` the custom templates you are going to use. By default this would be the template that shows the introductions and gives examples.
  - ``"restrictions":[]`` this is a list of restrictions. More on that later.
 
 ## Optional settings
