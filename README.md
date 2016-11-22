@@ -107,6 +107,7 @@ Here is a quick overview of the framework I wrote. It features:
 # Done
 
 ~~~
+ x wrote pattern replacement logic for checks
  x if too many attention checks failed the situation and sentence is there but empty. this could be improved.
  x abort if a participant fails 2 attention checks
  x fixed logging output, removed duplicates
