@@ -4,15 +4,9 @@ import unittest
 from modules.config import baseConfig
 import os
 
+import tests.config
 import logging
-logger = logging.getLogger('configTest.py')
-logger.setLevel(logging.INFO)
-formatter = logging.Formatter(
-    '[%(asctime)s] p%(process)s {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s', '%m-%d %H:%M:%S')
-ch = logging.StreamHandler()
-ch.setLevel(logging.INFO)
-ch.setFormatter(formatter)
-logger.addHandler(ch)
+logger = logging.getLogger(__file__)
 
 import pprint
 pp = pprint.PrettyPrinter(indent=4)

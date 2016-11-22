@@ -6,16 +6,9 @@ from modules.config import thisConfig
 import main
 import os
 
+import tests.config
 import logging
-logger = logging.getLogger('mainTest.py')
-logger.setLevel(logging.INFO)
-formatter = logging.Formatter(
-    '[%(asctime)s] p%(process)s {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s', '%m-%d %H:%M:%S')
-ch = logging.StreamHandler()
-ch.setLevel(logging.INFO)
-ch.setFormatter(formatter)
-logger.addHandler(ch)
-
+logger = logging.getLogger(__file__)
 
 # check that tasks and restriction checks work
 # they forbid a lot of things so it is easier to just check that they
