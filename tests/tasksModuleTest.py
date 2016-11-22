@@ -19,7 +19,7 @@ class TestChecks(unittest.TestCase):
             "questions": 10,
             "actions": ["select", "max_successors", "not_positions"],
             "types":["some", "types", "and", "more"],
-            "categories":["filler", "target"]
+            "categories":["filler", "target", "check"]
         }
         self.complete_settings = {}
         self.complete_settings["active"] = True
@@ -47,6 +47,7 @@ class TestChecks(unittest.TestCase):
         # these should all work
         self.task_filler = {"id": 0, "sentence": "Foobar", "situation": "Barfoo", "type": ["some", "types"], "category": "filler", "check": [0.0]}
         self.task_target = {"id": 0, "sentence": "Foobar", "situation": "Barfoo", "type": ["some", "types"], "category": "target"}
+        self.task_check = {"id": 0, "sentence": "Foobar", "situation": "Barfoo", "type": ["some", "types"], "category": "check", "check": [0.0]}
         self.task_no_situation = {"id": 0, "sentence": "Foobar", "situation": "", "type": ["some", "types"], "category": "filler", "check": [0.0]}
         self.task_no_type = {"id": 0, "sentence": "Foobar", "situation": "Barfoo", "type": [], "category": "filler", "check": [0.0]}
         self.task_no_sentence = {"id": 0, "sentence": "", "situation": "Barfoo", "type": [], "category": "filler", "check": [0.0]}
@@ -91,6 +92,7 @@ class TestChecks(unittest.TestCase):
             tasks_module.check_settings(complete_settings)
         return True
 
+    # check_restriction is used to check any restriction
     def test_check_restriction(self):
         #tests: def check_restriction(settings, restriction):
         self.assertTrue(tasks_module.check_restriction(self.settings, self.restriction_select_filler))
@@ -109,6 +111,7 @@ class TestChecks(unittest.TestCase):
         #tests: def check_task(settings, task):
         self.assertEqual(tasks_module.check_task(self.settings, self.task_filler), True)
         self.assertEqual(tasks_module.check_task(self.settings, self.task_target), True)
+        self.assertEqual(tasks_module.check_task(self.settings, self.task_check), True)
         self.assertEqual(tasks_module.check_task(self.settings, self.task_no_situation), True)
         self.assertEqual(tasks_module.check_task(self.settings, self.task_no_type), True)
         with self.assertRaises(AssertionError):
@@ -121,7 +124,6 @@ class TestChecks(unittest.TestCase):
             tasks_module.check_task(self.settings, self.task_no_check_check)
         with self.assertRaises(AssertionError):
             tasks_module.check_task(self.settings, self.task_no_check_filler)
-
 
 class TestCheckNotPositions(unittest.TestCase):
     ''' test if not positions checks work '''
@@ -296,9 +298,31 @@ class TestApplySelect(unittest.TestCase):
 class TestCheckCheck(unittest.TestCase):
 
     def setUp(self):
-        self.filler = {'id': 11, 'category': 'filler', 'type': ['owl'], 'check': [1.0], 'sentence': 'He loves the way how fillers look like.', 'situation': 'Jimmy is the best friend of an owl.'}
-        self.check = {'id': 11, 'category': 'check', 'type': ['owl'], 'check': [1.0], 'sentence': 'Please select the minimum.', 'situation': 'This is a check that you are paying attention.'}
+        self.filler = {'id': 10, 'category': 'filler', 'type': ['owl'], 'check': [1.0], 'sentence': 'He loves the way how fillers look like.', 'situation': 'Jimmy is the best friend of an owl.'}
+        self.check = {'id': 11, 'category': 'check', 'type': ['owl'], 'check': [0.0], 'sentence': 'Please select MIN_SCALE_DESC.', 'situation': 'This is a check that you are paying attention.'}
+        self.check_sent_min = {'id': 11, 'category': 'check', 'type': ['owl'], 'check': [0.0], 'sentence': 'Please select MIN_SCALE_DESC.', 'situation': 'This is a check that you are paying attention.'}
+        self.check_sent_max = {'id': 12, 'category': 'check', 'type': ['owl'], 'check': [1.0], 'sentence': 'Please select MAX_SCALE_DESC.', 'situation': 'This is a check that you are paying attention.'}
+        self.check_sit_min = {'id': 13, 'category': 'check', 'type': ['owl'], 'check': [0.0], 'situation': 'This is a check that you are paying attention.', 'sentence': 'Please select MIN_SCALE_DESC.'}
+        self.check_sit_max = {'id': 14, 'category': 'check', 'type': ['owl'], 'check': [1.0], 'situation': 'This is a check that you are paying attention.', 'sentence': 'Please select MAX_SCALE_DESC.'}
+        self.tasks = [self.check_sent_min, self.check_sent_max, self.check_sit_min, self.check_sit_max]
         self.target = {'id': 11, 'category': 'target', 'type': ['owl'], 'sentence': 'He loves the way how fillers look like.', 'situation': 'Jimmy is the best friend of an owl.'}
+
+        self.settings = {}
+        self.settings["min_scale"] = 0
+        self.settings["max_scale"] = 1
+        self.settings["min_scale_desc"] = "Min"
+        self.settings["max_scale_desc"] = "Max"
+
+        self.replacement_tuples = [('MIN_SCALE_DESC', self.settings["min_scale_desc"]),
+                                   ('MIN_SCALE', self.settings["min_scale"]),
+                                   ('MAX_SCALE_DESC', self.settings["max_scale_desc"]),
+                                   ('MAX_SCALE', self.settings["max_scale"])]
+
+        self.replacement_tuples_overlap = [('MIN_SCALE', self.settings["min_scale"]),
+                                           ('MIN_SCALE_DESC', self.settings["min_scale_desc"])]
+        self.replacement_tuples_rematch = [('MIN_SCALE', "Foobar"),
+                                           ('Foobar', self.settings["min_scale_desc"])]
+
         # the value val is check to map on the different scales (scale 01 is
         # from 0 to 1 aso.) to these results (and a range is just multiple
         # calls to map_check so the only thing that might be unwanted is the
@@ -336,4 +360,38 @@ class TestCheckCheck(unittest.TestCase):
         self.assertTrue(tasks_module.check_check([0.5], '2', self.min_scale, self.max_scale))
         self.assertTrue(tasks_module.check_check([0.75], '3', self.min_scale, self.max_scale))
         self.assertTrue(tasks_module.check_check([1.0], '4', self.min_scale, self.max_scale))
+
+    def test__format_check(self):
+        # empty
+        self.assertEqual(tasks_module._format_check(self.replacement_tuples, ""), "")
+        # no placeholder used
+        self.assertEqual(tasks_module._format_check(self.replacement_tuples, "Foobar"), "Foobar")
+        # only placeholder used
+        self.assertEqual(tasks_module._format_check(self.replacement_tuples, "MIN_SCALE"), str(self.settings['min_scale']))
+        self.assertEqual(tasks_module._format_check(self.replacement_tuples, "MAX_SCALE"), str(self.settings['max_scale']))
+        self.assertEqual(tasks_module._format_check(self.replacement_tuples, "MIN_SCALE_DESC"), str(self.settings['min_scale_desc']))
+        self.assertEqual(tasks_module._format_check(self.replacement_tuples, "MAX_SCALE_DESC"), str(self.settings['max_scale_desc']))
+
+        # text and placeholder
+        self.assertEqual(tasks_module._format_check(self.replacement_tuples, "Foobar " + "MIN_SCALE"), "Foobar " + str(self.settings['min_scale']))
+        self.assertEqual(tasks_module._format_check(self.replacement_tuples, "Foobar " + "MAX_SCALE"), "Foobar " + str(self.settings['max_scale']))
+        self.assertEqual(tasks_module._format_check(self.replacement_tuples, "Foobar " + "MIN_SCALE_DESC"), "Foobar " + str(self.settings['min_scale_desc']))
+        self.assertEqual(tasks_module._format_check(self.replacement_tuples, "Foobar " + "MAX_SCALE_DESC"), "Foobar " + str(self.settings['max_scale_desc']))
+
+        # text and placeholders
+        self.assertEqual(tasks_module._format_check(self.replacement_tuples, "Foobar " + "MIN_SCALE" + " Baz " + "MIN_SCALE_DESC"),
+                         "Foobar " + str(self.settings['min_scale']) + " Baz " + str(self.settings['min_scale_desc']))
+        self.assertEqual(tasks_module._format_check(self.replacement_tuples, "Foobar " + "MAX_SCALE" + " Baz " + "MAX_SCALE_DESC"),
+                         "Foobar " + str(self.settings['max_scale']) + " Baz " + str(self.settings['max_scale_desc']))
+        with self.assertRaises(AssertionError):
+            self.assertEqual(tasks_module._format_check(self.replacement_tuples_overlap, "MIN_SCALE"), str(self.settings['min_scale']))
+        with self.assertRaises(AssertionError):
+            self.assertEqual(tasks_module._format_check(self.replacement_tuples_rematch, "MIN_SCALE"), str(self.settings['min_scale']))
+
+    def test_format_checks(self):
+        #def format_checks(settings, tasks):
+        tasks_module.format_checks(self.settings, self.tasks)
+        pass
+
+
 

@@ -139,6 +139,11 @@ class baseConfig():
         # this is just a check if it is possible to get tasks (this is done once per study!)
         assert isinstance(tasks_module.main(settings, this_tasks), list)
 
+        # now that the tasks are checked and everything works, replace placeholders for checks
+        # the task_module only returns a sample, but the checks are read here initially, so
+        # the replacements have to happen here, once
+        this_tasks = tasks_module.format_checks(settings, this_tasks)
+
         return {'settings': settings,
                 'tasks': this_tasks,
                 }

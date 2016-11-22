@@ -27,12 +27,12 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Valentin Todo
 
- - if too many attention checks failed the situation and sentence is
- there but empty. this could be improved.
  - configure studies
      - include attention checks: 2 (short studies) 3 (longer studies)
-     - Z: change consent form to include attention checks and fails
+
+     - Z: change consent form to mention attention checks and that the study will be aborted
      - Z: are the attention checks alright? or are they too “deceptive/confusing”?
+     - Z: should we increase the number of tasks per study by the number of attention checks that we added?
 
 
 ### documentation:
@@ -107,6 +107,7 @@ Here is a quick overview of the framework I wrote. It features:
 # Done
 
 ~~~
+ x if too many attention checks failed the situation and sentence is there but empty. this could be improved.
  x abort if a participant fails 2 attention checks
  x fixed logging output, removed duplicates
  x check other pass_ … checks

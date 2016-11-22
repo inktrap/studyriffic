@@ -2,12 +2,14 @@
 
 from operator import eq
 import random
+import numbers
 import math
 
 from functools import wraps
 import errno
 import os
 import signal
+import re
 
 import logging
 logging.basicConfig(
@@ -32,6 +34,7 @@ logger = logging.getLogger(__file__)
 
 
 def check_restriction(settings, restriction):
+    # check any restriction
     assert isinstance(restriction, dict), "a restriction has to be a dictionary"
     assert 'action' in restriction.keys(), "a restriction has to have an action"
     assert (not('type' in restriction.keys() and 'category' in restriction.keys())), "a restriction operates on a type or a category, not both."
@@ -294,6 +297,44 @@ def check_check(check, real, min_scale, max_scale):
     # this code should never be reached:
     raise AssertionError("A check value has to be a list")
     return False
+
+def _format_check(replacement_tuples, string):
+    # apply all the replacements in the replacement tuple
+    # so this function is testable
+    assert isinstance(string, str)
+    assert isinstance(replacement_tuples, list)
+    for index, rt in enumerate(replacement_tuples):
+        assert isinstance(rt, tuple)
+        assert isinstance(rt[0], str) or isinstance(rt[0], numbers.Number)
+        assert isinstance(rt[1], str) or isinstance(rt[1], numbers.Number)
+        assert len(rt) == 2
+    replacement_tuples = [(str(rt[0]), str(rt[1])) for rt in replacement_tuples]
+    for index, rt in enumerate(replacement_tuples):
+        # check for every tuple except the last tuple that the patterns don't overlap
+        if index < len(replacement_tuples):
+            # check the complete rest for overlaps and rematching
+            for (rest_1, rest_2) in replacement_tuples[index + 1:]:
+                assert rt[0] not in rest_1, "The pattern in (%s, %s) overlaps with (%s, %s)" % (rt[0], rt[1], rest_1, rest_2)
+                assert rt[1] not in rest_1, "The result of (%s, %s) is matched by (%s, %s) again" % (rt[0], rt[1], rest_1, rest_2)
+    for pattern, repl in replacement_tuples:
+        string = re.sub(pattern, repl, string)
+    return string
+
+def format_checks(settings, tasks):
+    ''' format the checks according to the following replacement_tuples'''
+    # this could be realized through map but maybe on another day …
+    # check that you don't rematch and that patterns don't overlap
+    # TODO: unittest format_checks
+    replacement_tuples = [('MIN_SCALE_DESC', settings['min_scale_desc']),
+                          ('MAX_SCALE_DESC', settings['max_scale_desc']),
+                          ('MIN_SCALE', settings['min_scale']),
+                          ('MAX_SCALE', settings['max_scale'])
+                          ]
+    for this_check in tasks:
+        # apply each replacement to each sentencen and situation of the task
+        for this_key in ['sentence', 'situation']:
+            this_check[this_key] = _format_check(replacement_tuples, this_check[this_key])
+    return tasks
 
 def main(settings, tasks):
     check_config(settings, tasks)
