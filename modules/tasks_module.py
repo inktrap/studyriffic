@@ -10,15 +10,13 @@ import os
 import signal
 
 import logging
-logger = logging.getLogger('tasks_module')
-logger.setLevel(logging.INFO)
-formatter = logging.Formatter(
-    '[%(asctime)s] p%(process)s {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s', '%m-%d %H:%M:%S')
-
-ch = logging.StreamHandler()
-ch.setLevel(logging.INFO)
-ch.setFormatter(formatter)
-logger.addHandler(ch)
+logging.basicConfig(
+    level=logging.INFO,
+    format='[%(asctime)s] p%(process)s {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s',
+    # format = '%m-%d %H:%M:%S',
+    datefmt='%m-%d %H:%M:%S',
+)
+logger = logging.getLogger(__file__)
 
 #fh = logging.FileHandler('tasks_module.log')
 #fh.setLevel(logging.INFO)

@@ -10,15 +10,14 @@ from pymongo import MongoClient
 import urllib.parse
 
 import logging
-logger = logging.getLogger('config.py')
-logger.setLevel(logging.INFO)
-formatter = logging.Formatter(
-    '[%(asctime)s] p%(process)s {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s', '%m-%d %H:%M:%S')
-ch = logging.StreamHandler()
-ch.setLevel(logging.INFO)
-ch.setFormatter(formatter)
-logger.addHandler(ch)
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='[%(asctime)s] p%(process)s {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s',
+    # format = '%m-%d %H:%M:%S',
+    datefmt='%m-%d %H:%M:%S',
+)
 
+logger = logging.getLogger(__file__)
 
 class baseConfig():
 

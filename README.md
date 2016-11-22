@@ -107,6 +107,7 @@ Here is a quick overview of the framework I wrote. It features:
 # Done
 
 ~~~
+ x fixed logging output, removed duplicates
  x check other pass_ … checks
  x feature to exclude participants
  x test feature to exclude participants

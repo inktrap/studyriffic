@@ -6,15 +6,13 @@ import pprint
 pp = pprint.PrettyPrinter(indent=4)
 
 import logging
-logger = logging.getLogger('ua_checker')
-logger.setLevel(logging.INFO)
-formatter = logging.Formatter(
-    '[%(asctime)s] p%(process)s {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s', '%m-%d %H:%M:%S')
-ch = logging.StreamHandler()
-ch.setLevel(logging.INFO)
-ch.setFormatter(formatter)
-logger.addHandler(ch)
-
+logging.basicConfig(
+    level=logging.WARNING,
+    format='[%(asctime)s] p%(process)s {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s',
+    # format = '%m-%d %H:%M:%S',
+    datefmt='%m-%d %H:%M:%S',
+)
+logger = logging.getLogger(__file__)
 
 def parse_useragent(ua):
     try:
