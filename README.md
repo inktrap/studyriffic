@@ -27,13 +27,11 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Valentin Todo
 
- - configure studies
-     - include attention checks: 2 (short studies) 3 (longer studies)
-
-     - Z: change consent form to mention attention checks and that the study will be aborted
-     - Z: are the attention checks alright? or are they too “deceptive/confusing”?
-     - Z: should we increase the number of tasks per study by the number of attention checks that we added?
-
+ - check that PATTERNS in checks are replaced correctly
+ - include nondeceptive simple checks in studies: 2 (short studies) 3 (longer studies)
+ - change consent form
+ - create one hughe results table
+ - increase number of tasks to N + number of checks
 
 ### documentation:
 
