@@ -28,7 +28,7 @@ Our settings are living in a file called ``settings.json`` in the folder we just
 
 A settings file looks like the example below, and the keys that are described
 below are mandatory. Studyriffic is checking this pretty strictly, so you
-probably will get a lot of complaints (which is a good thing!).
+probably will get a lot of complaints (which is a good thing!) if you forget a key.
 
  - ``"active": true,``  if this setting is true, his study is active, if it is false, the study is not active.
  - ``"max_check_fail": 1``, the maximum number of attention checks a user is allowed to fail before the study will be aborted.
@@ -63,10 +63,14 @@ probably will get a lot of complaints (which is a good thing!).
 
 ## Restrictions
 
- - ``{"action":"select", "category":"filler", "argument":0.5},`` a select restriction that selects 50% of the tasks to be of the type "filler"
- - ``{"action":"select", "category":"target", "argument":0.5},`` a select restriction that selects 50% of the tasks to be of the type "target"
+### Select
+
+ - ``{"action":"select", "category":"filler", "argument":0.5},`` a select restriction that selects 50% of the tasks to be of the category "filler"
+ - ``{"action":"select", "category":"target", "argument":0.5},`` a select restriction that selects 50% of the tasks to be of the category "target"
 
 **PLEASE NOTE:** all select restrictions have to sum up to exactly 1 (100%) also you can only select tasks by category (that is what categories are for).
+
+### Successor
 
  - ``{"action":"max_successors", "category":"filler", "argument":3},`` a sequence of three tasks of the category filler is allowed, more is forbidden
  - ``{"action":"max_successors", "category":"target", "argument":3},`` a sequence of three tasks of the category target is allowed, more is forbidden
@@ -79,6 +83,12 @@ list of tasks it might be impossible or close to impossible to find a sample
 that fits your requirements (and we can't realisticly find a solution). In that
 case the user will be confronted with an error.
 
+### Position
+
+ - ``{"action":"not_positions", "category":"check", "argument":[0, 2]}`` an item of the category ``check`` is not allowed to occur at position 0 or position 2
+
+Typicly you don't want the first (and maybe last) task to be an attention check.
+
 
 ## Tasks
 
@@ -89,16 +99,14 @@ together. Again, json does not allow comments, so download the whole
 
 ### A single task
 
-A ``tasks.json`` file consists of a list of tasks. A single task looks like this:
-~~~
-{
-    "situation": "", /* this is the situation. if it is non-empty (that means anything else than "") it will be displayed first, see: situation-sentence-example. */ TODO
-    "category": "", /* the whole task has to have a category. typical categories are filler and target */
-    "sentence": "", /* this is the sentence that the participant is going to rate/judge */
-    "type": "", /* the whole task can have types which act as a fine-grained labeling that is not as broad as categories */
-    "id": /* lastly a task has to have a sequential numerical id that is unique for this tasks file */
-}
-~~~
+A ``tasks.json`` file consists of a list of tasks. A single task might look like this:
+
+ - ``"situation": "",`` this is the situation. if it is non-empty (that means anything else than "") it will be displayed first, see: situation-sentence-example.
+ - ``"category": "",`` the whole task has to have a category. typical categories are filler and target
+ - ``"sentence": "",`` this is the sentence that the participant is going to rate/judge
+ - ``"type": "",`` the whole task can have types which act as a fine-grained labeling that is not as broad as categories
+ - ``"id":`` lastly a task has to have a sequential numerical id that is unique for this tasks file
+
 
 ### An example tasks file
 
@@ -118,6 +126,13 @@ And a ``tasks.json`` file might look like this:
     "sentence": "The owl caught the mouse and ate it.",
     "type": ["hunt", "owl"],
     "id": 1
+}, {
+    "situation": "This is an attention check.",
+    "category": "check",
+    "sentence": "Please select MAX_SCALE_DESC",
+    "type": [],
+    "check": [1.0],
+    "id": 2
 }
 ]
 ~~~
@@ -125,6 +140,48 @@ And a ``tasks.json`` file might look like this:
 So, we have two tasks, one is a filler and one a target and both are of the
 type ``hunt`` and ``owl``. We also have two different situations and sentences.
 The ids are how they should be: unique, numerical and sequential.
+
+#### Attention Checks
+
+The last task is an attention check, because it is of the category ``check``.
+Also it has an additional key ``check``, which specifies the value the
+participant has to enter in order to pass the check.
+
+ - The value ``0.0 <= x <= 1.0`` is mapped to the scale you specified in your
+ ``settings.json`` file: ``0.0`` is mapped to the lowest possible value, or
+ minimum of your scale, (think of it as ``0%`` of your scale) and ``1`` is
+ mapped to the highest possible value, or maximum of your scale (think of it as
+ ``100%`` of your scale).
+ - You can specify a closed interval to give a range that is acceptable. F.e.:
+ ``[0.5,1.0]`` would specify that everything from ``50%`` to ``100%`` including
+ ``50%`` and ``100%`` is acceptable.
+ - You can use the placeholders ``MIN_SCALE``, ``MAX_SCALE``,
+ ``MIN_SCALE_DESC`` and ``MAX_SCALE_DESC`` in the ``situation`` or ``sentence``
+ texts and they will be replaced with the values you entered in the settings
+ for ``min_scale`` aso.
+
+If a participant fails ``max_check_fail`` checks for attention, the study is
+aborted.
+
+FIXME: this is redundant to the stuff above
+
+In general tasks of the category ``filler`` or the category ``check`` have to
+have an attribute called ``check``, which is a list. This list can contain
+either one (``[0.0]``) or two (``[0.0, 0.5]``) values.
+
+ - The values are mapped to the scale and are used to check if participants
+ gave the expected answers. F.e.: a ``check`` value like ``[0.0]`` on a scale
+ from ``0`` to ``4`` means: The participant has to select the lowest value on
+ the scale, in this example that would be ``0``. On a scale from ``1`` to ``5``
+ it would be ``1``. This is approach ensures that you can switch scales easily.
+ Because the answer of an attention check that wants you to select the minimum
+ always wants the lowest value on your scale.
+
+ - If two values are specified, you are providing a closed interval for the
+ answer: On a scale from ``0`` to ``4`` the check value of ``[0.0, 0.75]``
+ would include ``0, 1, 2, 3``, because they are included in the 0% - 75% range
+ of your scale.
+
 
 ### A tasks file that works
 
@@ -219,17 +276,17 @@ As per the JSON-standard, newlines have to be written as `\n`. The newline will
 be transformed into an HTML-linebreak by JavaScript in the template
 ``main.tpl``.
 
-(Please note: ``main.tpl`` uses Jquery's ``html``-method to display the content
+Technical note: ``main.tpl`` uses Jquery's ``html``-method to display the content
 -- and therefore is vulnerable to XSS-attacks and other shenanigans. I worked
 with the assumption that you are creating your template (or are using mine) but
 you are definitely creating your own tasks and settings files, so you can trust
 them. That way you have the flexibility to include other inline markup, despite
-that this is not the preferred way of doing this.)
+that this is not the preferred way of doing this.
 
-(Additional note/reminder for mysel: I still have to find out if bottle's
-cookie function is vulnerable to CSRF and if my endpoints should look out for
-token. On the other hand: the prolifc id is stored in the cookie, which has
-a signature.)
+(FIXME: Additional note/reminder for mysel: I still have to find out if
+bottle's cookie function is vulnerable to CSRF and if my endpoints should look
+out for tokens. On the other hand: the prolifc id is stored in the cookie,
+which has a signature.)
 
 
 ## Views
@@ -416,20 +473,19 @@ would be ``first.tpl``:
 ~~~
 
 
-# Restrictions
-
-
-# Special attributes for tasks
-
- - tasks of the category ``filler`` or the category ``check`` have to have an attribute called ``check``, which is a list. This list can contain either one (``[0.0]``) or two (``[0.0, 0.5]``) values.
-
- - The values are mapped to the scale and are used to check if participants gave the expected answers. F.e.: a ``check`` value like ``[0.0]`` on a scale from ``0`` to ``4`` means: The participant has to select the lowest value on the scale, in this example that would be ``0``. On a scale from ``1`` to ``5`` it would be ``1``. This is approach ensures that you can switch scales easily. Because the answer of an attention check that wants you to select the minimum always wants the lowest value on your scale.
-
- - If two values are specified, you are providing a closed interval for the answer: On a scale from ``0`` to ``4`` the check value of ``[0.0, 0.75]`` would include ``0, 1, 2, 3``, because they are included in the 0% - 75% range of your scale.
-
-## Caveats 
+# Caveats
 
 This behaviour might be configurable by options later.
 
- - Python3.5 rounds to the next even number if the distance to two number is the same. So ``1.5`` becomes ``2`` and ``2.5`` becomes ``2`` as well, even if most people would expect the last example to be ``3``. This is the default behaviour of Python3.5. See: [IEEE Rounding Rules](https://en.wikipedia.org/wiki/IEEE_floating_point#Rounding_rules) and [round()](https://docs.python.org/3/library/functions.html#round).
- - the interval is defined as closed, that means a ``check`` value of ``[MIN, MAX]`` for a value ``VALUE`` would be checked as: ``MIN`` <= ``VALUE`` <= ``MAX``. The reasoning here is that you are specifying a list and a list includes the values that are specified.That is why it seemed a reasonable assumption that the user expects these values to be included.
+ - Python3.5 rounds to the next even number if the distance to two number is
+ the same. So ``1.5`` becomes ``2`` and ``2.5`` becomes ``2`` as well, even if
+ most people would expect the last example to be ``3``. This is the default
+ behaviour of Python3.5. See: [IEEE Rounding
+ Rules](https://en.wikipedia.org/wiki/IEEE_floating_point#Rounding_rules) and
+ [round()](https://docs.python.org/3/library/functions.html#round).
+
+ - the interval is defined as closed, that means a ``check`` value of ``[MIN,
+ MAX]`` for a value ``VALUE`` would be checked as: ``MIN`` <= ``VALUE`` <=
+ ``MAX``. The reasoning here is that you are specifying a list and a list
+ includes the values that are specified.That is why it seemed a reasonable
+ assumption that the user expects these values to be included.
