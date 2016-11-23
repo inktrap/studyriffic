@@ -32,15 +32,15 @@ class TestChecks(unittest.TestCase):
         self.complete_settings["situation"] = "Situation"
         self.complete_settings["question"] = "Question"
         self.complete_settings["min_scale_desc"] = "Min"
+        self.complete_settings['categories'] = ["check", "filler", "target"]
+        self.complete_settings['actions'] = ["max_successors", "select", "not_positions"]
         self.complete_settings["max_scale_desc"] = "Max"
         self.complete_settings["university"] = "Uni"
         self.complete_settings["investigator"] = "Investigator"
         self.complete_settings["contact"] = "contact"
         self.complete_settings["link"] = "link"
-        self.complete_settings["restrictions"] = [{"action":"select", "category":"filler", "argument":1.0}]
-        self.complete_settings["actions"] = ["select"]
+        self.complete_settings["restrictions"] = [{"action":"select", "category":"filler", "argument":10}]
         self.complete_settings["types"] = []
-        self.complete_settings["categories"] = []
         self.complete_settings["templates"] = []
         self.complete_settings["excluded_pids"] = set()
 
@@ -64,8 +64,8 @@ class TestChecks(unittest.TestCase):
         self.restriction_successor_more = {"action":"max_successors", "type":"some", "argument":4}
         self.restriction_successor_some = {"action":"max_successors", "type":"more", "argument":4}
         self.restriction_successor_error = {"action":"max_successors", "type":"and", "argument":4}
-        self.restriction_select_filler = {"action":"select", "category":"filler", "argument":0.5}
-        self.restriction_select_target = {"action":"select", "category":"target", "argument":0.5}
+        self.restriction_select_filler = {"action":"select", "category":"filler", "argument":10}
+        self.restriction_select_target = {"action":"select", "category":"target", "argument":10}
         self.restriction_position_fine = {"action":"not_positions", "category":"check", "argument":[1, 3]}
         self.restriction_position_error_value = {"action":"not_positions", "category":"check", "argument":[0, "a"]}
         self.restriction_position_error_argument = {"action":"not_positions", "category":"check", "argument":"a"}
@@ -164,13 +164,13 @@ class TestApplyNotPositions(unittest.TestCase):
 class TestCheckSelect(unittest.TestCase):
     ''' these are semantic checks for select restrictions'''
     def setUp(self):
-        self.select_pass = [{"action":"select", "category":"filler", "argument":0.5}, {"action":"select", "category":"target", "argument":0.5}]
-        self.select_lesser = [{"action":"select", "category":"filler", "argument":-0.5}]
-        self.select_zero = [{"action":"select", "category":"filler", "argument":0.0}]
+        self.select_pass = [{"action":"select", "category":"filler", "argument":10}, {"action":"select", "category":"target", "argument":10}]
+        self.select_lesser = [{"action":"select", "category":"filler", "argument":-10}]
+        self.select_zero = [{"action":"select", "category":"filler", "argument":0}]
         self.select_greater = [{"action":"select", "category":"filler", "argument":1.5}]
-        self.select_duplicate = [{"action":"select", "category":"filler", "argument":0.3}, {"action":"select", "category":"filler", "argument":0.2}, {"action":"select", "category":"target", "argument":0.5}]
-        self.select_percentage_less = [{"action":"select", "category":"filler", "argument":0.3}, {"action":"select", "category":"target", "argument":0.5}]
-        self.select_percentage_more = [{"action":"select", "category":"filler", "argument":0.8}, {"action":"select", "category":"target", "argument":0.5}]
+        self.select_duplicate = [{"action":"select", "category":"filler", "argument":5}, {"action":"select", "category":"filler", "argument":5}, {"action":"select", "category":"target", "argument":10}]
+        self.select_percentage_less = [{"action":"select", "category":"filler", "argument":3}, {"action":"select", "category":"target", "argument":5}]
+        self.select_percentage_more = [{"action":"select", "category":"filler", "argument":8}, {"action":"select", "category":"target", "argument":5}]
 
     def test_check_select(self):
         # selections have to sum up to one
@@ -245,11 +245,11 @@ class TestApplySuccessor(unittest.TestCase):
 
 class TestApplySelect(unittest.TestCase):
     def setUp(self):
-        self.select_50_50 = [{"action":"select", "category":"filler", "argument":0.5}, {"action":"select", "category":"target", "argument":0.5}]
-        self.select_80_20 = [{"action":"select", "category":"filler", "argument":0.8}, {"action":"select", "category":"target", "argument":0.2}]
-        self.select_20_80 = [{"action":"select", "category":"filler", "argument":0.2}, {"action":"select", "category":"target", "argument":0.8}]
-        self.select_100 = [{"action":"select", "category":"filler", "argument":1}]
-        self.select_category_fail = [{"action":"select", "category":"filler", "argument":0.2}, {"action":"select", "category":"foobar", "argument":0.8}]
+        self.select_50_50 = [{"action":"select", "category":"filler", "argument":5}, {"action":"select", "category":"target", "argument":5}]
+        self.select_80_20 = [{"action":"select", "category":"filler", "argument":8}, {"action":"select", "category":"target", "argument":2}]
+        self.select_20_80 = [{"action":"select", "category":"filler", "argument":2}, {"action":"select", "category":"target", "argument":8}]
+        self.select_100 = [{"action":"select", "category":"filler", "argument":10}]
+        self.select_category_fail = [{"action":"select", "category":"filler", "argument":2}, {"action":"select", "category":"foobar", "argument":8}]
         self.tasks = [{"category": "filler"}] * 50 + [{"category": "target"}] * 50
         self.questions_fail = len(self.tasks) + 1
         self.questions_pass = 10
@@ -291,8 +291,8 @@ class TestApplySelect(unittest.TestCase):
         filler = [r for r in self.select_20_80 if r['category'] == 'filler'][0]
         target = [r for r in self.select_20_80 if r['category'] == 'target'][0]
         # now the counts have to match what's in that particular select restriction
-        self.assertEqual(count_filler, int(filler['argument'] * self.questions_pass))
-        self.assertEqual(count_target, int(target['argument'] * self.questions_pass))
+        self.assertEqual(count_filler, filler['argument'])
+        self.assertEqual(count_target, target['argument'])
 
 
 class TestCheckCheck(unittest.TestCase):

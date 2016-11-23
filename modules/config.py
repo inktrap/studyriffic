@@ -62,16 +62,17 @@ class baseConfig():
                                        "university",
                                        "investigator",
                                        "contact",
+                                       "actions",
+                                       "categories",
                                        "active",
                                        "labels",
                                        "time",
                                        "link",
-                                       "actions",
                                        "types",
-                                       "categories",
                                        "templates",
                                        "restrictions"
                                        ]
+
         # baseConfig.studies are configured by convention
         # studies dict contains settings for each study
         self.studies = self.configure()
@@ -94,6 +95,10 @@ class baseConfig():
             except json.decoder.JSONDecodeError as e:
                 logger.error("There is an error in one of your settings.json files: %s" % study_settings)
                 raise e
+
+            settings['categories'] = ["check", "filler", "target"]
+            settings['actions'] = ["max_successors", "select", "not_positions"]
+
             for key in self.required_settings_keys:
                 assert key in settings.keys(), "You have to specify the key '%s' in your settings file: %s" % (key, study_settings)
             if 'active' in settings.keys():

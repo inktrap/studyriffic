@@ -27,10 +27,13 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Valentin Todo
 
+ - why shouldn't select restrictions be much simpler and give absolute values??
+ No 0.3 aso. but an int -> rewrite and rewrite tests
+
  - check that PATTERNS in checks are replaced correctly
  - include nondeceptive simple checks in studies: 2 (short studies) 3 (longer studies)
  - change consent form
- - create one hughe results table
+ - create one huge results table
  - increase number of tasks to N + number of checks
 
 ### documentation:

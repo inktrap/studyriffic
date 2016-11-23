@@ -53,9 +53,9 @@ def check_restriction(settings, restriction):
         assert restriction['argument'] >= 0, "For the argument a of a max_successors restriction it has to hold that 0 <= a"
         # assert restriction['argument'] < settings['questions'], "For the argument a of a max_successors restriction it is probably a mistake if a >= the number of questions."
     elif restriction['action'] == 'select':
-        assert isinstance(restriction['argument'], float)
+        assert isinstance(restriction['argument'], int), "A select restriction has to select a number of tasks"
         assert 'category' in restriction.keys()
-        assert 0.0 < restriction['argument'] <= 1.0, "The argument for a select restriction x has to have the following property: 0 < x <= 1"
+        assert 0.0 < restriction['argument'] <= settings['questions'], "The argument for a select restriction x has to have the following property: 0 < x <= (number of tasks)"
     elif restriction['action'] == 'not_positions':
         assert isinstance(restriction['argument'], list)
         assert 'category' in restriction.keys(), "A not_positions restriction has to operate on a category"
@@ -139,21 +139,19 @@ def check_select(questions, select_restrictions):
     assert len(select_restrictions) > 0, "You have to specify at least one select restriction"
 
     # semantic checks for select restrictions
-    # check if the numbers of selects add up to 1
+    # check if the numbers of selects add up to the number of tasks
     select_sum = sum([select_restriction['argument'] for select_restriction in select_restrictions])
-    # TODO this is stupid for three thirds that are written as 0.33333333 each. Do this as fractions.
-    #assert select_sum == 1, "Select restrictions have to sum up to (exactly?) 1, these sum up to: %s" % str(select_sum)
     logger.debug(select_sum)
-    assert 0 <= (1 - select_sum) < 0.00001, "Select restrictions have to sum up to (exactly?) 1, these sum up to: %s" % str(select_sum)
+    assert select_sum == questions, "Select restrictions have to sum up to the number of tasks, these sum up to: %s" % str(select_sum)
 
     select_categories = []
 
     for select_restriction in select_restrictions:
         logging.debug(math.modf(questions * select_restriction['argument'])[0])
-        assert (math.modf(questions * select_restriction['argument']))[0] == 0.0, "selection arguments can not produce items less than 1 (F.e.: You can not split a question in half)."
+        assert isinstance(select_restriction['argument'], int), "selection arguments have to be integers, you can not split a task"
         assert 'category' in select_restriction.keys(), "Category key not present"
         assert select_restriction['argument'] > 0, "The argument of a select restriction must be greater 0 (it has to select something)"
-        assert select_restriction['argument'] <= 1, "The argument of a select restriction must be <= 1 (you can't select more than 100%)"
+        assert select_restriction['argument'] <= questions, "The argument of a select restriction must be <= (number of tasks) (you can't select more than 100%)"
         select_categories.append(select_restriction['category'])
 
     # check if select has been specified more than once with the same argument
@@ -247,14 +245,12 @@ def apply_select(questions, select_restrictions, tasks):
         # otherwise the first entries would be favored
         category_tasks = list(filter(lambda x: x['category'] == select_restriction['category'], tasks))
         assert len(category_tasks) > 0, "There are no tasks for the category %s" % select_restriction['category']
-        # get number of entities the current restriction takes
-        take_restrictions = questions * select_restriction['argument']
-        # print(take_restrictions)
         # print(len(category_tasks))
-        assert take_restrictions <= len(category_tasks), "You want to select %i task(s) of the category %s but there are only %i tasks of that category" % (take_restrictions, select_restriction["category"], len(category_tasks))
+        assert isinstance(select_restriction['argument'], int)
+        assert select_restriction['argument'] <= len(category_tasks), "You want to select %i task(s) of the category %s but there are only %i tasks of that category" % (select_restriction['argument'], select_restriction["category"], len(category_tasks))
         # create a list of the indices
         # we can use int here, because I checked this with math.modf before
-        random_sample = random.sample(category_tasks, int(take_restrictions))
+        random_sample = random.sample(category_tasks, select_restriction['argument'])
         # random.sample: Used for random sampling without replacement.
         result += random_sample
 
