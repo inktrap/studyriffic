@@ -20,7 +20,18 @@ logger.addHandler(ch)
 
 class baseConfig():
     def __init__(self):
-        u''' build paths, make assertions. sets self.result_paths and self.study_paths'''
+        '''
+        build paths, make assertions. sets self.result_paths and self.study_paths.
+        the main purpose of this class is to build a list of result objects
+        where a result object looks like this:
+        {
+            'settings': 'ROOT/studies/owls/settings.json',
+            'db': 'ROOT/results/owls/db.json',
+            'name': 'owls',
+            'tasks': 'ROOT/studies/owls/tasks.json',
+            'csv': 'ROOT/results/owls/csv'
+        }
+        '''
 
         # conventions
         studies_folder = 'studies'
@@ -97,6 +108,9 @@ class baseConfig():
 
 class csvResults():
     def __init__(self, results):
+        '''
+        dump all the files as csv
+        '''
         for result in results:
             settings = csvResults.makeSettings(self, result)
             assert self.write(settings, os.path.join(result['csv'], 'settings.csv')) is True
@@ -106,10 +120,15 @@ class csvResults():
             assert self.write(tasks, os.path.join(result['csv'], 'tasks.csv')) is True
             answers = csvResults.makeAnswers(self, result)
             assert self.write(answers, os.path.join(result['csv'], 'answers.csv')) is True
-            #all_results = csvResults.makeAll(self, settings, demographics, tasks, answers)
-            #assert self.write(all_results, os.path.join(results['csv'], 'all.csv')) is True
+            all_results = csvResults.makeAll(self, settings, demographics, tasks, answers)
+            assert self.write(all_results, os.path.join(result['csv'], 'all.csv')) is True
 
     def loadJson(self, name, results):
+        '''
+        load json data given by
+            name (the name you want)
+            results (the result object that contains the file locations)
+        '''
         #logger.debug(results[name])
         assert isinstance(name, str)
         assert isinstance(results, dict)
@@ -119,7 +138,9 @@ class csvResults():
         return content
 
     def makeSettings(self, results):
-        u''' a generic method that simply dumps the contents as csv'''
+        '''
+        create the column and rows that form the settings table
+        '''
         content = self.loadJson('settings', results)
         # remove unncessary keys:
         # - that ensures that studyriffic works the way it should (templates, categories, aso.)
@@ -144,12 +165,18 @@ class csvResults():
         return data
 
     def _joinList(self, this_list):
+        '''
+        join a list with spaces and strip spaces on boundaries
+        '''
         assert isinstance(this_list, list)
         # do not modify strings that were entered by the user
         #return ' '.join([l.lower().strip() for l in this_list]).strip()
         return ' '.join([l.strip() for l in this_list]).strip()
 
     def makeTasks(self, results):
+        '''
+        create the column and rows that form the tasks table
+        '''
         # maybe later: get the categories and types from settings, create one column per category and type
         settings = self.loadJson('settings', results)
         type_keys = settings['types']
@@ -176,6 +203,9 @@ class csvResults():
         return data
 
     def makeAnswers(self, results):
+        '''
+        create the column and rows that form the answers table
+        '''
         items = self.loadJson('db', results)
         result_keys = sorted(list(items[0]['results'][0].keys()))
         header = [['pid'] + result_keys]
@@ -194,6 +224,9 @@ class csvResults():
         return data
 
     def makeDemographics(self, results):
+        '''
+        create the column and rows that form the demographics table
+        '''
         listKeys = ['languages']
         items = self.loadJson('db', results)
         demographics_keys = sorted(list(items[0]['demographics'].keys()))
@@ -211,12 +244,25 @@ class csvResults():
         return data
 
     def makeAll(self, settings, demographics, tasks, answers):
-        # combine all the different results in one huge redundant table
+        '''
+        combine all the different results into one huge redundant table
+        that is convenient for statistical analysis
+        - the unique value are the answers, for every answer a task must
+          be selected
+        '''
+        # an answer has this format: ['pid', 'id', 'sent_rt', 'sit_rt', 'value']
+        assert answers[0][0] == 'pid'
+        #logger.debug(answers)
+        for answer in answers[1:]:
+            pass
         data = []
         return data
 
     def write(self, data, outfile):
-        u''' write the rows to a file called name'''
+        u'''
+        data is expected to be a list of rows and the first row is the column.
+        write the rows to a file called name.
+        '''
         assert isinstance(data, list)
         assert isinstance(outfile, str)
         # all the rows have to have the same length
@@ -232,12 +278,14 @@ class csvResults():
 
 def main():
     thisConfig = baseConfig()
+    #logger.debug(thisConfig.results)
     csvResults(thisConfig.results)
     # print(thisConfig.results)
     # demographics
     # settings
     # tasks
     # results
+
 
 if __name__ == "__main__":
     main()
