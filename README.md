@@ -27,14 +27,8 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Valentin Todo
 
- - why shouldn't select restrictions be much simpler and give absolute values??
- No 0.3 aso. but an int -> rewrite and rewrite tests
-
- - check that PATTERNS in checks are replaced correctly
- - include nondeceptive simple checks in studies: 2 (short studies) 3 (longer studies)
- - change consent form
  - create one huge results table
- - increase number of tasks to N + number of checks
+ - flexbox footer that is sticky and scales and simply works
 
 ### documentation:
 
@@ -48,10 +42,9 @@ Here is a quick overview of the framework I wrote. It features:
  - flash message if the participant is going really fast (configurable)
  - how to display errors?
  - how to encapsulate js properly?
- - sometimes/maybe include expected values for fillers in data
+ - include expected values for fillers in data
  - include a setting to specify the type of interval for ranges in the check field
  - implement interval setting and rounding setting
- - specify select restrictions as fractions instead of floats?
  - refactoring
      - try out rope
      - rename (as NOUN_SPECIFIER, where noun is the type of thing):
@@ -108,6 +101,16 @@ Here is a quick overview of the framework I wrote. It features:
 # Done
 
 ~~~
+ x change consent form
+ x increase number of tasks to N + number of checks
+ x select restrictions work with ints instead of floats now
+ x test select restrictions
+ x included attention checks in studies
+ x changed selects in studies
+ x moved category and action setting keys to config module (the user only has to change those if a new feature is needed).
+
+ x check that PATTERNS in checks are replaced correctly
+ x include nondeceptive simple checks in studies: 2 (short studies) 3 (longer studies)
  x wrote pattern replacement logic for checks
  x if too many attention checks failed the situation and sentence is there but empty. this could be improved.
  x abort if a participant fails 2 attention checks

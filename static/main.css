@@ -89,3 +89,7 @@ span.text-bold {
 span.text-italic {
     font-style: italic;
 }
+
+span.line {
+  display: inline-block;
+}

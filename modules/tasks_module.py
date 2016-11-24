@@ -142,7 +142,7 @@ def check_select(questions, select_restrictions):
     # check if the numbers of selects add up to the number of tasks
     select_sum = sum([select_restriction['argument'] for select_restriction in select_restrictions])
     logger.debug(select_sum)
-    assert select_sum == questions, "Select restrictions have to sum up to the number of tasks, these sum up to: %s" % str(select_sum)
+    assert select_sum == questions, "Select restrictions have to sum up to the number of tasks (%i), these sum up to: %i" % (questions, select_sum)
 
     select_categories = []
 

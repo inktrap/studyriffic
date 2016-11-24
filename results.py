@@ -98,10 +98,16 @@ class baseConfig():
 class csvResults():
     def __init__(self, results):
         for result in results:
-            csvResults.writeSettings(self, result)
-            csvResults.writeDemographics(self, result)
-            csvResults.writeTasks(self, result)
-            csvResults.writeResults(self, result)
+            settings = csvResults.makeSettings(self, result)
+            assert self.write(settings, os.path.join(result['csv'], 'settings.csv')) is True
+            demographics = csvResults.makeDemographics(self, result)
+            assert self.write(demographics, os.path.join(result['csv'], 'demographics.csv')) is True
+            tasks = csvResults.makeTasks(self, result)
+            assert self.write(tasks, os.path.join(result['csv'], 'tasks.csv')) is True
+            answers = csvResults.makeAnswers(self, result)
+            assert self.write(answers, os.path.join(result['csv'], 'answers.csv')) is True
+            #all_results = csvResults.makeAll(self, settings, demographics, tasks, answers)
+            #assert self.write(all_results, os.path.join(results['csv'], 'all.csv')) is True
 
     def loadJson(self, name, results):
         #logger.debug(results[name])
@@ -112,7 +118,7 @@ class csvResults():
             assert len(content) > 0
         return content
 
-    def writeSettings(self, results):
+    def makeSettings(self, results):
         u''' a generic method that simply dumps the contents as csv'''
         content = self.loadJson('settings', results)
         # remove unncessary keys:
@@ -135,8 +141,7 @@ class csvResults():
         for item in header:
             rows.append(content[item])
         data = [header, rows]
-        assert self.write(data, os.path.join(results['csv'], 'settings.csv')) is True
-        return True
+        return data
 
     def _joinList(self, this_list):
         assert isinstance(this_list, list)
@@ -144,7 +149,7 @@ class csvResults():
         #return ' '.join([l.lower().strip() for l in this_list]).strip()
         return ' '.join([l.strip() for l in this_list]).strip()
 
-    def writeTasks(self, results):
+    def makeTasks(self, results):
         # maybe later: get the categories and types from settings, create one column per category and type
         settings = self.loadJson('settings', results)
         type_keys = settings['types']
@@ -168,10 +173,9 @@ class csvResults():
                 #row_types[type_keys.index(this_type)] = 1
             row = row + row_types[:]
             data.append(row)
-        assert self.write(data, os.path.join(results['csv'], 'tasks.csv')) is True
-        return True
+        return data
 
-    def writeResults(self, results):
+    def makeAnswers(self, results):
         items = self.loadJson('db', results)
         result_keys = sorted(list(items[0]['results'][0].keys()))
         header = [['pid'] + result_keys]
@@ -187,10 +191,9 @@ class csvResults():
                         logger.error(this_result)
                         sys.exit(1)
                 data.append(row)
-        assert self.write(data, os.path.join(results['csv'], 'results.csv')) is True
-        return True
+        return data
 
-    def writeDemographics(self, results):
+    def makeDemographics(self, results):
         listKeys = ['languages']
         items = self.loadJson('db', results)
         demographics_keys = sorted(list(items[0]['demographics'].keys()))
@@ -205,17 +208,27 @@ class csvResults():
                 else:
                     row.append(item['demographics'][key])
             data.append(row)
-        assert self.write(data, os.path.join(results['csv'], 'demographics.csv')) is True
-        return True
+        return data
+
+    def makeAll(self, settings, demographics, tasks, answers):
+        # combine all the different results in one huge redundant table
+        data = []
+        return data
 
     def write(self, data, outfile):
         u''' write the rows to a file called name'''
+        assert isinstance(data, list)
+        assert isinstance(outfile, str)
+        # all the rows have to have the same length
+        for row in data:
+            assert len(row) == len(data[0])
         #logger.debug(data)
         with open(outfile, 'w') as f:
             writer = csv.writer(f)
             writer.writerows(data)
         logger.info("Wrote %s" % outfile)
         return True
+
 
 def main():
     thisConfig = baseConfig()
