@@ -27,7 +27,7 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Valentin Todo
 
- - create one huge results table
+ - test one huge results table
  - flexbox footer that is sticky and scales and simply works
 
 ### documentation:
@@ -101,6 +101,7 @@ Here is a quick overview of the framework I wrote. It features:
 # Done
 
 ~~~
+ x create one huge results table
  x change consent form
  x increase number of tasks to N + number of checks
  x select restrictions work with ints instead of floats now
