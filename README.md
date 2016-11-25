@@ -111,7 +111,6 @@ Here is a quick overview of the framework I wrote. It features:
  x included attention checks in studies
  x changed selects in studies
  x moved category and action setting keys to config module (the user only has to change those if a new feature is needed).
-
  x check that PATTERNS in checks are replaced correctly
  x include nondeceptive simple checks in studies: 2 (short studies) 3 (longer studies)
  x wrote pattern replacement logic for checks
