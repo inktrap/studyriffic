@@ -7,6 +7,9 @@ import re
 import csv
 import sys
 
+import pprint
+pp = pprint.PrettyPrinter(indent=4)
+
 import logging
 logger = logging.getLogger('results.py')
 logger.setLevel(logging.DEBUG)
@@ -120,8 +123,21 @@ class csvResults():
             assert self.write(tasks, os.path.join(result['csv'], 'tasks.csv')) is True
             answers = csvResults.makeAnswers(self, result)
             assert self.write(answers, os.path.join(result['csv'], 'answers.csv')) is True
-            all_results = csvResults.makeAll(self, settings, demographics, tasks, answers)
+            # create a combined results table
+            all_results = csvResults.makeAll(self, demographics, tasks, answers)
             assert self.write(all_results, os.path.join(result['csv'], 'all.csv')) is True
+
+    def _check_format(self, outfile, data):
+        ''' check that this is a list of sublists of strings
+            where all the sublists are of the same length'''
+        # all the rows have to have the same length
+        assert isinstance(data, list)
+        for line, row in enumerate(data):
+            assert isinstance(row, list)
+            assert len(row) == len(data[0]), "Insonsistent lengths for %s at line %i (%i) and line 0 (%i)" % (outfile, line, len(row), len(data[0]))
+            for item in row:
+                assert isinstance(item, str), "In %s an entry is not a string (%s) at line %i" % (outfile, str(item), line)
+        return True
 
     def loadJson(self, name, results):
         '''
@@ -156,11 +172,11 @@ class csvResults():
                 del(content[key])
             except KeyError:
                 pass
-        header = sorted(list(content.keys()))
+        header = sorted(list(map(str, content.keys())))
         rows = []
         # settings are a dictionary so this table only has one row
         for item in header:
-            rows.append(content[item])
+            rows.append(str(content[item]))
         data = [header, rows]
         return data
 
@@ -185,18 +201,18 @@ class csvResults():
         # exclude the check key because only fillers and checks have it
         if 'check' in item_keys:
             item_keys.remove('check')
-        item_keys = sorted([item_key for item_key in item_keys if item_key != 'type'])
+        item_keys = sorted([str(item_key) for item_key in item_keys if item_key != 'type'])
         # append the types after the end of the columns and rename each type (f.e. foobar becomes TypeFoobar)
         data = [list(item_keys) + [t + 'Type' for t in type_keys]]
         for item in items:
             row = []
             row_types = [''] * len(type_keys)
             for key in item_keys:
-                row.append(item[key])
+                row.append(str(item[key]))
             for this_type in item['type']:
                 # this is the most fragile step: setting 1 for each type that is true in the predefined list
                 # redundant and duplicate behaviour would be
-                row_types[type_keys.index(this_type)] = this_type
+                row_types[type_keys.index(this_type)] = str(this_type)
                 #row_types[type_keys.index(this_type)] = 1
             row = row + row_types[:]
             data.append(row)
@@ -213,10 +229,10 @@ class csvResults():
         for item in items:
             for this_result in item['results']:
                 row = []
-                row.append(item['pid'])
+                row.append(str(item['pid']))
                 for key in result_keys:
                     try:
-                        row.append(this_result[key])
+                        row.append(str(this_result[key]))
                     except KeyError:
                         logger.error(this_result)
                         sys.exit(1)
@@ -234,28 +250,85 @@ class csvResults():
         data = header
         for item in items:
             row = []
-            row.append(item['pid'])
+            row.append(str(item['pid']))
             for key in demographics_keys:
                 if key in listKeys:
                     row.append(self._joinList(item['demographics'][key]))
                 else:
-                    row.append(item['demographics'][key])
+                    if isinstance(item['demographics'][key], list):
+                        row.append(self._joinList(item['demographics'][key]))
+                    else:
+                        row.append(item['demographics'][key])
             data.append(row)
         return data
 
-    def makeAll(self, settings, demographics, tasks, answers):
+    def _flattenList(self, *args):
+        result = []
+        for arg in args:
+            assert isinstance(arg, list)
+            result += arg[:]
+        return result
+
+    def makeAll(self, demographics, tasks, answers):
         '''
-        combine all the different results into one huge redundant table
-        that is convenient for statistical analysis
+        combine all the different **results** into one huge redundant table
+        that is convenient for statistical analysis.
+        this includes: pid,id,sit_rt, sent_rt,value, category, type, age, languages
+
         - the unique value are the answers, for every answer a task must
           be selected
         '''
         # an answer has this format: ['pid', 'id', 'sent_rt', 'sit_rt', 'value']
+        # the id joins the task and the answers value
+        # a task looks like this ['category', 'id', 'sentence', 'situation', '*Type']
+        # where *Type is one or more types, like fooType, barType, aso.
+        # the pid joins the demographics and answers values
         assert answers[0][0] == 'pid'
+        assert demographics[0][0] == 'pid'
+        assert answers[0][1] == 'id'
+        assert tasks[0][1] == 'id'
+
+        # remove situation and sentence keys from tasks
+        # logger.debug(tasks[0])
+        delete_values = []
+        delete_values.append(tasks[0].index('sentence'))
+        delete_values.append(tasks[0].index('situation'))
+        for task in tasks:
+            # this is quite important: when deleting values from an array
+            # the indices that are coming later are shifted.
+            # so delete the indices from highest to lowest
+            # otherwise this would be horribly wrong
+            # (tbh: writing code that transforms tables feels horribly wrong, ugh)
+            for d in sorted(delete_values, reverse=True):
+                del task[d]
+
         #logger.debug(answers)
-        for answer in answers[1:]:
-            pass
+
         data = []
+
+        pids = set([x[0] for x in demographics[1:]])
+        #logger.debug(pids)
+
+        data = [self._flattenList(demographics[0], tasks[0], answers[0])]
+        #logger.debug(demographics[1])
+        for pid in pids:
+            # this_answers = [answer for answer in answers if answer[0] == pid]
+            # get all the answers for the pid
+            this_answers = list(filter(lambda x: x[0] == pid, answers))
+            # get all the answer ids
+            this_answer_ids = list(set([x[1] for x in this_answers]))
+            # get all the tasks for this set of answers
+            this_tasks = list(filter(lambda x: x[1] in this_answer_ids, tasks))
+            # get all the demographic values for this pid (like originally done)
+            this_demographics = list(filter(lambda x: x[0] == pid, demographics))
+            assert len(this_demographics) == 1
+            assert len(this_answers) == len(this_answer_ids) == len(this_tasks)
+            for this_demographic in this_demographics:
+                for this_answer in this_answers:
+                    current_task = list(filter(lambda x: x[1] == this_answer[1], this_tasks))
+                    assert len(current_task) == 1
+                    current_task = current_task[0]
+                    data.append(self._flattenList(this_demographic, current_task, this_answer))
         return data
 
     def write(self, data, outfile):
@@ -263,11 +336,8 @@ class csvResults():
         data is expected to be a list of rows and the first row is the column.
         write the rows to a file called name.
         '''
-        assert isinstance(data, list)
         assert isinstance(outfile, str)
-        # all the rows have to have the same length
-        for row in data:
-            assert len(row) == len(data[0])
+        assert self._check_format(outfile, data) is True
         #logger.debug(data)
         with open(outfile, 'w') as f:
             writer = csv.writer(f)
