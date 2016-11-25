@@ -115,14 +115,23 @@ class csvResults():
         dump all the files as csv
         '''
         for result in results:
-            settings = csvResults.makeSettings(self, result)
+            items = self.loadJson('settings', result)
+            settings = csvResults.makeSettings(self, items)
             assert self.write(settings, os.path.join(result['csv'], 'settings.csv')) is True
-            demographics = csvResults.makeDemographics(self, result)
+
+            items = self.loadJson('db', result)
+            demographics = csvResults.makeDemographics(self, items)
             assert self.write(demographics, os.path.join(result['csv'], 'demographics.csv')) is True
-            tasks = csvResults.makeTasks(self, result)
+
+            settings = self.loadJson('settings', result)
+            items = self.loadJson('tasks', result)
+            tasks = csvResults.makeTasks(self, items, settings)
             assert self.write(tasks, os.path.join(result['csv'], 'tasks.csv')) is True
-            answers = csvResults.makeAnswers(self, result)
+
+            items = self.loadJson('db', result)
+            answers = csvResults.makeAnswers(self, items)
             assert self.write(answers, os.path.join(result['csv'], 'answers.csv')) is True
+
             # create a combined results table
             all_results = csvResults.makeAll(self, demographics, tasks, answers)
             assert self.write(all_results, os.path.join(result['csv'], 'all.csv')) is True
@@ -153,11 +162,10 @@ class csvResults():
             assert len(content) > 0
         return content
 
-    def makeSettings(self, results):
+    def makeSettings(self, items):
         '''
         create the column and rows that form the settings table
         '''
-        content = self.loadJson('settings', results)
         # remove unncessary keys:
         # - that ensures that studyriffic works the way it should (templates, categories, aso.)
         # - studyriffic configuration data (labels, active, aso.)
@@ -169,14 +177,14 @@ class csvResults():
         # publishing_keys = ['university', 'investigator', 'contact']
         for key in unnecessary_keys:
             try:
-                del(content[key])
+                del(items[key])
             except KeyError:
                 pass
-        header = sorted(list(map(str, content.keys())))
+        header = sorted(list(map(str, items.keys())))
         rows = []
         # settings are a dictionary so this table only has one row
         for item in header:
-            rows.append(str(content[item]))
+            rows.append(str(items[item]))
         data = [header, rows]
         return data
 
@@ -189,14 +197,12 @@ class csvResults():
         #return ' '.join([l.lower().strip() for l in this_list]).strip()
         return ' '.join([l.strip() for l in this_list]).strip()
 
-    def makeTasks(self, results):
+    def makeTasks(self, items, settings):
         '''
         create the column and rows that form the tasks table
         '''
         # maybe later: get the categories and types from settings, create one column per category and type
-        settings = self.loadJson('settings', results)
         type_keys = settings['types']
-        items = self.loadJson('tasks', results)
         item_keys = list(items[0].keys())
         # exclude the check key because only fillers and checks have it
         if 'check' in item_keys:
@@ -218,11 +224,10 @@ class csvResults():
             data.append(row)
         return data
 
-    def makeAnswers(self, results):
+    def makeAnswers(self, items):
         '''
         create the column and rows that form the answers table
         '''
-        items = self.loadJson('db', results)
         result_keys = sorted(list(items[0]['results'][0].keys()))
         header = [['pid'] + result_keys]
         data = header
@@ -239,12 +244,11 @@ class csvResults():
                 data.append(row)
         return data
 
-    def makeDemographics(self, results):
+    def makeDemographics(self, items):
         '''
         create the column and rows that form the demographics table
         '''
         listKeys = ['languages']
-        items = self.loadJson('db', results)
         demographics_keys = sorted(list(items[0]['demographics'].keys()))
         header = [['pid'] + demographics_keys]
         data = header
