@@ -29,6 +29,8 @@ Here is a quick overview of the framework I wrote. It features:
 
  - test one huge results table
  - flexbox footer that is sticky and scales and simply works
+ - exclude pids for 1a) from 1b)
+ - exclude ``$USER`` from all studies
 
 ### documentation:
 
