@@ -10,56 +10,56 @@ logger = logging.getLogger(__file__)
 import pprint
 pp = pprint.PrettyPrinter(indent=4)
 
-class csvResultsTest():
+class TestCsvResults(unittest.TestCase):
 
     def setUp(self):
         pass
 
     # helper functions
 
-    def _check_formatTest(self):
+    def test__check_format(self):
         #def _check_format(self, outfile, data):
-        pass
+        self.assertTrue(True)
 
-    def _joinListTest(self):
+    def test__joinList(self):
         #def _joinList(self, this_list):
-        pass
+        self.assertTrue(True)
 
-    def _flattenListTest(self):
+    def test__flattenList(self):
         #def _flattenList(self, *args):
-        pass
+        self.assertTrue(True)
 
     # main functions (these should be tested first)
 
-    def makeSettingsTest(self):
+    def test_makeSettings(self):
         #def makeSettings(self, items):
-        pass
+        self.assertTrue(True)
 
-    def makeTasksTest(self):
+    def test_makeTasks(self):
         #def makeTasks(self, items, settings):
-        pass
+        self.assertTrue(True)
 
-    def makeAnswersTest(self):
+    def test_makeAnswers(self):
         #def makeAnswers(self, items):
-        pass
+        self.assertTrue(True)
 
-    def makeDemographicsTest(self):
+    def test_makeDemographics(self):
         #def makeDemographics(self, items):
-        pass
+        self.assertTrue(True)
 
-    def makeAllTest(self):
+    def test_makeAll(self):
         #def makeAll(self, demographics, tasks, answers):
-        pass
+        self.assertTrue(True)
 
     # functions with a lot of side effects that can only
-    # be tested to throw assertions
-    def writeTest(self):
+    # be tested to throw the right assertions
+    def test_write(self):
         #def write(self, data, outfile):
-        pass
+        self.assertTrue(True)
 
-    def loadJsonTest(self):
+    def test_loadJson(self):
         #def loadJson(self, name, results):
-        pass
+        self.assertTrue(True)
 
 
 if __name__ == '__main__':
