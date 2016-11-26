@@ -110,7 +110,10 @@ class baseConfig():
         return names
 
 class csvResults():
-    def __init__(self, results):
+    def __init__(self):
+        pass
+
+    def main(self, results):
         '''
         dump all the files as csv
         '''
@@ -144,6 +147,7 @@ class csvResults():
         for line, row in enumerate(data):
             assert isinstance(row, list)
             assert len(row) == len(data[0]), "Insonsistent lengths for %s at line %i (%i) and line 0 (%i)" % (outfile, line, len(row), len(data[0]))
+            assert len(data[0]) > 0, "Empty data objects are probably a mistake"
             for item in row:
                 assert isinstance(item, str), "In %s an entry is not a string (%s) at line %i" % (outfile, str(item), line)
         return True
@@ -165,7 +169,10 @@ class csvResults():
     def makeSettings(self, items):
         '''
         create the column and rows that form the settings table
+        this behaves a little bit like zip()
         '''
+
+        assert isinstance(items, dict)
         # remove unncessary keys:
         # - that ensures that studyriffic works the way it should (templates, categories, aso.)
         # - studyriffic configuration data (labels, active, aso.)
@@ -195,18 +202,28 @@ class csvResults():
         assert isinstance(this_list, list)
         # do not modify strings that were entered by the user
         #return ' '.join([l.lower().strip() for l in this_list]).strip()
-        return ' '.join([l.strip() for l in this_list]).strip()
+        return ' '.join([str(l).strip() for l in this_list]).strip()
+
+    def _mergeLists(self, *args):
+        result = []
+        for arg in args:
+            assert isinstance(arg, list)
+            result += arg[:]
+        return result
 
     def makeTasks(self, items, settings):
         '''
         create the column and rows that form the tasks table
         '''
         # maybe later: get the categories and types from settings, create one column per category and type
+        assert 'types' in settings.keys()
+
         type_keys = settings['types']
         item_keys = list(items[0].keys())
         # exclude the check key because only fillers and checks have it
         if 'check' in item_keys:
             item_keys.remove('check')
+
         item_keys = sorted([str(item_key) for item_key in item_keys if item_key != 'type'])
         # append the types after the end of the columns and rename each type (f.e. foobar becomes TypeFoobar)
         data = [list(item_keys) + [t + 'Type' for t in type_keys]]
@@ -214,6 +231,7 @@ class csvResults():
             row = []
             row_types = [''] * len(type_keys)
             for key in item_keys:
+                assert key in item.keys()
                 row.append(str(item[key]))
             for this_type in item['type']:
                 # this is the most fragile step: setting 1 for each type that is true in the predefined list
@@ -228,6 +246,14 @@ class csvResults():
         '''
         create the column and rows that form the answers table
         '''
+        assert isinstance(items, list)
+        assert 'results' in items[0].keys()
+        assert isinstance(items[0], dict)
+        assert isinstance(items[0]['results'], list)
+        assert len(items[0]['results']) > 0
+        assert isinstance(items[0]['results'][0], dict)
+        assert 'pid' in items[0]
+
         result_keys = sorted(list(items[0]['results'][0].keys()))
         header = [['pid'] + result_keys]
         data = header
@@ -262,16 +288,9 @@ class csvResults():
                     if isinstance(item['demographics'][key], list):
                         row.append(self._joinList(item['demographics'][key]))
                     else:
-                        row.append(item['demographics'][key])
+                        row.append(str(item['demographics'][key]))
             data.append(row)
         return data
-
-    def _flattenList(self, *args):
-        result = []
-        for arg in args:
-            assert isinstance(arg, list)
-            result += arg[:]
-        return result
 
     def makeAll(self, demographics, tasks, answers):
         '''
@@ -313,7 +332,7 @@ class csvResults():
         pids = set([x[0] for x in demographics[1:]])
         #logger.debug(pids)
 
-        data = [self._flattenList(demographics[0], tasks[0], answers[0])]
+        data = [self._mergeLists(demographics[0], tasks[0], answers[0])]
         #logger.debug(demographics[1])
         for pid in pids:
             # this_answers = [answer for answer in answers if answer[0] == pid]
@@ -332,7 +351,7 @@ class csvResults():
                     current_task = list(filter(lambda x: x[1] == this_answer[1], this_tasks))
                     assert len(current_task) == 1
                     current_task = current_task[0]
-                    data.append(self._flattenList(this_demographic, current_task, this_answer))
+                    data.append(self._mergeLists(this_demographic, current_task, this_answer))
         return data
 
     def write(self, data, outfile):
@@ -353,7 +372,8 @@ class csvResults():
 def main():
     thisConfig = baseConfig()
     #logger.debug(thisConfig.results)
-    csvResults(thisConfig.results)
+    thisResults = csvResults()
+    thisResults.main(thisConfig.results)
     # print(thisConfig.results)
     # demographics
     # settings
