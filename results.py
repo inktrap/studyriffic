@@ -400,7 +400,6 @@ class csvResults():
                     assert len(current_task) == 1
                     current_task = current_task[0]
                     data.append(self._mergeLists(this_demographic, current_task, this_answer))
-        # data = self._deduplicateTable(data)
         data = self._deduplicateTable(data)
         return data
 
