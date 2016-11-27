@@ -302,7 +302,7 @@ class csvResults():
             assert 0 <= index, "Index must be greater equal to 0"
             assert index < len(table[0]), "IndexError"
         if len(indices) == 0:
-            return []
+            return table
         # logger.debug(table[0])
         for task in table:
             # this is quite important: when deleting values from an array
@@ -363,7 +363,16 @@ class csvResults():
         assert answers[0][1] == 'id'
         assert tasks[0][1] == 'id'
 
-        indices = [tasks.index('situation'), tasks.index('sentence')]
+        indices = []
+        try:
+            indices.append(tasks[0].index('situation'))
+        except ValueError:
+            pass
+        try:
+            indices.append(tasks[0].index('sentence'))
+        except ValueError:
+            pass
+
         tasks = self._deleteFromTable(indices, tasks)
         data = []
 
@@ -392,6 +401,7 @@ class csvResults():
                     current_task = current_task[0]
                     data.append(self._mergeLists(this_demographic, current_task, this_answer))
         # data = self._deduplicateTable(data)
+        data = self._deduplicateTable(data)
         return data
 
     def write(self, data, outfile):
