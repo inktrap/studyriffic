@@ -27,8 +27,6 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Valentin Todo
 
- - remove duplicate values from huge results table
- - test one huge results table
  - flexbox footer that is sticky and scales and simply works
  - exclude pids for 1a) from 1b)
  - exclude ``$USER`` from all studies
@@ -104,6 +102,8 @@ Here is a quick overview of the framework I wrote. It features:
 # Done
 
 ~~~
+ x remove duplicate values from huge results table
+ x test one huge results table
  x create one huge results table
  x change consent form
  x increase number of tasks to N + number of checks

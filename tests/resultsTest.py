@@ -151,6 +151,25 @@ class TestCsvResults(unittest.TestCase):
         self.assertEqual([["a", "x", "b"]], self.results._deduplicateTable([["a", "x", "a", "a", "x", "b"]]))
         self.assertEqual([["foo", "bar", "foobar"], ["a", "b", "c"]], self.results._deduplicateTable([["foo", "bar", "foobar", "foo", "bar"], ["a", "b", "c", "a", "b"]]))
 
+    def test__getPids(self):
+        #def _getPids(self, answers):
+        pids = [["pid"], ["foo"], ["foo"], ["bar"]]
+        with self.assertRaises(AssertionError):
+            self.results._getPids({})
+        with self.assertRaises(AssertionError):
+            self.results._getPids([])
+        with self.assertRaises(AssertionError):
+            self.results._getPids([""])
+        with self.assertRaises(AssertionError):
+            self.results._getPids([["id"]])
+        # getPids sorts, so this test works
+        self.assertEqual(self.results._getPids(pids), ["bar", "foo"])
+
+    def test_makePids(self):
+        #def makePids(self, answers):
+        pids = [["pid"], ["foo"], ["foo"], ["bar"]]
+        self.assertEqual(self.results.makePids(pids), [["pid"], ["bar"], ["foo"]])
+
     def test_deleteFromTable(self):
         # def _deleteFromTable(self, columns, table):
         # TODO

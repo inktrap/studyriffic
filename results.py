@@ -135,6 +135,10 @@ class csvResults():
             answers = csvResults.makeAnswers(self, items)
             assert self.write(answers, os.path.join(result['csv'], 'answers.csv')) is True
 
+            pids = csvResults.makePids(self, answers)
+            logger.debug(pids)
+            assert self.write(pids, os.path.join(result['csv'], 'pids.csv')) is True
+
             # create a combined results table
             all_results = csvResults.makeAll(self, demographics, tasks, answers)
             assert self.write(all_results, os.path.join(result['csv'], 'all.csv')) is True
@@ -344,6 +348,18 @@ class csvResults():
         # unpack the lists and merge them, checking is already done
         return self._deleteFromTable(self._mergeLists(*indices), table)
 
+    def _getPids(self, answers):
+        assert isinstance(answers, list)
+        assert len(answers) > 0
+        assert isinstance(answers[0], list)
+        assert len(answers[0][0]) > 0
+        assert answers[0][0] == 'pid'
+        # sorting is needed because otherwise testing might fail
+        return sorted(list(set([x[0] for x in answers[1:]])))
+
+    def makePids(self, answers):
+        return [['pid']] + list(map(lambda x: [x], self._getPids(answers)))
+
     def makeAll(self, demographics, tasks, answers):
         '''
         combine all the different **results** into one huge redundant table
@@ -377,7 +393,7 @@ class csvResults():
         data = []
 
         # get all the pids
-        pids = set([x[0] for x in demographics[1:]])
+        pids = self._getPids(answers)
         #logger.debug(pids)
 
         data = [self._mergeLists(demographics[0], tasks[0], answers[0])]
