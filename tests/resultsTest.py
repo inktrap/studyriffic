@@ -118,6 +118,10 @@ class TestCsvResults(unittest.TestCase):
 
     def test_makeAll(self):
         #def makeAll(self, demographics, tasks, answers):
+
+        # TODO
+        self.skipTest("Not implemented yet")
+
         demographics = [['pid', 'age', 'languages', 'name'], ['example', '4', 'foo bar baz', 'foobar']]
         answers = [['pid', 'id'], ['example', 'aID'], ['example', 'bID'], ['example', 'cID']]
         tasks = [["value", "id", "aType", "sentence", "situation"], ["foo", "aID", "a", "sentence", "situation"], ["bar", "bID", "", "sentence", "situation"], ["baz", "cID", "", "sentence", "situation"]]
@@ -138,6 +142,42 @@ class TestCsvResults(unittest.TestCase):
             self.results.write([["a"],["b"]], [])
         with self.assertRaises(AssertionError):
             self.results.write([["a"],["b"]], {})
+
+    def test_deduplicateTable(self):
+        # def _deduplicateTable(self, table):
+        # TODO
+        # self.skipTest("Not implemented yet")
+        self.assertEqual([["a", "b"]], self.results._deduplicateTable([["a", "b", "a", "a", "b"]]))
+        self.assertEqual([["a", "x", "b"]], self.results._deduplicateTable([["a", "x", "a", "a", "x", "b"]]))
+        self.assertEqual([["foo", "bar", "foobar"], ["a", "b", "c"]], self.results._deduplicateTable([["foo", "bar", "foobar", "foo", "bar"], ["a", "b", "c", "a", "b"]]))
+
+    def test_deleteFromTable(self):
+        # def _deleteFromTable(self, columns, table):
+        # TODO
+        # self.skipTest("Not implemented yet")
+        self.assertEqual(self.results._deleteFromTable([0], [["a"]]), [[]])
+        self.assertEqual(self.results._deleteFromTable([0], [["a"], ["b"]]), [[], []])
+        self.assertEqual(self.results._deleteFromTable([0], [["a", "b"], ["a", "b"]]), [["b"], ["b"]])
+        self.assertEqual(self.results._deleteFromTable([1], [["a", "b"], ["a", "b"]]), [["a"], ["a"]])
+        self.assertEqual(self.results._deleteFromTable([1], []), [])
+
+    def test_duplicatesEqual(self):
+        # def _duplicatesEqual(self, duplicates, table):
+        # duplicates is a list of a list of indices
+        # table is a list of lists of values
+
+        # True
+        self.assertTrue(self.results._duplicatesEqual([[0,0]], [["a"]]))
+        self.assertTrue(self.results._duplicatesEqual([[0,1]], [["a", "a"]]))
+        self.assertTrue(self.results._duplicatesEqual([[0,1,3]], [["a", "a", "b", "a"]]))
+        self.assertTrue(self.results._duplicatesEqual([[0,1,2]], [["a", "a", "a", "b"]]))
+        self.assertTrue(self.results._duplicatesEqual([[0,3], [1,2]], [["b", "a", "a", "b"]]))
+
+        # False
+        self.assertFalse(self.results._duplicatesEqual([[0,1]], [["a", "b"]]))
+        self.assertFalse(self.results._duplicatesEqual([[0,3], [1,2]], [["1", "a", "a", "b"]]))
+        # type 2 != "2"
+        self.assertFalse(self.results._duplicatesEqual([[0,3], [1,2]], [[1, "a", "a", "1"]]))
 
     def test_loadJson(self):
         #def loadJson(self, name, results):

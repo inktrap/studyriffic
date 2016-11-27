@@ -292,6 +292,58 @@ class csvResults():
             data.append(row)
         return data
 
+    def _deleteFromTable(self, indices, table):
+        assert isinstance(table, list)
+        assert isinstance(indices, list)
+        if len(table) == 0:
+            return []
+        for index in indices:
+            assert isinstance(index, int)
+            assert 0 <= index, "Index must be greater equal to 0"
+            assert index < len(table[0]), "IndexError"
+        if len(indices) == 0:
+            return []
+        # logger.debug(table[0])
+        for task in table:
+            # this is quite important: when deleting values from an array
+            # the indices that are coming later are shifted.
+            # so delete the indices from highest to lowest
+            # otherwise this would be horribly wrong
+            # (tbh: writing code that transforms tables feels horribly wrong, ugh)
+            for d in sorted(indices, reverse=True):
+                del task[d]
+        return table
+
+    def _duplicatesEqual(self, duplicates, table):
+        assert isinstance(duplicates, list)
+        assert isinstance(table, list)
+        for indices in duplicates:
+            for index in indices[1:]:
+                for row in table:
+                    if row[index] != row[indices[0]]:
+                        return False
+        return True
+
+    def _deduplicateTable(self, table):
+        assert isinstance(table, list)
+        assert len(table) > 0
+        assert isinstance(table[0], list)
+        interim = {}
+        # build a dictionary of occurrences
+        # important assumptions: this is done for the header only and this is the first sublist
+        for i, t in enumerate(table[0]):
+            try:
+                interim[t].append(i)
+            except KeyError:
+                interim[t] = [i]
+        _, indices = zip(*list([(x,y) for x,y in interim.items() if len(y) > 1]))
+        indices = list(indices)
+        assert self._duplicatesEqual(indices, table) is True
+        # exclude the first of every index (that way it won't be deleted)
+        indices = list(map(lambda x: x[1:], indices))
+        # unpack the lists and merge them, checking is already done
+        return self._deleteFromTable(self._mergeLists(*indices), table)
+
     def makeAll(self, demographics, tasks, answers):
         '''
         combine all the different **results** into one huge redundant table
@@ -311,24 +363,11 @@ class csvResults():
         assert answers[0][1] == 'id'
         assert tasks[0][1] == 'id'
 
-        # remove situation and sentence keys from tasks
-        # logger.debug(tasks[0])
-        delete_values = []
-        delete_values.append(tasks[0].index('sentence'))
-        delete_values.append(tasks[0].index('situation'))
-        for task in tasks:
-            # this is quite important: when deleting values from an array
-            # the indices that are coming later are shifted.
-            # so delete the indices from highest to lowest
-            # otherwise this would be horribly wrong
-            # (tbh: writing code that transforms tables feels horribly wrong, ugh)
-            for d in sorted(delete_values, reverse=True):
-                del task[d]
-
-        #logger.debug(answers)
-
+        indices = [tasks.index('situation'), tasks.index('sentence')]
+        tasks = self._deleteFromTable(indices, tasks)
         data = []
 
+        # get all the pids
         pids = set([x[0] for x in demographics[1:]])
         #logger.debug(pids)
 
@@ -352,6 +391,7 @@ class csvResults():
                     assert len(current_task) == 1
                     current_task = current_task[0]
                     data.append(self._mergeLists(this_demographic, current_task, this_answer))
+        # data = self._deduplicateTable(data)
         return data
 
     def write(self, data, outfile):
