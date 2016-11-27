@@ -28,8 +28,8 @@ Here is a quick overview of the framework I wrote. It features:
 # Valentin Todo
 
  - flexbox footer that is sticky and scales and simply works
- - exclude pids for 1a) from 1b)
- - exclude ``$USER`` from all studies
+ - exclude pids for 1a) from 1b) (in prolific)
+ - exclude ``$USER`` from all studies (in prolific)
 
 ### documentation:
 
@@ -102,6 +102,9 @@ Here is a quick overview of the framework I wrote. It features:
 # Done
 
 ~~~
+ x tests for _getPids and makePids methods
+ x exclude pids for 1a) from 1b) (in studyriffic)
+ x exclude ``$USER`` from all studies (in studyriffic)
  x remove duplicate values from huge results table
  x test one huge results table
  x create one huge results table
