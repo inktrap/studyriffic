@@ -27,7 +27,6 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Valentin Todo
 
- - flexbox footer that is sticky and scales and simply works
  - exclude pids for 1a) from 1b) (in prolific)
  - exclude ``$USER`` from all studies (in prolific)
 
@@ -102,6 +101,7 @@ Here is a quick overview of the framework I wrote. It features:
 # Done
 
 ~~~
+ x included footer information in an alert, where it is more appropriate
  x tests for _getPids and makePids methods
  x exclude pids for 1a) from 1b) (in studyriffic)
  x exclude ``$USER`` from all studies (in studyriffic)
