@@ -59,7 +59,6 @@ class TestChecks(unittest.TestCase):
         self.task_no_check_filler = {"id": 0, "sentence": "Foobar", "situation": "Barfoo", "type": [], "category": "filler"}
 
         # syntactically well formed restrictions
-        self.restriction_successor_0 = {"action":"max_successors", "category":"filler", "argument":0}
         self.restriction_successor_filler = {"action":"max_successors", "category":"filler", "argument":4}
         self.restriction_successor_target = {"action":"max_successors", "category":"target", "argument":4}
         self.restriction_successor_more = {"action":"max_successors", "type":"some", "argument":4}
@@ -96,7 +95,6 @@ class TestChecks(unittest.TestCase):
     # check_restriction is used to check any restriction
     def test_check_restriction(self):
         #tests: def check_restriction(settings, restriction):
-        self.assertTrue(tasks_module.check_restriction(self.settings, self.restriction_successor_0))
         self.assertTrue(tasks_module.check_restriction(self.settings, self.restriction_select_filler))
         self.assertTrue(tasks_module.check_restriction(self.settings, self.restriction_select_target))
         self.assertTrue(tasks_module.check_restriction(self.settings, self.restriction_successor_filler))
@@ -203,18 +201,10 @@ class TestApplySuccessor(unittest.TestCase):
         # restrictions by category
         self.successor_restrictions_category = [{"action":"max_successors", "category":"filler", "argument":3}]
         # samples with categories
-        # two items of type category are not allowed in a row
-        self.successor_restrictions_category_0 = [{"action":"max_successors", "category":"filler", "argument":0}]
-        self.successor_restrictions_category_1 = [{"action":"max_successors", "category":"filler", "argument":1}]
-        self.sample_category_filler_0_singleton = [{"category": "filler"}]
-        self.sample_category_filler_0_fails = [{"category": "filler"}] * 2
-        self.sample_category_filler_0_passes = [{"category": "filler"}, {"category": "target"}] * 2
-        # more
         self.sample_category_filler = [{"category": "filler"}] * 5
         self.sample_category_filler_first = [{"category": "target"}] + [{"category": "filler"}] * 3
         self.sample_category_mixed = [{"category": "target"}] * 2 + [{"category": "filler"}] * 3 + [{"category": "target"}] * 2
-        # this will fail, because only 3 successors are allowed to be of category filler, but here are 4 successors, that means 5 in a row
-        self.sample_category_filler_first_fail = [{"category": "target"}] + [{"category": "filler"}] * 5
+        self.sample_category_filler_first_fail = [{"category": "target"}] + [{"category": "filler"}] * 4
         self.sample_category_filler_continue = [{"category": "filler"}] * 3
 
         # restrictions by type
@@ -229,14 +219,6 @@ class TestApplySuccessor(unittest.TestCase):
     def test_apply_successor_category(self):
         # tests: #def apply_successor(sample, successor_restrictions):
         # logger.info("Testing category restriction check")
-
-        self.assertEqual(tasks_module.apply_successor(self.sample_category_filler_0_singleton, self.successor_restrictions_category_0), True)
-        self.assertEqual(tasks_module.apply_successor(self.sample_category_filler_0_fails, self.successor_restrictions_category_0), False)
-        self.assertEqual(tasks_module.apply_successor(self.sample_category_filler_0_passes, self.successor_restrictions_category_0), True)
-        # this should pass, because there are two items and one successor is allowed
-        self.assertEqual(tasks_module.apply_successor(self.sample_category_filler_0_fails, self.successor_restrictions_category_1), True)
-        # skip because there are not enough items
-        self.assertEqual(tasks_module.apply_successor(self.sample_category_filler_0_fails, self.successor_restrictions_category_0), False)
         # will fail because there are too many fillers
         self.assertEqual(tasks_module.apply_successor(self.sample_category_filler, self.successor_restrictions_category), False)
         # will pass the first iteration and then fail because there are too many fillers
