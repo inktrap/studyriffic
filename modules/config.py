@@ -10,18 +10,19 @@ from pymongo import MongoClient
 import urllib.parse
 
 import logging
+
 logging.basicConfig(
-    level=logging.DEBUG,
     format='[%(asctime)s] p%(process)s {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s',
-    # format = '%m-%d %H:%M:%S',
-    datefmt='%m-%d %H:%M:%S',
+    datefmt='%m-%d %H:%M:%S'
 )
 
 logger = logging.getLogger(__file__)
+logger.setLevel(logging.INFO)
 
 class baseConfig():
 
     def __init__(self):
+
         database = 'studyriffic'
         if socket.gethostname() == "box":
             client = MongoClient()

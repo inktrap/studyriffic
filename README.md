@@ -27,8 +27,16 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Valentin Todo
 
+ - Opera continue button padding
+ x zero questions bug -- conditional rewritten
+ x **demographics form** usability fix
+ x fixed comma and newline in tasks for 3-bus
+ x add not_positions restrictions to studies
+
  - exclude pids for 1a) from 1b) (in prolific)
  - exclude ``$USER`` from all studies (in prolific)
+
+
 
 ### documentation:
 
