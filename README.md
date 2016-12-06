@@ -28,6 +28,8 @@ Here is a quick overview of the framework I wrote. It features:
 # Valentin Todo
 
  - Opera continue button padding
+ - rewrite apply_select
+ - running tests should be independent of studies
  x zero questions bug -- conditional rewritten
  x **demographics form** usability fix
  x fixed comma and newline in tasks for 3-bus
