@@ -2,7 +2,6 @@
 
 import unittest
 from modules import tasks_module
-from modules.config import thisConfig
 import os
 
 import tests.config
