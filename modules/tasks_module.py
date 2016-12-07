@@ -13,7 +13,7 @@ import re
 
 import logging
 logging.basicConfig(
-    level=logging.INFO,
+    level=logging.DEBUG,
     format='[%(asctime)s] p%(process)s {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s',
     # format = '%m-%d %H:%M:%S',
     datefmt='%m-%d %H:%M:%S',
@@ -178,61 +178,50 @@ def apply_not_positions(sample, notpos_restrictions):
 def apply_successor(sample, successor_restrictions):
     ''' apply the successors and return true or false if the sample is valid'''
     assert len(sample) > 0
-    #assert len(successor_restrictions) > 0
-    logger.debug("applying successors")
+    logger.debug("Entering function")
+    logger.debug("Sample")
     logger.debug(sample)
+    logger.debug("Restrictions are")
     logger.debug(successor_restrictions)
+
     # apply
     for index, item in enumerate(sample):
+        # logger.debug("index %i" % index)
+        logger.debug("item:")
+        logger.debug(item)
         # check every restriction
         for successor_restriction in successor_restrictions:
-            # if there are not enough items, their order is not important
-            # not enough means:
-            #   the current item: index
-            #   the number of allowed items: argument
-            #   including the last one f.e. if argument = 3: we need [index, 1, 2, 3]
-            #   but continue for [index, 1, 2]
-            if (index + successor_restriction['argument'] + 1) > len(sample):
+            logger.debug(successor_restriction)
+            lookahead = sample[index + 1: index + 1 + successor_restriction['argument'] + 1]
+            # abort the check if there are less items anyway, so
+            # [Foo, Foo, Foo, Foo] won't be checked if 3 of WHATEVER are allowed anyway.
+            # or if they are 0
+            # [Foo] if 0 is allowed
+            if (0 == len(lookahead)) or (len(lookahead) < successor_restriction['argument']):
                 continue
-
             if 'category' in successor_restriction.keys():
-                # map and lambda: extract all the unique categories form the given range into a list
-                # index
-                    # the range includes the current item (index)
-                    # and on top of that the items that are allowed (let's say we allow three items)
-                    # [index, 1, 2, 3]
-                    # so the slice should take [index, 1, 2, 3], including 3.
-                # then make a set out of it to remove duplicates
-                # create a list from the set
-                # if there are other categories present, the length will be greater 1
-                # if not, it fails
-                successors = list(set(map(lambda x: x['category'], sample[index:index + successor_restriction['argument'] + 1])))
-                # found a sequence that contradicts the requirements
-                logger.debug("by category")
-                logger.debug(successors)
-                if len(successors) == 1 and (successors[0] == successor_restriction['category']):
-                    logger.debug("false")
-                    return False
+                logger.debug(item)
+                logger.debug(successor_restriction)
+                # check if the current item is affected by the restriction
+                if item['category'] != successor_restriction['category']:
+                    continue
+                # check if the values in lookahead are successors
+                lookahead = [successor_restriction['category'] == i['category'] for i in lookahead]
             elif 'type' in successor_restriction.keys():
-                successors = sample[index:index + successor_restriction['argument'] + 2]
-                logger.debug("by type")
-                logger.debug(successors)
-                # we assume that the sequence contradicts the requirements
-                contradicts = True
-                for succ in successors:
-                    # check the following tasks
-                    if successor_restriction['type'] not in succ['type']:
-                        # we found a sequence that does not contradict the requirements
-                        # we are happy and can stop checking this part
-                        logger.debug("false")
-                        contradicts = False
-                        break
-                logger.debug("the sequence contradicts the requirements")
-                # the sequence contradicts the requirements
-                if contradicts is True:
-                    return False
-                # otherwise we keep looking
-    logger.debug("the sequence is alright")
+                # check if the current item is affected by the restriction
+                if successor_restriction['type'] not in item['type']:
+                    continue
+                # create a list of the type values (they are lists)
+                lookahead = [successor_restriction['type'] in i['type'] for i in lookahead]
+            else:
+                # this should never happen
+                raise ValueError
+            logger.debug("Lookahead")
+            logger.debug(lookahead)
+            if all(lookahead):
+                logger.debug("Returning False")
+                return False
+    logger.debug("Returning True")
     return True
 
 

@@ -200,8 +200,8 @@ class TestApplySuccessor(unittest.TestCase):
     def setUp(self):
         # restrictions by category
         self.successor_restrictions_category = [{"action":"max_successors", "category":"filler", "argument":3}]
+        self.successor_restrictions_category_0 = [{"action":"max_successors", "category":"filler", "argument":0}]
         # samples with categories
-        self.sample_category_filler = [{"category": "filler"}] * 5
         self.sample_category_filler_first = [{"category": "target"}] + [{"category": "filler"}] * 3
         self.sample_category_mixed = [{"category": "target"}] * 2 + [{"category": "filler"}] * 3 + [{"category": "target"}] * 2
         self.sample_category_filler_first_fail = [{"category": "target"}] + [{"category": "filler"}] * 4
@@ -220,7 +220,8 @@ class TestApplySuccessor(unittest.TestCase):
         # tests: #def apply_successor(sample, successor_restrictions):
         # logger.info("Testing category restriction check")
         # will fail because there are too many fillers
-        self.assertEqual(tasks_module.apply_successor(self.sample_category_filler, self.successor_restrictions_category), False)
+        self.assertEqual(tasks_module.apply_successor([{"category": "filler"}] * 5, self.successor_restrictions_category), False)
+        self.assertEqual(tasks_module.apply_successor([{"category": "filler"}] * 2, self.successor_restrictions_category_0), False)
         # will pass the first iteration and then fail because there are too many fillers
         self.assertEqual(tasks_module.apply_successor(self.sample_category_filler_first_fail, self.successor_restrictions_category), False)
         # will pass the first iteration and then continue
@@ -228,6 +229,7 @@ class TestApplySuccessor(unittest.TestCase):
         # will continue
         self.assertEqual(tasks_module.apply_successor(self.sample_category_filler_continue, self.successor_restrictions_category), True)
         # will pass
+        self.assertEqual(tasks_module.apply_successor([{"category": "filler"}], self.successor_restrictions_category_0), True)
         self.assertEqual(tasks_module.apply_successor(self.sample_category_mixed, self.successor_restrictions_category), True)
 
     def test_apply_successor_type(self):
