@@ -27,8 +27,8 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Valentin Todo
 
+ - see new tasks/study design
  - Opera continue button padding
- - running tests should be independent of studies
  - check for console.log calls
  x rewrite ``apply_select``
  x zero questions bug -- conditional rewritten
