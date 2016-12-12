@@ -366,9 +366,10 @@ by comparing ``results.csv`` with ``settings.csv``.
 
 ## Publish your data
 
-My intention is to make the step from the database to the results transparent. In
-addition I would reccomend using something like Sweave or Rmarkdown to make the
-relationship between the results and the published results transparent:
+My intention is to make the step from the database to the results transparent.
+In addition I would reccomend using something like
+[knitr](http://yihui.name/knitr/) and Rmarkdown to make the relationship
+between the results and the published results transparent:
 
  - by using your ``settings.csv`` file which lists the authors of the study,
  you (or I) can write a script to export your ``csv``-files to a designated
@@ -379,12 +380,12 @@ relationship between the results and the published results transparent:
  source and (I hope) well documented. **TODO:** what about spam if the contact
  mail is included?
 
- - if you are using [Sweave](http://www.statistik.lmu.de/~leisch/Sweave/) in
+ - if you are using [knitr](http://yihui.name/knitr/) in
  your TeX-files or Rmarkdown, you can be sure that you are using the data from
  the csv files (and it is easy to check if two files are the same).
 
 If you know a better and easier way, please leave some feedback, I would love
-to hear about it!
+to hear about it! (TODO: [www.foastat.org](foastat)).
 
 
 # Errors

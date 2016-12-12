@@ -23,6 +23,7 @@ class TestChecks(unittest.TestCase):
         self.complete_settings = {}
         self.complete_settings["active"] = True
         self.complete_settings["labels"] = False
+        self.complete_settings["filler_is_first"] = True
         self.complete_settings["questions"] = 10
         self.complete_settings["max_check_fail"] = 0
         self.complete_settings["min_scale"] = 0
@@ -295,6 +296,18 @@ class TestApplySelect(unittest.TestCase):
         self.assertEqual(count_filler, filler['argument'])
         self.assertEqual(count_target, target['argument'])
 
+
+class TestFillerFirst(unittest.TestCase):
+
+    def setUp(self):
+        self.sample2 = [{'category':'target'},{'category':'filler'}]
+        self.sample10 = [{'category':'target'},{'category':'filler'}] * 5
+
+    def test_filler_is_first(self):
+        self.assertEqual(tasks_module.filler_is_first(self.sample2)[0]['category'], 'filler')
+        self.assertEqual(tasks_module.filler_is_first(self.sample2)[1]['category'], 'target')
+        self.assertEqual(tasks_module.filler_is_first(self.sample10)[0]['category'], 'filler')
+        self.assertEqual(tasks_module.filler_is_first(self.sample10)[1]['category'], 'target')
 
 class TestCheckCheck(unittest.TestCase):
 

@@ -54,6 +54,7 @@ class baseConfig():
         self.templates = ['demographics.tpl', 'first.tpl', 'last.tpl', 'consent.tpl', 'main.tpl']
         self.template_path = os.path.join(self.project_root, 'views')
         self.required_settings_keys = ["question",
+                                       "filler_is_first",
                                        "situation",
                                        "questions",
                                        "min_scale",

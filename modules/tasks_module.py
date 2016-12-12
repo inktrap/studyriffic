@@ -321,6 +321,18 @@ def format_checks(settings, tasks):
             this_check[this_key] = _format_check(replacement_tuples, this_check[this_key])
     return tasks
 
+def filler_is_first(random_sample):
+    # make the first element a filler
+    if random_sample[0]['category'] == 'filler':
+        return random_sample
+    for index, sample in enumerate(random_sample):
+        if sample['category'] == 'filler':
+            original_first = random_sample[0]
+            random_sample[0] = random_sample[index]
+            random_sample[index] = original_first
+            break
+    return random_sample
+
 def main(settings, tasks):
     check_config(settings, tasks)
     # returns a random sample
@@ -340,6 +352,11 @@ def main(settings, tasks):
             break
         # get a sample
         random_sample = apply_select(settings['questions'], select_restrictions, tasks)
+        # switch the first element with the first element that is a filler
+        if settings['filler_is_first'] is True:
+            logger.debug(random_sample)
+            random_sample = filler_is_first(random_sample)
+            logger.debug(random_sample)
         # check the sample
         status = apply_not_positions(random_sample, notpos_restrictions)
         if status is False:
@@ -355,6 +372,7 @@ def main(settings, tasks):
 def check_settings(settings):
     assert "active" in settings.keys()
     assert "labels" in settings.keys()
+    assert "filler_is_first" in settings.keys()
     assert "max_check_fail" in settings.keys()
     assert "questions" in settings.keys()
     assert "min_scale" in settings.keys()
@@ -363,6 +381,7 @@ def check_settings(settings):
 
     assert isinstance(settings["active"], bool)
     assert isinstance(settings["labels"], bool)
+    assert isinstance(settings["filler_is_first"], bool)
     assert isinstance(settings["questions"], int)
     assert isinstance(settings["min_scale"], int)
     assert isinstance(settings["max_scale"], int)
