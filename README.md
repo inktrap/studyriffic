@@ -27,9 +27,16 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Valentin Todo
 
- - see new tasks/study design
  - Opera continue button padding
  - check for console.log calls
+
+ i) update the instructions (based on overleaf) and use likert scales in each experiment
+ ii) update the items (based on overleaf)
+ iv) address Opera Continue button issue (either with padding, or with a pop-up notice after the browser check for Opera users what to do in case they can't click the button)
+
+ x implement constraint on item randomization: the first item should be a filler.
+ x test: constraint on item randomization: the first item should be a filler.
+ x implemented a setting: constraint on item randomization: the first item should be a filler.
  x rewrite ``apply_select``
  x zero questions bug -- conditional rewritten
  x **demographics form** usability fix
