@@ -9,6 +9,11 @@
     margin-top: 1em;
 }
 
+/* fix for the case that opera is under the windows status bar */
+#content{
+    padding-bottom: 5%;
+}
+
 div.form-content, div.answer, div.situation, div.sentence { margin:1em; }
 
 div.answer {

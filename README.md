@@ -25,15 +25,34 @@ Here is a quick overview of the framework I wrote. It features:
  - owls
 
 
+# Questions
+
+ - exclude mobile phones (scale placement) (see screenshot)
+ - is the "opera continue button padding" enough?
+ - which tasks changed for study 2? None?
+ - re-read **all** instructions for typos?
+ - extensions: (informal) consent form summary? (see: <https://creativecommons.org/licenses/?lang=en#layers>)
+
 # Valentin Todo
 
- - Opera continue button padding
  - check for console.log calls
+ - write javascript for instructions, hide/show
 
- i) update the instructions (based on overleaf) and use likert scales in each experiment
- ii) update the items (based on overleaf)
- iv) address Opera Continue button issue (either with padding, or with a pop-up notice after the browser check for Opera users what to do in case they can't click the button)
+ - final testing
+ - remove backups
+ - create studies
+     - 90% and 10% split
+     - exclude pids for 1a) from 1b) (in prolific)
+     - exclude ``$USER`` from all studies (in prolific)
+ - reset database
 
+ x changed typo "let as take an example" into "let us take an example" for study 3
+ x update the content of the instructions (based on overleaf)
+
+ x update the items (based on overleaf)
+ x use likert scales in each experiment
+ x address Opera Continue button issue: padding
+ x rewrite so javascript is not in onload
  x implement constraint on item randomization: the first item should be a filler.
  x test: constraint on item randomization: the first item should be a filler.
  x implemented a setting: constraint on item randomization: the first item should be a filler.
@@ -42,10 +61,6 @@ Here is a quick overview of the framework I wrote. It features:
  x **demographics form** usability fix
  x fixed comma and newline in tasks for 3-bus
  x add not_positions restrictions to studies
-
- - exclude pids for 1a) from 1b) (in prolific)
- - exclude ``$USER`` from all studies (in prolific)
-
 
 
 ### documentation:
