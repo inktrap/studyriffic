@@ -101,5 +101,9 @@ function getTask() {
     });
 }
 
-console.log("getting task for the first time");
-getTask();
+$( document ).ready(function() {
+    console.log("getting task");
+    $(".is_hidden").hide();
+    $(".is_visible").show();
+    getTask();
+});
