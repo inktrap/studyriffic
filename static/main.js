@@ -80,14 +80,16 @@ function getTask() {
                 $(".progress-bar").css('width', data.complete + '%');
                 $(".progress-bar").html(data.complete + '%');
                 //console.log("Hiding");
-                if ("{{situation}}".length > 0) {
-                    $(".is_hidden").hide();
-                    $(".is_visible").show();
-                } else {
+                if ($('div.situation').length === 0) {
+                    //console.log("empty situation");
                     $(".is_hidden").show();
                     $(".is_visible").hide();
                     situation_rt = 0;
                     sentence_start = performance.now();
+                } else {
+                    //console.log("non empty situation");
+                    $(".is_hidden").hide();
+                    $(".is_visible").show();
                 }
                 $(".uncheck").prop('checked', false);
                 /* situation and sentence can contain newlines */
@@ -103,7 +105,5 @@ function getTask() {
 
 $( document ).ready(function() {
     console.log("getting task");
-    $(".is_hidden").hide();
-    $(".is_visible").show();
     getTask();
 });
