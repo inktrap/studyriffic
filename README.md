@@ -43,30 +43,7 @@ Here is a quick overview of the framework I wrote. It features:
      - exclude pids for 1a) from 1b) (in prolific)
      - exclude ``$USER`` from all studies (in prolific)
  - reset database
-
- x for "first item is filler" option assert that there is at least one filler (specified to select)
- x test "first item is filler" assertion
- x check spacing for next buttons
- x check spacing for tasks
- x remove/add <hr> so everything looks consistent
-
- x write javascript for instructions, hide/show
- x changed typo "let as take an example" into "let us take an example" for study 3
- x update the content of the instructions (based on overleaf)
- x update the items (based on overleaf)
- x use likert scales in each experiment
- x address Opera Continue button issue: padding
- x rewrite so javascript is not in onload
- x implement constraint on item randomization: the first item should be a filler.
- x test: constraint on item randomization: the first item should be a filler.
- x implemented a setting: constraint on item randomization: the first item should be a filler.
- x rewrite ``apply_select``
-
- x zero questions bug -- conditional rewritten
- x **demographics form** usability fix
- x fixed comma and newline in tasks for 3-bus
- x add not_positions restrictions to studies
-
+ - remove password protection
 
 ### documentation:
 
@@ -77,6 +54,7 @@ Here is a quick overview of the framework I wrote. It features:
 
 ## maybe/sometimes:
 
+ - restructure tests and use more classes and modules
  - flash message if the participant is going really fast (configurable)
  - how to display errors?
  - how to encapsulate js properly?
@@ -139,6 +117,29 @@ Here is a quick overview of the framework I wrote. It features:
 # Done
 
 ~~~
+ x for "first item is filler" option assert that there is at least one filler (specified to select)
+ x test "first item is filler" assertion
+ x check spacing for next buttons
+ x check spacing for tasks
+ x remove/add <hr> so everything looks consistent
+
+ x write javascript for instructions, hide/show
+ x changed typo "let as take an example" into "let us take an example" for study 3
+ x update the content of the instructions (based on overleaf)
+ x update the items (based on overleaf)
+ x use likert scales in each experiment
+ x address Opera Continue button issue: padding
+ x rewrite so javascript is not in onload
+ x implement constraint on item randomization: the first item should be a filler.
+ x test: constraint on item randomization: the first item should be a filler.
+ x implemented a setting: constraint on item randomization: the first item should be a filler.
+ x rewrite ``apply_select``
+
+ x zero questions bug -- conditional rewritten
+ x **demographics form** usability fix
+ x fixed comma and newline in tasks for 3-bus
+ x add not_positions restrictions to studies
+
  x included footer information in an alert, where it is more appropriate
  x tests for _getPids and makePids methods
  x exclude pids for 1a) from 1b) (in studyriffic)
