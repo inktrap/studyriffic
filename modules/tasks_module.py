@@ -427,12 +427,22 @@ because a task has to have a question."
         check_restriction(settings, this_restriction)
 
     check_max_check_fail(settings)
+    check_filler_is_first(settings)
     return True
 
 def check_max_check_fail(settings):
     # assert that max_check_fail is configured correctly
     assert isinstance(settings['max_check_fail'], int), "max_check_fail has to be an integer"
     assert settings['max_check_fail'] >= 0, "max_check_fail has to be >= 0"
+    return True
+
+def check_filler_is_first(settings):
+    # check that the minimal prerequisites for filler_is_first are met
+    if settings['filler_is_first'] is True:
+        select_restrictions = list(filter(lambda x: x['action'] == 'select', settings['restrictions']))
+        filler = list(filter(lambda x: x['category'] == 'filler', select_restrictions))
+        assert len(filler) > 0, "You have to have a select restriction"
+        assert filler[0]['argument'] > 0, "You must select at least one filler so the first task can be a filler"
     return True
 
 def check_tasks(settings, tasks):

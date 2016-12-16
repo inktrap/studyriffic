@@ -1,9 +1,10 @@
 
 $( document ).ready(function() {
     $(":button.next").on("click", function() {
-      var next_visible = $('.next.is_visible').next();
-      $('.next.is_visible').hide().removeClass('is_visible');
-      var result = next_visible.show().addClass('is_visible');
+      var current = $('.next.is_visible');
+      var next = current.next();
+      current.removeClass('is_visible').hide().addClass('is_hidden');
+      next.show().removeClass('is_hidden').addClass('is_visible');
     });
 });
 

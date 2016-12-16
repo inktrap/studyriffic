@@ -92,6 +92,26 @@ class TestChecks(unittest.TestCase):
             tasks_module.check_settings(complete_settings)
         return True
 
+    def test_check_filler_is_first(self):
+        this_settings = self.complete_settings
+        this_settings['filler_is_first'] = False
+        self.assertTrue(tasks_module.check_filler_is_first(this_settings))
+
+        this_settings = {'filler_is_first': False, 'questions':10, 'restrictions':[]}
+        self.assertTrue(tasks_module.check_filler_is_first(this_settings))
+
+        with self.assertRaises(AssertionError):
+            this_settings = {'filler_is_first': True, 'questions':10, 'restrictions':[]}
+            tasks_module.check_filler_is_first(this_settings)
+        with self.assertRaises(AssertionError):
+            this_settings = {'filler_is_first': True, 'questions':10, 'restrictions': [{'action': 'select', 'argument':0, 'category': 'filler'}]}
+            tasks_module.check_filler_is_first(this_settings)
+        with self.assertRaises(AssertionError):
+            this_settings = {'filler_is_first': True, 'questions':10, 'restrictions': [{'action': 'select', 'argument':-1, 'category': 'filler'}]}
+            tasks_module.check_filler_is_first(this_settings)
+        this_settings = {'filler_is_first': True, 'questions':10, 'restrictions': [{'action': 'select', 'argument':1, 'category': 'filler'}]}
+        self.assertTrue(tasks_module.check_filler_is_first(this_settings))
+
     # check_restriction is used to check any restriction
     def test_check_restriction(self):
         #tests: def check_restriction(settings, restriction):
@@ -308,6 +328,7 @@ class TestFillerFirst(unittest.TestCase):
         self.assertEqual(tasks_module.filler_is_first(self.sample2)[1]['category'], 'target')
         self.assertEqual(tasks_module.filler_is_first(self.sample10)[0]['category'], 'filler')
         self.assertEqual(tasks_module.filler_is_first(self.sample10)[1]['category'], 'target')
+
 
 class TestCheckCheck(unittest.TestCase):
 

@@ -35,10 +35,8 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Valentin Todo
 
- - check for console.log calls
- - write javascript for instructions, hide/show
-
  - final testing
+     - check for console.log calls
  - remove backups
  - create studies
      - 90% and 10% split
@@ -46,9 +44,15 @@ Here is a quick overview of the framework I wrote. It features:
      - exclude ``$USER`` from all studies (in prolific)
  - reset database
 
+ x for "first item is filler" option assert that there is at least one filler (specified to select)
+ x test "first item is filler" assertion
+ x check spacing for next buttons
+ x check spacing for tasks
+ x remove/add <hr> so everything looks consistent
+
+ x write javascript for instructions, hide/show
  x changed typo "let as take an example" into "let us take an example" for study 3
  x update the content of the instructions (based on overleaf)
-
  x update the items (based on overleaf)
  x use likert scales in each experiment
  x address Opera Continue button issue: padding
@@ -57,6 +61,7 @@ Here is a quick overview of the framework I wrote. It features:
  x test: constraint on item randomization: the first item should be a filler.
  x implemented a setting: constraint on item randomization: the first item should be a filler.
  x rewrite ``apply_select``
+
  x zero questions bug -- conditional rewritten
  x **demographics form** usability fix
  x fixed comma and newline in tasks for 3-bus
