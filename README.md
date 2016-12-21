@@ -35,12 +35,6 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Valentin Todo
 
- - check all the tasks and texts that they match overleaf
- - check that the correct items are included
- - check question text for 2) and 3) (How appropriate an answer is A to question Q?")
- - check that quotes in attention checks work
- - check that for 3 the tasks are swapped
-
  - final testing
      - check for console.log calls
  - remove backups
@@ -130,6 +124,12 @@ Here is a quick overview of the framework I wrote. It features:
 # Done
 
 ~~~
+ x check all the tasks and texts that they match overleaf
+ x check that the correct items are included
+ x check question text for 2) and 3) (How appropriate an answer is A to question Q?")
+ x check that quotes in attention checks work
+ x check that for 3 the tasks are swapped
+
  x for "first item is filler" option assert that there is at least one filler (specified to select)
  x test "first item is filler" assertion
  x check spacing for next buttons
