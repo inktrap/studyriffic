@@ -35,6 +35,12 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Valentin Todo
 
+ - check all the tasks and texts that they match overleaf
+ - check that the correct items are included
+ - check question text for 2) and 3) (How appropriate an answer is A to question Q?")
+ - check that quotes in attention checks work
+ - check that for 3 the tasks are swapped
+
  - final testing
      - check for console.log calls
  - remove backups
@@ -42,6 +48,7 @@ Here is a quick overview of the framework I wrote. It features:
      - 90% and 10% split
      - exclude pids for 1a) from 1b) (in prolific)
      - exclude ``$USER`` from all studies (in prolific)
+     - exclude mobile users
  - reset database
  - remove password protection
 
@@ -54,6 +61,12 @@ Here is a quick overview of the framework I wrote. It features:
 
 ## maybe/sometimes:
 
+ - maybe: als ergänzung zur zufälligen auswahl:
+     - neuer auswahlmechanismus
+         - explizite Struktur vorgeben mit erlaubten Typen
+         - in den kategorien und typen spezifizieren wie häufig wann, als partition
+         - dann berechnen, was mit welcher WK ausgewählt wird
+     - vorgefertigte listen
  - restructure tests and use more classes and modules
  - flash message if the participant is going really fast (configurable)
  - how to display errors?
