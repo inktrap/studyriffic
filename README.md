@@ -36,15 +36,20 @@ Here is a quick overview of the framework I wrote. It features:
 # Valentin Todo
 
  - final testing
+     - unittests
+     - remove debugging info
      - check for console.log calls
- - remove backups
+     - check that all the studies work
+     - check that all the demographic forms work
  - create studies
      - 90% and 10% split
      - exclude pids for 1a) from 1b) (in prolific)
      - exclude ``$USER`` from all studies (in prolific)
      - exclude mobile users
+ - remove backups
  - reset database
  - remove password protection
+ - after that is done and there is money left: update study 1b)
 
 ### documentation:
 
