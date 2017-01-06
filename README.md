@@ -36,7 +36,7 @@ Here is a quick overview of the framework I wrote. It features:
 # Valentin Todo
 
  - final testing
-     - unittests
+     x unittests
      - remove debugging info
      - check for console.log calls
      - check that all the studies work

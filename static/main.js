@@ -21,11 +21,11 @@ $(":button.task").on("click", function() {
             dataType: "json",
         })
     ).then(function(data, textStatus, jqXHR) {
-        console.log("post");
-        console.log(jqXHR.status); // Alerts 200
-        console.log(textStatus);
-        console.log(data);
-        console.log("---");
+        //console.log("post");
+        //console.log(jqXHR.status); // Alerts 200
+        //console.log(textStatus);
+        //console.log(data);
+        //console.log("---");
         if (textStatus == "success") {
             if (data.status === null) {
                 alert(data.message);
@@ -63,11 +63,11 @@ function getTask() {
             dataType: "json",
         })
     ).then(function(data, textStatus, jqXHR) {
-        console.log("get");
-        console.log(jqXHR.status); // Alerts 200
-        console.log(textStatus);
-        console.log(data);
-        console.log("---");
+        //console.log("get");
+        //console.log(jqXHR.status); // Alerts 200
+        //console.log(textStatus);
+        //console.log(data);
+        //console.log("---");
         if (textStatus == "success") {
             if (data.status === false) {
                 // show the error
@@ -104,6 +104,6 @@ function getTask() {
 }
 
 $( document ).ready(function() {
-    console.log("getting task");
+    //console.log("getting task");
     getTask();
 });
