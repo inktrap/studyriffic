@@ -36,16 +36,20 @@ Here is a quick overview of the framework I wrote. It features:
 # Valentin Todo
 
  - final testing
-     x unittests
-     - remove debugging info
-     - check for console.log calls
-     - check that all the studies work
-     - check that all the demographic forms work
+     x run unittests
+     x remove debugging info
+     x check for console.log calls
+     x check that all the studies work
+     x check that all the demographic forms work
  - create studies
      - 90% and 10% split
      - exclude pids for 1a) from 1b) (in prolific)
      - exclude ``$USER`` from all studies (in prolific)
      - exclude mobile users
+     - include reward link in studies
+     - <https://perigen.diphda.uberspace.de/study/3-bus?prolific_pid=958432>
+     - <https://perigen.diphda.uberspace.de/study/1a-wine?prolific_pid=958432>
+     - <https://perigen.diphda.uberspace.de/study/2-table?prolific_pid=958432>
  - remove backups
  - reset database
  - remove password protection

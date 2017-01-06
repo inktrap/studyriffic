@@ -13,7 +13,7 @@ import re
 
 import logging
 logging.basicConfig(
-    level=logging.DEBUG,
+    level=logging.INFO,
     format='[%(asctime)s] p%(process)s {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s',
     # format = '%m-%d %H:%M:%S',
     datefmt='%m-%d %H:%M:%S',
