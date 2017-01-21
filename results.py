@@ -51,7 +51,6 @@ class baseConfig():
 
         # required files for the configuration to work (only names, without ending)
         studies_files = ['settings', 'tasks']
-        results_files = ['db']
 
         # read names
         study_names = self._get_names(studies_folder)
@@ -60,6 +59,7 @@ class baseConfig():
         result_names = self._get_names(results_folder)
         for result in result_names:
             assert result in study_names, "This results directory has no study: %s" % result
+            results_files = ['db-%s' % result]
             result_path = self._get_dir_path(self.results_path, result)
             # now that we have the result path, assert that result directories are well configured
             # this happens via get_file_path
@@ -79,7 +79,7 @@ class baseConfig():
             for f in studies_files:
                 current_result[f] = self._get_file_path(study_path, f + '.json')
             for f in results_files:
-                current_result[f] = self._get_file_path(result_path, f + '.json')
+                current_result['db'] = self._get_file_path(result_path, f + '.json')
 
             # if everything worked fine, create the csv dir if it does not exist
             if not os.path.isdir(os.path.join(result_path, 'csv')):
@@ -162,6 +162,7 @@ class csvResults():
             name (the name you want)
             results (the result object that contains the file locations)
         '''
+        #logger.debug(results)
         #logger.debug(results[name])
         assert isinstance(name, str)
         assert isinstance(results, dict)

@@ -35,6 +35,7 @@ Here is a quick overview of the framework I wrote. It features:
 
 # Valentin Todo
 
+ - change 1b) and check all the tasks, do final testing and create study
  - final testing
      x run unittests
      x remove debugging info
@@ -42,18 +43,15 @@ Here is a quick overview of the framework I wrote. It features:
      x check that all the studies work
      x check that all the demographic forms work
  - create studies
-     - 90% and 10% split
-     - exclude pids for 1a) from 1b) (in prolific)
-     - exclude ``$USER`` from all studies (in prolific)
-     - exclude mobile users
-     - include reward link in studies
+     x 90% and 10% split
+     x exclude pids for 1a) from 1b) (in prolific)
+     x exclude ``$USER`` from all studies (in prolific)
+     x exclude mobile users
+     x include reward link in studies
      - <https://perigen.diphda.uberspace.de/study/3-bus?prolific_pid=958432>
      - <https://perigen.diphda.uberspace.de/study/1a-wine?prolific_pid=958432>
      - <https://perigen.diphda.uberspace.de/study/2-table?prolific_pid=958432>
- - remove backups
- - reset database
  - remove password protection
- - after that is done and there is money left: update study 1b)
 
 ### documentation:
 
@@ -96,7 +94,6 @@ Here is a quick overview of the framework I wrote. It features:
 
 ## documentation
 
- - run main experiment
  - participant selection criteria
     - english speaking
     - > 18
@@ -133,6 +130,10 @@ Here is a quick overview of the framework I wrote. It features:
 # Done
 
 ~~~
+ x remove backups
+ x reset database
+ x remove password protection
+ x run main experiment
  x check all the tasks and texts that they match overleaf
  x check that the correct items are included
  x check question text for 2) and 3) (How appropriate an answer is A to question Q?")
