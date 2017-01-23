@@ -449,8 +449,12 @@ def check_tasks(settings, tasks):
     assert isinstance(tasks, list)
     # this is one of two checks for ids
     assert len(tasks) > 0
+    task_ids = [t['id'] for t in tasks]
+    assert len(task_ids) == len(list(set(task_ids))), "You have tasks with non-unique IDs"
     for index, task in enumerate(tasks):
-        assert index == task['id'], "A task needs an explicit numerical ID, but %s is not %i" % (str(task['id']), index)
+        # change: ids don't need to be sequential, they only have to be unique (more flexibility needed here)
+        # assert index == task['id'], "A task needs an explicit numerical ID, but %s is not %i" % (str(task['id']), index)
+        assert isinstance(task['id'], int)
         assert check_task(settings, task) is True
     return True
 
