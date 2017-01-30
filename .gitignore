@@ -2,3 +2,5 @@
 *.log
 *.zip
 tmp
+.hide
+..bfg-report

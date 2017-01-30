@@ -162,8 +162,12 @@ class baseConfig():
             study_path = os.path.join(studies_path, study)
             #logger.debug(study_path)
             if os.path.isdir(study_path):
+                if re.match('\.', study):
+                    logger.info("Skipping hidden dir %s" % study_path)
+                    continue
                 this_study = self.configure_study(study, study_path)
                 if this_study is False:
+                    logger.info("Configuring study %s failed (is it active?)" % study_path)
                     continue
                 studies[study] = this_study
         #logger.debug(studies.keys())

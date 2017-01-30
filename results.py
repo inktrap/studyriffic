@@ -410,7 +410,7 @@ class csvResults():
             # get all the demographic values for this pid (like originally done)
             this_demographics = list(filter(lambda x: x[0] == pid, demographics))
             assert len(this_demographics) == 1
-            assert len(this_answers) == len(this_answer_ids) == len(this_tasks)
+            assert len(this_answers) == len(this_answer_ids) == len(this_tasks), "%i (answers) == %i (answer ids) == %i (tasks)" % (len(this_answers), len(this_answer_ids), len(this_tasks))
             for this_demographic in this_demographics:
                 for this_answer in this_answers:
                     current_task = list(filter(lambda x: x[1] == this_answer[1], this_tasks))
