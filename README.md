@@ -21,8 +21,9 @@ Best used with [prolific](https://prolific.ac).
 
 ## Demo
 
- - The demos is about [owls](https://perigen.diphda.uberspace.de).
- - TODO: Screenshot
+ - The demos is about [owls](https://perigen.diphda.uberspace.de/study/owls).
+
+![screenshot of studyriffic][https://raw.githubusercontent.com/inktrap/studyriffic/master/docs/studyriffic-qa.png]
 
 ## Tests
 
