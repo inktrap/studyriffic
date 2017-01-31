@@ -1,0 +1,601 @@
+pid,age,gender,languages,native,category,id,huntType,factType,jimmyType,owlType,sent_rt,sit_rt,value
+103702302452037552,> 60,,Russian German,Swaheli,check,10,,,,,5432,0,3
+103702302452037552,> 60,,Russian German,Swaheli,check,11,,,,,6302,0,2
+103702302452037552,> 60,,Russian German,Swaheli,target,7,,,jimmy,,8994,0,1
+103702302452037552,> 60,,Russian German,Swaheli,filler,13,,fact,,,9090,0,5
+103702302452037552,> 60,,Russian German,Swaheli,filler,0,hunt,,,,5389,0,4
+103702302452037552,> 60,,Russian German,Swaheli,target,14,,fact,,,9933,0,5
+103702302452037552,> 60,,Russian German,Swaheli,target,18,hunt,,,,11282,0,2
+103702302452037552,> 60,,Russian German,Swaheli,target,5,hunt,,,,5011,0,3
+103702302452037552,> 60,,Russian German,Swaheli,filler,4,,fact,,,5652,0,0
+103702302452037552,> 60,,Russian German,Swaheli,filler,22,,fact,,,8729,0,4
+103702302452037552,> 60,,Russian German,Swaheli,target,21,hunt,,,,4916,0,2
+103702302452037552,> 60,,Russian German,Swaheli,target,16,hunt,,,,6002,0,1
+103702302452037552,> 60,,Russian German,Swaheli,filler,8,,,jimmy,,4910,0,3
+103702302452037552,> 60,,Russian German,Swaheli,filler,17,,fact,,,8857,0,2
+103702302452037552,> 60,,Russian German,Swaheli,filler,6,,fact,,,10066,0,2
+103702302452037552,> 60,,Russian German,Swaheli,target,3,,fact,,,11622,0,2
+103702302452037552,> 60,,Russian German,Swaheli,filler,19,,fact,,,9753,0,3
+103702302452037552,> 60,,Russian German,Swaheli,target,12,hunt,,,,8714,0,1
+103702302452037552,> 60,,Russian German,Swaheli,target,9,,,jimmy,,7172,0,5
+103702302452037552,> 60,,Russian German,Swaheli,target,1,hunt,,,,9279,0,3
+111523005609019118,30-39,,Russian,Italian,filler,19,,fact,,,7171,0,1
+111523005609019118,30-39,,Russian,Italian,target,12,hunt,,,,5914,0,4
+111523005609019118,30-39,,Russian,Italian,filler,20,,fact,,,11615,0,2
+111523005609019118,30-39,,Russian,Italian,target,5,hunt,,,,4383,0,5
+111523005609019118,30-39,,Russian,Italian,target,1,hunt,,,,4490,0,1
+111523005609019118,30-39,,Russian,Italian,filler,6,,fact,,,5870,0,0
+111523005609019118,30-39,,Russian,Italian,filler,15,,fact,,,8371,0,4
+111523005609019118,30-39,,Russian,Italian,target,16,hunt,,,,11643,0,0
+111523005609019118,30-39,,Russian,Italian,filler,2,,fact,,,6103,0,2
+111523005609019118,30-39,,Russian,Italian,target,9,,,jimmy,,10405,0,0
+111523005609019118,30-39,,Russian,Italian,target,21,hunt,,,,7837,0,4
+111523005609019118,30-39,,Russian,Italian,filler,0,hunt,,,,8512,0,1
+111523005609019118,30-39,,Russian,Italian,filler,13,,fact,,,8974,0,1
+111523005609019118,30-39,,Russian,Italian,filler,4,,fact,,,7111,0,1
+111523005609019118,30-39,,Russian,Italian,filler,17,,fact,,,10547,0,1
+111523005609019118,30-39,,Russian,Italian,filler,8,,,jimmy,,6564,0,2
+111523005609019118,30-39,,Russian,Italian,check,10,,,,,8955,0,5
+111523005609019118,30-39,,Russian,Italian,target,18,hunt,,,,4039,0,2
+111523005609019118,30-39,,Russian,Italian,target,7,,,jimmy,,5118,0,1
+111523005609019118,30-39,,Russian,Italian,check,11,,,,,8097,0,4
+116513309833770379,30-39,female,Mandarin none Korean Spanish,Korean,target,16,hunt,,,,8218,0,0
+116513309833770379,30-39,female,Mandarin none Korean Spanish,Korean,filler,15,,fact,,,8753,0,3
+116513309833770379,30-39,female,Mandarin none Korean Spanish,Korean,target,5,hunt,,,,7941,0,2
+116513309833770379,30-39,female,Mandarin none Korean Spanish,Korean,target,21,hunt,,,,9179,0,5
+116513309833770379,30-39,female,Mandarin none Korean Spanish,Korean,filler,4,,fact,,,7165,0,2
+116513309833770379,30-39,female,Mandarin none Korean Spanish,Korean,target,1,hunt,,,,4608,0,3
+116513309833770379,30-39,female,Mandarin none Korean Spanish,Korean,check,10,,,,,10808,0,3
+116513309833770379,30-39,female,Mandarin none Korean Spanish,Korean,filler,17,,fact,,,11015,0,3
+116513309833770379,30-39,female,Mandarin none Korean Spanish,Korean,filler,13,,fact,,,10695,0,3
+116513309833770379,30-39,female,Mandarin none Korean Spanish,Korean,filler,22,,fact,,,6179,0,2
+116513309833770379,30-39,female,Mandarin none Korean Spanish,Korean,filler,6,,fact,,,6918,0,2
+116513309833770379,30-39,female,Mandarin none Korean Spanish,Korean,filler,2,,fact,,,6557,0,2
+116513309833770379,30-39,female,Mandarin none Korean Spanish,Korean,target,14,,fact,,,10825,0,4
+116513309833770379,30-39,female,Mandarin none Korean Spanish,Korean,filler,20,,fact,,,8048,0,4
+116513309833770379,30-39,female,Mandarin none Korean Spanish,Korean,check,11,,,,,8675,0,4
+116513309833770379,30-39,female,Mandarin none Korean Spanish,Korean,target,3,,fact,,,6024,0,2
+116513309833770379,30-39,female,Mandarin none Korean Spanish,Korean,target,12,hunt,,,,10534,0,4
+116513309833770379,30-39,female,Mandarin none Korean Spanish,Korean,filler,0,hunt,,,,8894,0,0
+116513309833770379,30-39,female,Mandarin none Korean Spanish,Korean,target,9,,,jimmy,,10208,0,2
+116513309833770379,30-39,female,Mandarin none Korean Spanish,Korean,target,7,,,jimmy,,11715,0,2
+119249863032231170,50-59,male,none Polish Spanish,English,filler,13,,fact,,,6547,0,0
+119249863032231170,50-59,male,none Polish Spanish,English,target,21,hunt,,,,9566,0,2
+119249863032231170,50-59,male,none Polish Spanish,English,filler,17,,fact,,,9167,0,4
+119249863032231170,50-59,male,none Polish Spanish,English,target,5,hunt,,,,11716,0,2
+119249863032231170,50-59,male,none Polish Spanish,English,target,14,,fact,,,11467,0,2
+119249863032231170,50-59,male,none Polish Spanish,English,filler,6,,fact,,,6232,0,0
+119249863032231170,50-59,male,none Polish Spanish,English,check,10,,,,,4040,0,1
+119249863032231170,50-59,male,none Polish Spanish,English,target,7,,,jimmy,,10587,0,1
+119249863032231170,50-59,male,none Polish Spanish,English,filler,22,,fact,,,7002,0,3
+119249863032231170,50-59,male,none Polish Spanish,English,filler,8,,,jimmy,,7081,0,1
+119249863032231170,50-59,male,none Polish Spanish,English,filler,0,hunt,,,,7265,0,3
+119249863032231170,50-59,male,none Polish Spanish,English,filler,15,,fact,,,9767,0,0
+119249863032231170,50-59,male,none Polish Spanish,English,target,16,hunt,,,,10212,0,1
+119249863032231170,50-59,male,none Polish Spanish,English,target,3,,fact,,,5648,0,5
+119249863032231170,50-59,male,none Polish Spanish,English,filler,19,,fact,,,7989,0,1
+119249863032231170,50-59,male,none Polish Spanish,English,filler,2,,fact,,,8586,0,2
+119249863032231170,50-59,male,none Polish Spanish,English,target,12,hunt,,,,7959,0,5
+119249863032231170,50-59,male,none Polish Spanish,English,target,1,hunt,,,,7509,0,1
+119249863032231170,50-59,male,none Polish Spanish,English,filler,4,,fact,,,11481,0,2
+119249863032231170,50-59,male,none Polish Spanish,English,check,11,,,,,7555,0,2
+156183045455250189,18-29,,Swaheli Polish Mandarin,Swaheli,filler,13,,fact,,,4623,0,1
+156183045455250189,18-29,,Swaheli Polish Mandarin,Swaheli,filler,2,,fact,,,4768,0,0
+156183045455250189,18-29,,Swaheli Polish Mandarin,Swaheli,target,21,hunt,,,,4283,0,3
+156183045455250189,18-29,,Swaheli Polish Mandarin,Swaheli,target,12,hunt,,,,5524,0,2
+156183045455250189,18-29,,Swaheli Polish Mandarin,Swaheli,check,11,,,,,8504,0,2
+156183045455250189,18-29,,Swaheli Polish Mandarin,Swaheli,filler,4,,fact,,,7338,0,2
+156183045455250189,18-29,,Swaheli Polish Mandarin,Swaheli,filler,8,,,jimmy,,7541,0,5
+156183045455250189,18-29,,Swaheli Polish Mandarin,Swaheli,filler,15,,fact,,,10380,0,2
+156183045455250189,18-29,,Swaheli Polish Mandarin,Swaheli,target,16,hunt,,,,10966,0,0
+156183045455250189,18-29,,Swaheli Polish Mandarin,Swaheli,filler,6,,fact,,,5224,0,5
+156183045455250189,18-29,,Swaheli Polish Mandarin,Swaheli,target,9,,,jimmy,,4849,0,0
+156183045455250189,18-29,,Swaheli Polish Mandarin,Swaheli,filler,17,,fact,,,5817,0,1
+156183045455250189,18-29,,Swaheli Polish Mandarin,Swaheli,check,10,,,,,9351,0,4
+156183045455250189,18-29,,Swaheli Polish Mandarin,Swaheli,filler,19,,fact,,,10756,0,0
+156183045455250189,18-29,,Swaheli Polish Mandarin,Swaheli,target,3,,fact,,,11879,0,3
+156183045455250189,18-29,,Swaheli Polish Mandarin,Swaheli,target,14,,fact,,,6653,0,5
+156183045455250189,18-29,,Swaheli Polish Mandarin,Swaheli,target,5,hunt,,,,8173,0,4
+156183045455250189,18-29,,Swaheli Polish Mandarin,Swaheli,target,1,hunt,,,,8854,0,4
+156183045455250189,18-29,,Swaheli Polish Mandarin,Swaheli,filler,20,,fact,,,4768,0,3
+156183045455250189,18-29,,Swaheli Polish Mandarin,Swaheli,target,7,,,jimmy,,7641,0,2
+16978382584725370,18-29,female,Italian Polish none,German,target,16,hunt,,,,5407,0,2
+16978382584725370,18-29,female,Italian Polish none,German,filler,0,hunt,,,,5876,0,3
+16978382584725370,18-29,female,Italian Polish none,German,target,9,,,jimmy,,6118,0,3
+16978382584725370,18-29,female,Italian Polish none,German,check,11,,,,,11705,0,3
+16978382584725370,18-29,female,Italian Polish none,German,target,1,hunt,,,,10871,0,4
+16978382584725370,18-29,female,Italian Polish none,German,target,14,,fact,,,4041,0,2
+16978382584725370,18-29,female,Italian Polish none,German,target,18,hunt,,,,10971,0,1
+16978382584725370,18-29,female,Italian Polish none,German,filler,22,,fact,,,5308,0,1
+16978382584725370,18-29,female,Italian Polish none,German,target,7,,,jimmy,,10489,0,5
+16978382584725370,18-29,female,Italian Polish none,German,filler,20,,fact,,,11602,0,0
+16978382584725370,18-29,female,Italian Polish none,German,filler,15,,fact,,,8207,0,2
+16978382584725370,18-29,female,Italian Polish none,German,filler,13,,fact,,,8426,0,2
+16978382584725370,18-29,female,Italian Polish none,German,filler,2,,fact,,,11147,0,4
+16978382584725370,18-29,female,Italian Polish none,German,filler,4,,fact,,,7113,0,0
+16978382584725370,18-29,female,Italian Polish none,German,filler,8,,,jimmy,,8944,0,4
+16978382584725370,18-29,female,Italian Polish none,German,filler,17,,fact,,,5910,0,3
+16978382584725370,18-29,female,Italian Polish none,German,target,12,hunt,,,,4130,0,2
+16978382584725370,18-29,female,Italian Polish none,German,check,10,,,,,5036,0,3
+16978382584725370,18-29,female,Italian Polish none,German,filler,6,,fact,,,5728,0,2
+16978382584725370,18-29,female,Italian Polish none,German,target,3,,fact,,,7684,0,4
+175926259714985808,> 60,male,Russian,Italian,target,21,hunt,,,,4564,0,4
+175926259714985808,> 60,male,Russian,Italian,target,1,hunt,,,,7427,0,0
+175926259714985808,> 60,male,Russian,Italian,filler,20,,fact,,,7232,0,0
+175926259714985808,> 60,male,Russian,Italian,target,12,hunt,,,,8737,0,2
+175926259714985808,> 60,male,Russian,Italian,filler,0,hunt,,,,5155,0,3
+175926259714985808,> 60,male,Russian,Italian,target,3,,fact,,,6658,0,2
+175926259714985808,> 60,male,Russian,Italian,filler,13,,fact,,,9594,0,1
+175926259714985808,> 60,male,Russian,Italian,target,5,hunt,,,,10525,0,2
+175926259714985808,> 60,male,Russian,Italian,target,16,hunt,,,,10510,0,1
+175926259714985808,> 60,male,Russian,Italian,target,14,,fact,,,7831,0,3
+175926259714985808,> 60,male,Russian,Italian,filler,2,,fact,,,6256,0,4
+175926259714985808,> 60,male,Russian,Italian,filler,4,,fact,,,11193,0,4
+175926259714985808,> 60,male,Russian,Italian,filler,19,,fact,,,6670,0,0
+175926259714985808,> 60,male,Russian,Italian,check,10,,,,,4984,0,2
+175926259714985808,> 60,male,Russian,Italian,filler,8,,,jimmy,,7213,0,1
+175926259714985808,> 60,male,Russian,Italian,target,7,,,jimmy,,10385,0,5
+175926259714985808,> 60,male,Russian,Italian,check,11,,,,,7949,0,5
+175926259714985808,> 60,male,Russian,Italian,target,9,,,jimmy,,7908,0,2
+175926259714985808,> 60,male,Russian,Italian,filler,22,,fact,,,9487,0,2
+175926259714985808,> 60,male,Russian,Italian,filler,15,,fact,,,10909,0,2
+182635038961435455,50-59,male,none Italian Korean,,target,21,hunt,,,,5372,0,1
+182635038961435455,50-59,male,none Italian Korean,,filler,8,,,jimmy,,7209,0,4
+182635038961435455,50-59,male,none Italian Korean,,target,14,,fact,,,8988,0,5
+182635038961435455,50-59,male,none Italian Korean,,filler,13,,fact,,,4792,0,1
+182635038961435455,50-59,male,none Italian Korean,,filler,6,,fact,,,8921,0,4
+182635038961435455,50-59,male,none Italian Korean,,filler,19,,fact,,,10195,0,5
+182635038961435455,50-59,male,none Italian Korean,,filler,20,,fact,,,5921,0,4
+182635038961435455,50-59,male,none Italian Korean,,target,5,hunt,,,,5860,0,2
+182635038961435455,50-59,male,none Italian Korean,,target,3,,fact,,,4510,0,2
+182635038961435455,50-59,male,none Italian Korean,,filler,15,,fact,,,6325,0,3
+182635038961435455,50-59,male,none Italian Korean,,target,12,hunt,,,,8151,0,2
+182635038961435455,50-59,male,none Italian Korean,,check,10,,,,,7590,0,0
+182635038961435455,50-59,male,none Italian Korean,,target,7,,,jimmy,,6063,0,1
+182635038961435455,50-59,male,none Italian Korean,,filler,4,,fact,,,6536,0,3
+182635038961435455,50-59,male,none Italian Korean,,check,11,,,,,8468,0,4
+182635038961435455,50-59,male,none Italian Korean,,target,16,hunt,,,,4531,0,2
+182635038961435455,50-59,male,none Italian Korean,,filler,2,,fact,,,5342,0,4
+182635038961435455,50-59,male,none Italian Korean,,filler,22,,fact,,,11771,0,5
+182635038961435455,50-59,male,none Italian Korean,,target,1,hunt,,,,5317,0,5
+182635038961435455,50-59,male,none Italian Korean,,target,9,,,jimmy,,5810,0,3
+215668875168226148,40-49,male,German,English,check,10,,,,,5932,0,1
+215668875168226148,40-49,male,German,English,filler,19,,fact,,,6366,0,5
+215668875168226148,40-49,male,German,English,filler,13,,fact,,,4845,0,1
+215668875168226148,40-49,male,German,English,filler,4,,fact,,,9511,0,4
+215668875168226148,40-49,male,German,English,filler,20,,fact,,,7707,0,5
+215668875168226148,40-49,male,German,English,target,12,hunt,,,,9628,0,4
+215668875168226148,40-49,male,German,English,filler,17,,fact,,,4537,0,5
+215668875168226148,40-49,male,German,English,target,7,,,jimmy,,9836,0,5
+215668875168226148,40-49,male,German,English,target,1,hunt,,,,9672,0,5
+215668875168226148,40-49,male,German,English,filler,15,,fact,,,4953,0,5
+215668875168226148,40-49,male,German,English,filler,0,hunt,,,,8523,0,4
+215668875168226148,40-49,male,German,English,target,5,hunt,,,,8465,0,0
+215668875168226148,40-49,male,German,English,filler,8,,,jimmy,,9775,0,3
+215668875168226148,40-49,male,German,English,target,14,,fact,,,10429,0,5
+215668875168226148,40-49,male,German,English,target,18,hunt,,,,7741,0,1
+215668875168226148,40-49,male,German,English,target,21,hunt,,,,6585,0,0
+215668875168226148,40-49,male,German,English,filler,2,,fact,,,8382,0,0
+215668875168226148,40-49,male,German,English,filler,6,,fact,,,11013,0,3
+215668875168226148,40-49,male,German,English,target,3,,fact,,,11755,0,5
+215668875168226148,40-49,male,German,English,filler,22,,fact,,,11036,0,1
+242478815999835676,30-39,female,Mandarin Spanish German none,English,target,21,hunt,,,,11424,0,4
+242478815999835676,30-39,female,Mandarin Spanish German none,English,target,16,hunt,,,,7397,0,0
+242478815999835676,30-39,female,Mandarin Spanish German none,English,target,1,hunt,,,,11414,0,3
+242478815999835676,30-39,female,Mandarin Spanish German none,English,target,12,hunt,,,,11328,0,4
+242478815999835676,30-39,female,Mandarin Spanish German none,English,check,11,,,,,11552,0,3
+242478815999835676,30-39,female,Mandarin Spanish German none,English,target,7,,,jimmy,,8983,0,2
+242478815999835676,30-39,female,Mandarin Spanish German none,English,filler,0,hunt,,,,4611,0,5
+242478815999835676,30-39,female,Mandarin Spanish German none,English,target,18,hunt,,,,7367,0,1
+242478815999835676,30-39,female,Mandarin Spanish German none,English,filler,19,,fact,,,11014,0,2
+242478815999835676,30-39,female,Mandarin Spanish German none,English,filler,17,,fact,,,6411,0,5
+242478815999835676,30-39,female,Mandarin Spanish German none,English,target,5,hunt,,,,9335,0,0
+242478815999835676,30-39,female,Mandarin Spanish German none,English,filler,6,,fact,,,7675,0,1
+242478815999835676,30-39,female,Mandarin Spanish German none,English,target,14,,fact,,,10338,0,4
+242478815999835676,30-39,female,Mandarin Spanish German none,English,filler,4,,fact,,,6374,0,2
+242478815999835676,30-39,female,Mandarin Spanish German none,English,target,9,,,jimmy,,9728,0,3
+242478815999835676,30-39,female,Mandarin Spanish German none,English,filler,13,,fact,,,7454,0,5
+242478815999835676,30-39,female,Mandarin Spanish German none,English,filler,2,,fact,,,6687,0,0
+242478815999835676,30-39,female,Mandarin Spanish German none,English,filler,22,,fact,,,10860,0,1
+242478815999835676,30-39,female,Mandarin Spanish German none,English,target,3,,fact,,,8047,0,2
+242478815999835676,30-39,female,Mandarin Spanish German none,English,filler,8,,,jimmy,,5132,0,1
+254712423352045549,40-49,female,Spanish Polish,English,target,9,,,jimmy,,11612,0,3
+254712423352045549,40-49,female,Spanish Polish,English,filler,2,,fact,,,4370,0,5
+254712423352045549,40-49,female,Spanish Polish,English,filler,4,,fact,,,10236,0,3
+254712423352045549,40-49,female,Spanish Polish,English,filler,20,,fact,,,8650,0,2
+254712423352045549,40-49,female,Spanish Polish,English,filler,13,,fact,,,11071,0,2
+254712423352045549,40-49,female,Spanish Polish,English,target,12,hunt,,,,10124,0,4
+254712423352045549,40-49,female,Spanish Polish,English,target,3,,fact,,,10800,0,2
+254712423352045549,40-49,female,Spanish Polish,English,target,18,hunt,,,,9347,0,3
+254712423352045549,40-49,female,Spanish Polish,English,target,21,hunt,,,,10333,0,3
+254712423352045549,40-49,female,Spanish Polish,English,check,11,,,,,8749,0,0
+254712423352045549,40-49,female,Spanish Polish,English,filler,0,hunt,,,,11186,0,0
+254712423352045549,40-49,female,Spanish Polish,English,filler,15,,fact,,,10195,0,1
+254712423352045549,40-49,female,Spanish Polish,English,target,16,hunt,,,,11759,0,4
+254712423352045549,40-49,female,Spanish Polish,English,filler,8,,,jimmy,,11119,0,0
+254712423352045549,40-49,female,Spanish Polish,English,target,1,hunt,,,,9355,0,2
+254712423352045549,40-49,female,Spanish Polish,English,filler,19,,fact,,,4717,0,5
+254712423352045549,40-49,female,Spanish Polish,English,filler,6,,fact,,,7261,0,3
+254712423352045549,40-49,female,Spanish Polish,English,filler,22,,fact,,,5027,0,4
+254712423352045549,40-49,female,Spanish Polish,English,target,5,hunt,,,,4655,0,4
+254712423352045549,40-49,female,Spanish Polish,English,target,7,,,jimmy,,7717,0,1
+26180796163426617,30-39,male,Russian Spanish,Spanish,filler,0,hunt,,,,9708,0,3
+26180796163426617,30-39,male,Russian Spanish,Spanish,filler,22,,fact,,,6667,0,5
+26180796163426617,30-39,male,Russian Spanish,Spanish,filler,8,,,jimmy,,9769,0,0
+26180796163426617,30-39,male,Russian Spanish,Spanish,check,11,,,,,11248,0,1
+26180796163426617,30-39,male,Russian Spanish,Spanish,filler,6,,fact,,,10474,0,1
+26180796163426617,30-39,male,Russian Spanish,Spanish,target,21,hunt,,,,7300,0,2
+26180796163426617,30-39,male,Russian Spanish,Spanish,target,9,,,jimmy,,6394,0,5
+26180796163426617,30-39,male,Russian Spanish,Spanish,target,1,hunt,,,,11469,0,4
+26180796163426617,30-39,male,Russian Spanish,Spanish,target,12,hunt,,,,6627,0,2
+26180796163426617,30-39,male,Russian Spanish,Spanish,target,16,hunt,,,,5323,0,2
+26180796163426617,30-39,male,Russian Spanish,Spanish,filler,13,,fact,,,6517,0,0
+26180796163426617,30-39,male,Russian Spanish,Spanish,target,3,,fact,,,5954,0,2
+26180796163426617,30-39,male,Russian Spanish,Spanish,filler,17,,fact,,,9929,0,5
+26180796163426617,30-39,male,Russian Spanish,Spanish,target,5,hunt,,,,11782,0,1
+26180796163426617,30-39,male,Russian Spanish,Spanish,filler,20,,fact,,,11094,0,2
+26180796163426617,30-39,male,Russian Spanish,Spanish,target,7,,,jimmy,,8449,0,4
+26180796163426617,30-39,male,Russian Spanish,Spanish,filler,15,,fact,,,4558,0,1
+26180796163426617,30-39,male,Russian Spanish,Spanish,filler,4,,fact,,,4325,0,4
+26180796163426617,30-39,male,Russian Spanish,Spanish,filler,2,,fact,,,7965,0,2
+26180796163426617,30-39,male,Russian Spanish,Spanish,target,14,,fact,,,7527,0,5
+264274681371731239,> 60,male,German,Korean,target,5,hunt,,,,10558,0,2
+264274681371731239,> 60,male,German,Korean,target,18,hunt,,,,6843,0,2
+264274681371731239,> 60,male,German,Korean,filler,8,,,jimmy,,8025,0,5
+264274681371731239,> 60,male,German,Korean,target,9,,,jimmy,,7517,0,5
+264274681371731239,> 60,male,German,Korean,target,12,hunt,,,,10219,0,4
+264274681371731239,> 60,male,German,Korean,filler,17,,fact,,,7006,0,5
+264274681371731239,> 60,male,German,Korean,filler,0,hunt,,,,7527,0,3
+264274681371731239,> 60,male,German,Korean,target,7,,,jimmy,,6089,0,3
+264274681371731239,> 60,male,German,Korean,target,16,hunt,,,,4534,0,1
+264274681371731239,> 60,male,German,Korean,filler,20,,fact,,,5536,0,2
+264274681371731239,> 60,male,German,Korean,filler,13,,fact,,,6681,0,3
+264274681371731239,> 60,male,German,Korean,filler,6,,fact,,,11489,0,3
+264274681371731239,> 60,male,German,Korean,target,14,,fact,,,11805,0,4
+264274681371731239,> 60,male,German,Korean,target,1,hunt,,,,9837,0,3
+264274681371731239,> 60,male,German,Korean,check,10,,,,,4912,0,2
+264274681371731239,> 60,male,German,Korean,filler,2,,fact,,,7470,0,2
+264274681371731239,> 60,male,German,Korean,filler,22,,fact,,,9794,0,0
+264274681371731239,> 60,male,German,Korean,filler,15,,fact,,,8642,0,4
+264274681371731239,> 60,male,German,Korean,filler,19,,fact,,,5526,0,2
+264274681371731239,> 60,male,German,Korean,target,3,,fact,,,10975,0,2
+265157329988577740,> 60,female,Mandarin,Italian,check,10,,,,,4808,0,0
+265157329988577740,> 60,female,Mandarin,Italian,target,21,hunt,,,,11578,0,1
+265157329988577740,> 60,female,Mandarin,Italian,filler,6,,fact,,,11495,0,2
+265157329988577740,> 60,female,Mandarin,Italian,target,18,hunt,,,,4105,0,2
+265157329988577740,> 60,female,Mandarin,Italian,filler,8,,,jimmy,,4896,0,2
+265157329988577740,> 60,female,Mandarin,Italian,filler,0,hunt,,,,10083,0,4
+265157329988577740,> 60,female,Mandarin,Italian,target,16,hunt,,,,5471,0,4
+265157329988577740,> 60,female,Mandarin,Italian,filler,4,,fact,,,7211,0,5
+265157329988577740,> 60,female,Mandarin,Italian,filler,19,,fact,,,11518,0,2
+265157329988577740,> 60,female,Mandarin,Italian,target,7,,,jimmy,,7967,0,1
+265157329988577740,> 60,female,Mandarin,Italian,filler,20,,fact,,,5313,0,4
+265157329988577740,> 60,female,Mandarin,Italian,target,1,hunt,,,,7668,0,2
+265157329988577740,> 60,female,Mandarin,Italian,filler,13,,fact,,,11998,0,1
+265157329988577740,> 60,female,Mandarin,Italian,filler,22,,fact,,,6002,0,2
+265157329988577740,> 60,female,Mandarin,Italian,target,3,,fact,,,7372,0,5
+265157329988577740,> 60,female,Mandarin,Italian,check,11,,,,,4804,0,2
+265157329988577740,> 60,female,Mandarin,Italian,filler,2,,fact,,,9048,0,2
+265157329988577740,> 60,female,Mandarin,Italian,target,5,hunt,,,,11702,0,2
+265157329988577740,> 60,female,Mandarin,Italian,target,12,hunt,,,,4074,0,0
+265157329988577740,> 60,female,Mandarin,Italian,target,14,,fact,,,6195,0,4
+268033561694298206,50-59,male,Polish English German Mandarin,Mandarin,target,9,,,jimmy,,10037,0,2
+268033561694298206,50-59,male,Polish English German Mandarin,Mandarin,target,16,hunt,,,,5457,0,4
+268033561694298206,50-59,male,Polish English German Mandarin,Mandarin,filler,0,hunt,,,,5221,0,2
+268033561694298206,50-59,male,Polish English German Mandarin,Mandarin,target,3,,fact,,,10484,0,1
+268033561694298206,50-59,male,Polish English German Mandarin,Mandarin,filler,20,,fact,,,4818,0,3
+268033561694298206,50-59,male,Polish English German Mandarin,Mandarin,target,1,hunt,,,,8555,0,3
+268033561694298206,50-59,male,Polish English German Mandarin,Mandarin,filler,17,,fact,,,7673,0,3
+268033561694298206,50-59,male,Polish English German Mandarin,Mandarin,target,7,,,jimmy,,11803,0,1
+268033561694298206,50-59,male,Polish English German Mandarin,Mandarin,filler,13,,fact,,,4980,0,0
+268033561694298206,50-59,male,Polish English German Mandarin,Mandarin,target,12,hunt,,,,10792,0,3
+268033561694298206,50-59,male,Polish English German Mandarin,Mandarin,check,10,,,,,10083,0,1
+268033561694298206,50-59,male,Polish English German Mandarin,Mandarin,target,5,hunt,,,,6497,0,3
+268033561694298206,50-59,male,Polish English German Mandarin,Mandarin,check,11,,,,,9089,0,4
+268033561694298206,50-59,male,Polish English German Mandarin,Mandarin,filler,6,,fact,,,8403,0,5
+268033561694298206,50-59,male,Polish English German Mandarin,Mandarin,target,21,hunt,,,,6302,0,2
+268033561694298206,50-59,male,Polish English German Mandarin,Mandarin,filler,2,,fact,,,10736,0,5
+268033561694298206,50-59,male,Polish English German Mandarin,Mandarin,filler,19,,fact,,,6451,0,0
+268033561694298206,50-59,male,Polish English German Mandarin,Mandarin,filler,4,,fact,,,7187,0,1
+268033561694298206,50-59,male,Polish English German Mandarin,Mandarin,target,18,hunt,,,,11955,0,0
+268033561694298206,50-59,male,Polish English German Mandarin,Mandarin,target,14,,fact,,,4469,0,5
+273280542864625863,> 60,,English Russian,English,target,12,hunt,,,,8942,0,1
+273280542864625863,> 60,,English Russian,English,filler,0,hunt,,,,11859,0,4
+273280542864625863,> 60,,English Russian,English,filler,8,,,jimmy,,11074,0,2
+273280542864625863,> 60,,English Russian,English,filler,22,,fact,,,9662,0,3
+273280542864625863,> 60,,English Russian,English,target,7,,,jimmy,,7201,0,0
+273280542864625863,> 60,,English Russian,English,check,10,,,,,6396,0,3
+273280542864625863,> 60,,English Russian,English,filler,17,,fact,,,7444,0,5
+273280542864625863,> 60,,English Russian,English,target,5,hunt,,,,11758,0,3
+273280542864625863,> 60,,English Russian,English,filler,15,,fact,,,10191,0,1
+273280542864625863,> 60,,English Russian,English,filler,20,,fact,,,11107,0,0
+273280542864625863,> 60,,English Russian,English,target,1,hunt,,,,10729,0,1
+273280542864625863,> 60,,English Russian,English,target,14,,fact,,,7589,0,0
+273280542864625863,> 60,,English Russian,English,check,11,,,,,4244,0,3
+273280542864625863,> 60,,English Russian,English,target,16,hunt,,,,9511,0,2
+273280542864625863,> 60,,English Russian,English,filler,4,,fact,,,11437,0,2
+273280542864625863,> 60,,English Russian,English,filler,6,,fact,,,5680,0,5
+273280542864625863,> 60,,English Russian,English,target,3,,fact,,,6551,0,4
+273280542864625863,> 60,,English Russian,English,target,18,hunt,,,,11035,0,5
+273280542864625863,> 60,,English Russian,English,filler,19,,fact,,,11174,0,0
+273280542864625863,> 60,,English Russian,English,target,9,,,jimmy,,10259,0,3
+276354756154139451,18-29,male,German Korean,German,filler,4,,fact,,,9828,0,2
+276354756154139451,18-29,male,German Korean,German,filler,0,hunt,,,,11477,0,2
+276354756154139451,18-29,male,German Korean,German,filler,20,,fact,,,5583,0,0
+276354756154139451,18-29,male,German Korean,German,filler,13,,fact,,,4120,0,0
+276354756154139451,18-29,male,German Korean,German,target,16,hunt,,,,6331,0,4
+276354756154139451,18-29,male,German Korean,German,target,3,,fact,,,6947,0,4
+276354756154139451,18-29,male,German Korean,German,filler,8,,,jimmy,,9400,0,4
+276354756154139451,18-29,male,German Korean,German,target,9,,,jimmy,,11478,0,4
+276354756154139451,18-29,male,German Korean,German,filler,22,,fact,,,9616,0,2
+276354756154139451,18-29,male,German Korean,German,target,18,hunt,,,,9258,0,2
+276354756154139451,18-29,male,German Korean,German,filler,6,,fact,,,5425,0,5
+276354756154139451,18-29,male,German Korean,German,check,10,,,,,9581,0,0
+276354756154139451,18-29,male,German Korean,German,filler,15,,fact,,,4482,0,2
+276354756154139451,18-29,male,German Korean,German,target,5,hunt,,,,11191,0,1
+276354756154139451,18-29,male,German Korean,German,target,21,hunt,,,,11134,0,0
+276354756154139451,18-29,male,German Korean,German,filler,17,,fact,,,11690,0,0
+276354756154139451,18-29,male,German Korean,German,target,7,,,jimmy,,5028,0,4
+276354756154139451,18-29,male,German Korean,German,target,1,hunt,,,,7020,0,1
+276354756154139451,18-29,male,German Korean,German,target,12,hunt,,,,6835,0,3
+276354756154139451,18-29,male,German Korean,German,target,14,,fact,,,5609,0,2
+298603018306771899,> 60,male,Mandarin,Mandarin,target,1,hunt,,,,6569,0,5
+298603018306771899,> 60,male,Mandarin,Mandarin,filler,13,,fact,,,9794,0,1
+298603018306771899,> 60,male,Mandarin,Mandarin,filler,20,,fact,,,4876,0,1
+298603018306771899,> 60,male,Mandarin,Mandarin,target,9,,,jimmy,,8509,0,3
+298603018306771899,> 60,male,Mandarin,Mandarin,target,18,hunt,,,,6172,0,1
+298603018306771899,> 60,male,Mandarin,Mandarin,target,7,,,jimmy,,11377,0,0
+298603018306771899,> 60,male,Mandarin,Mandarin,target,3,,fact,,,7562,0,0
+298603018306771899,> 60,male,Mandarin,Mandarin,target,16,hunt,,,,8369,0,1
+298603018306771899,> 60,male,Mandarin,Mandarin,filler,15,,fact,,,6765,0,2
+298603018306771899,> 60,male,Mandarin,Mandarin,filler,4,,fact,,,4104,0,0
+298603018306771899,> 60,male,Mandarin,Mandarin,filler,17,,fact,,,8809,0,4
+298603018306771899,> 60,male,Mandarin,Mandarin,filler,0,hunt,,,,9619,0,1
+298603018306771899,> 60,male,Mandarin,Mandarin,check,11,,,,,5741,0,4
+298603018306771899,> 60,male,Mandarin,Mandarin,filler,2,,fact,,,8900,0,2
+298603018306771899,> 60,male,Mandarin,Mandarin,filler,8,,,jimmy,,10943,0,5
+298603018306771899,> 60,male,Mandarin,Mandarin,target,5,hunt,,,,4003,0,1
+298603018306771899,> 60,male,Mandarin,Mandarin,target,14,,fact,,,10205,0,0
+298603018306771899,> 60,male,Mandarin,Mandarin,filler,22,,fact,,,4380,0,5
+298603018306771899,> 60,male,Mandarin,Mandarin,target,21,hunt,,,,6639,0,4
+298603018306771899,> 60,male,Mandarin,Mandarin,check,10,,,,,6602,0,1
+310402935877467478,50-59,,,Korean,filler,0,hunt,,,,6628,0,5
+310402935877467478,50-59,,,Korean,filler,4,,fact,,,9383,0,4
+310402935877467478,50-59,,,Korean,target,3,,fact,,,5682,0,1
+310402935877467478,50-59,,,Korean,filler,19,,fact,,,8848,0,3
+310402935877467478,50-59,,,Korean,check,11,,,,,9691,0,0
+310402935877467478,50-59,,,Korean,filler,8,,,jimmy,,11300,0,5
+310402935877467478,50-59,,,Korean,target,1,hunt,,,,6404,0,3
+310402935877467478,50-59,,,Korean,filler,20,,fact,,,8618,0,2
+310402935877467478,50-59,,,Korean,filler,13,,fact,,,6830,0,0
+310402935877467478,50-59,,,Korean,target,7,,,jimmy,,6668,0,4
+310402935877467478,50-59,,,Korean,check,10,,,,,7020,0,3
+310402935877467478,50-59,,,Korean,target,16,hunt,,,,11664,0,2
+310402935877467478,50-59,,,Korean,target,14,,fact,,,5079,0,3
+310402935877467478,50-59,,,Korean,filler,6,,fact,,,11360,0,1
+310402935877467478,50-59,,,Korean,target,9,,,jimmy,,11598,0,3
+310402935877467478,50-59,,,Korean,target,21,hunt,,,,10719,0,5
+310402935877467478,50-59,,,Korean,filler,17,,fact,,,10772,0,3
+310402935877467478,50-59,,,Korean,target,5,hunt,,,,9871,0,4
+310402935877467478,50-59,,,Korean,target,12,hunt,,,,9873,0,2
+310402935877467478,50-59,,,Korean,filler,22,,fact,,,9778,0,3
+311907745499955548,40-49,,Russian Spanish,Swaheli,target,9,,,jimmy,,10397,0,5
+311907745499955548,40-49,,Russian Spanish,Swaheli,filler,6,,fact,,,11898,0,5
+311907745499955548,40-49,,Russian Spanish,Swaheli,filler,0,hunt,,,,4477,0,5
+311907745499955548,40-49,,Russian Spanish,Swaheli,target,14,,fact,,,6344,0,5
+311907745499955548,40-49,,Russian Spanish,Swaheli,check,11,,,,,6085,0,1
+311907745499955548,40-49,,Russian Spanish,Swaheli,filler,2,,fact,,,7909,0,0
+311907745499955548,40-49,,Russian Spanish,Swaheli,check,10,,,,,9209,0,4
+311907745499955548,40-49,,Russian Spanish,Swaheli,filler,4,,fact,,,11461,0,4
+311907745499955548,40-49,,Russian Spanish,Swaheli,filler,15,,fact,,,11148,0,4
+311907745499955548,40-49,,Russian Spanish,Swaheli,filler,22,,fact,,,10005,0,3
+311907745499955548,40-49,,Russian Spanish,Swaheli,target,12,hunt,,,,6440,0,2
+311907745499955548,40-49,,Russian Spanish,Swaheli,filler,8,,,jimmy,,8472,0,4
+311907745499955548,40-49,,Russian Spanish,Swaheli,target,16,hunt,,,,10858,0,1
+311907745499955548,40-49,,Russian Spanish,Swaheli,target,5,hunt,,,,10054,0,5
+311907745499955548,40-49,,Russian Spanish,Swaheli,filler,17,,fact,,,9681,0,4
+311907745499955548,40-49,,Russian Spanish,Swaheli,target,3,,fact,,,11871,0,4
+311907745499955548,40-49,,Russian Spanish,Swaheli,target,1,hunt,,,,8800,0,5
+311907745499955548,40-49,,Russian Spanish,Swaheli,filler,13,,fact,,,11574,0,3
+311907745499955548,40-49,,Russian Spanish,Swaheli,filler,19,,fact,,,7955,0,4
+311907745499955548,40-49,,Russian Spanish,Swaheli,filler,20,,fact,,,6987,0,3
+323588937821523358,40-49,female,Polish German,Italian,filler,17,,fact,,,5040,0,4
+323588937821523358,40-49,female,Polish German,Italian,target,14,,fact,,,9157,0,0
+323588937821523358,40-49,female,Polish German,Italian,filler,15,,fact,,,10312,0,4
+323588937821523358,40-49,female,Polish German,Italian,filler,6,,fact,,,10436,0,3
+323588937821523358,40-49,female,Polish German,Italian,target,3,,fact,,,10897,0,4
+323588937821523358,40-49,female,Polish German,Italian,target,7,,,jimmy,,7568,0,2
+323588937821523358,40-49,female,Polish German,Italian,target,16,hunt,,,,6678,0,5
+323588937821523358,40-49,female,Polish German,Italian,target,21,hunt,,,,8351,0,1
+323588937821523358,40-49,female,Polish German,Italian,target,5,hunt,,,,5376,0,1
+323588937821523358,40-49,female,Polish German,Italian,filler,0,hunt,,,,4586,0,0
+323588937821523358,40-49,female,Polish German,Italian,filler,4,,fact,,,4379,0,0
+323588937821523358,40-49,female,Polish German,Italian,filler,19,,fact,,,5889,0,5
+323588937821523358,40-49,female,Polish German,Italian,target,18,hunt,,,,9436,0,4
+323588937821523358,40-49,female,Polish German,Italian,filler,8,,,jimmy,,11381,0,1
+323588937821523358,40-49,female,Polish German,Italian,target,12,hunt,,,,6539,0,3
+323588937821523358,40-49,female,Polish German,Italian,filler,22,,fact,,,11306,0,2
+323588937821523358,40-49,female,Polish German,Italian,target,9,,,jimmy,,10653,0,1
+323588937821523358,40-49,female,Polish German,Italian,check,10,,,,,10276,0,0
+323588937821523358,40-49,female,Polish German,Italian,target,1,hunt,,,,8284,0,0
+323588937821523358,40-49,female,Polish German,Italian,filler,20,,fact,,,10408,0,2
+380847377612395712,30-39,male,,Italian,filler,17,,fact,,,6897,0,5
+380847377612395712,30-39,male,,Italian,target,16,hunt,,,,10175,0,4
+380847377612395712,30-39,male,,Italian,filler,8,,,jimmy,,10027,0,3
+380847377612395712,30-39,male,,Italian,filler,2,,fact,,,6307,0,0
+380847377612395712,30-39,male,,Italian,filler,13,,fact,,,5940,0,0
+380847377612395712,30-39,male,,Italian,target,3,,fact,,,4862,0,1
+380847377612395712,30-39,male,,Italian,target,1,hunt,,,,9008,0,2
+380847377612395712,30-39,male,,Italian,target,14,,fact,,,8591,0,5
+380847377612395712,30-39,male,,Italian,filler,4,,fact,,,10102,0,2
+380847377612395712,30-39,male,,Italian,target,12,hunt,,,,6059,0,0
+380847377612395712,30-39,male,,Italian,filler,0,hunt,,,,8888,0,3
+380847377612395712,30-39,male,,Italian,target,21,hunt,,,,4335,0,5
+380847377612395712,30-39,male,,Italian,check,10,,,,,4953,0,0
+380847377612395712,30-39,male,,Italian,target,7,,,jimmy,,5235,0,3
+380847377612395712,30-39,male,,Italian,filler,22,,fact,,,7880,0,0
+380847377612395712,30-39,male,,Italian,target,18,hunt,,,,6856,0,5
+380847377612395712,30-39,male,,Italian,target,5,hunt,,,,9401,0,4
+380847377612395712,30-39,male,,Italian,filler,6,,fact,,,6458,0,3
+380847377612395712,30-39,male,,Italian,check,11,,,,,5760,0,4
+380847377612395712,30-39,male,,Italian,filler,19,,fact,,,6823,0,4
+392129074318815243,18-29,male,none Italian English Swaheli,Spanish,filler,17,,fact,,,9410,0,3
+392129074318815243,18-29,male,none Italian English Swaheli,Spanish,filler,19,,fact,,,11431,0,0
+392129074318815243,18-29,male,none Italian English Swaheli,Spanish,filler,2,,fact,,,9696,0,3
+392129074318815243,18-29,male,none Italian English Swaheli,Spanish,filler,22,,fact,,,6082,0,1
+392129074318815243,18-29,male,none Italian English Swaheli,Spanish,filler,6,,fact,,,8587,0,1
+392129074318815243,18-29,male,none Italian English Swaheli,Spanish,target,21,hunt,,,,11655,0,5
+392129074318815243,18-29,male,none Italian English Swaheli,Spanish,target,1,hunt,,,,11974,0,4
+392129074318815243,18-29,male,none Italian English Swaheli,Spanish,filler,13,,fact,,,10904,0,4
+392129074318815243,18-29,male,none Italian English Swaheli,Spanish,filler,8,,,jimmy,,9559,0,0
+392129074318815243,18-29,male,none Italian English Swaheli,Spanish,target,12,hunt,,,,8398,0,0
+392129074318815243,18-29,male,none Italian English Swaheli,Spanish,target,3,,fact,,,4988,0,5
+392129074318815243,18-29,male,none Italian English Swaheli,Spanish,target,5,hunt,,,,8470,0,3
+392129074318815243,18-29,male,none Italian English Swaheli,Spanish,target,9,,,jimmy,,9231,0,2
+392129074318815243,18-29,male,none Italian English Swaheli,Spanish,target,14,,fact,,,6055,0,3
+392129074318815243,18-29,male,none Italian English Swaheli,Spanish,check,11,,,,,7047,0,3
+392129074318815243,18-29,male,none Italian English Swaheli,Spanish,filler,0,hunt,,,,10272,0,0
+392129074318815243,18-29,male,none Italian English Swaheli,Spanish,filler,15,,fact,,,11961,0,4
+392129074318815243,18-29,male,none Italian English Swaheli,Spanish,filler,4,,fact,,,7168,0,1
+392129074318815243,18-29,male,none Italian English Swaheli,Spanish,target,7,,,jimmy,,11037,0,1
+392129074318815243,18-29,male,none Italian English Swaheli,Spanish,filler,20,,fact,,,6954,0,0
+401663023028788829,18-29,male,Spanish Swaheli Russian Mandarin,Polish,filler,15,,fact,,,6049,0,2
+401663023028788829,18-29,male,Spanish Swaheli Russian Mandarin,Polish,target,12,hunt,,,,8648,0,4
+401663023028788829,18-29,male,Spanish Swaheli Russian Mandarin,Polish,target,3,,fact,,,5370,0,5
+401663023028788829,18-29,male,Spanish Swaheli Russian Mandarin,Polish,target,18,hunt,,,,4111,0,0
+401663023028788829,18-29,male,Spanish Swaheli Russian Mandarin,Polish,target,7,,,jimmy,,6448,0,4
+401663023028788829,18-29,male,Spanish Swaheli Russian Mandarin,Polish,target,5,hunt,,,,10904,0,1
+401663023028788829,18-29,male,Spanish Swaheli Russian Mandarin,Polish,filler,19,,fact,,,10969,0,4
+401663023028788829,18-29,male,Spanish Swaheli Russian Mandarin,Polish,filler,20,,fact,,,8491,0,1
+401663023028788829,18-29,male,Spanish Swaheli Russian Mandarin,Polish,filler,13,,fact,,,7440,0,0
+401663023028788829,18-29,male,Spanish Swaheli Russian Mandarin,Polish,filler,2,,fact,,,4311,0,4
+401663023028788829,18-29,male,Spanish Swaheli Russian Mandarin,Polish,filler,17,,fact,,,6601,0,2
+401663023028788829,18-29,male,Spanish Swaheli Russian Mandarin,Polish,target,9,,,jimmy,,5619,0,5
+401663023028788829,18-29,male,Spanish Swaheli Russian Mandarin,Polish,filler,22,,fact,,,5975,0,2
+401663023028788829,18-29,male,Spanish Swaheli Russian Mandarin,Polish,filler,0,hunt,,,,10195,0,3
+401663023028788829,18-29,male,Spanish Swaheli Russian Mandarin,Polish,filler,6,,fact,,,6901,0,2
+401663023028788829,18-29,male,Spanish Swaheli Russian Mandarin,Polish,check,11,,,,,6416,0,4
+401663023028788829,18-29,male,Spanish Swaheli Russian Mandarin,Polish,filler,8,,,jimmy,,10861,0,2
+401663023028788829,18-29,male,Spanish Swaheli Russian Mandarin,Polish,target,21,hunt,,,,11806,0,0
+401663023028788829,18-29,male,Spanish Swaheli Russian Mandarin,Polish,filler,4,,fact,,,9488,0,1
+401663023028788829,18-29,male,Spanish Swaheli Russian Mandarin,Polish,target,1,hunt,,,,6012,0,5
+406608934674469509,18-29,,Spanish German,Mandarin,check,11,,,,,4200,0,4
+406608934674469509,18-29,,Spanish German,Mandarin,target,7,,,jimmy,,7200,0,1
+406608934674469509,18-29,,Spanish German,Mandarin,filler,17,,fact,,,6272,0,1
+406608934674469509,18-29,,Spanish German,Mandarin,filler,8,,,jimmy,,6618,0,4
+406608934674469509,18-29,,Spanish German,Mandarin,filler,20,,fact,,,8036,0,2
+406608934674469509,18-29,,Spanish German,Mandarin,check,10,,,,,5103,0,3
+406608934674469509,18-29,,Spanish German,Mandarin,filler,19,,fact,,,11548,0,2
+406608934674469509,18-29,,Spanish German,Mandarin,filler,2,,fact,,,10184,0,3
+406608934674469509,18-29,,Spanish German,Mandarin,target,18,hunt,,,,5067,0,5
+406608934674469509,18-29,,Spanish German,Mandarin,target,1,hunt,,,,10921,0,2
+406608934674469509,18-29,,Spanish German,Mandarin,filler,4,,fact,,,11812,0,0
+406608934674469509,18-29,,Spanish German,Mandarin,filler,6,,fact,,,6692,0,5
+406608934674469509,18-29,,Spanish German,Mandarin,target,16,hunt,,,,4789,0,2
+406608934674469509,18-29,,Spanish German,Mandarin,target,5,hunt,,,,9792,0,4
+406608934674469509,18-29,,Spanish German,Mandarin,target,12,hunt,,,,6032,0,1
+406608934674469509,18-29,,Spanish German,Mandarin,filler,15,,fact,,,8078,0,1
+406608934674469509,18-29,,Spanish German,Mandarin,target,14,,fact,,,7321,0,5
+406608934674469509,18-29,,Spanish German,Mandarin,filler,0,hunt,,,,5278,0,5
+406608934674469509,18-29,,Spanish German,Mandarin,target,9,,,jimmy,,11696,0,4
+406608934674469509,18-29,,Spanish German,Mandarin,target,21,hunt,,,,6769,0,0
+429705103210079317,18-29,,Korean Polish Swaheli Spanish,Russian,filler,6,,fact,,,10803,0,3
+429705103210079317,18-29,,Korean Polish Swaheli Spanish,Russian,filler,2,,fact,,,9185,0,5
+429705103210079317,18-29,,Korean Polish Swaheli Spanish,Russian,filler,8,,,jimmy,,6879,0,5
+429705103210079317,18-29,,Korean Polish Swaheli Spanish,Russian,target,12,hunt,,,,11749,0,2
+429705103210079317,18-29,,Korean Polish Swaheli Spanish,Russian,check,11,,,,,7023,0,0
+429705103210079317,18-29,,Korean Polish Swaheli Spanish,Russian,filler,15,,fact,,,8808,0,1
+429705103210079317,18-29,,Korean Polish Swaheli Spanish,Russian,filler,0,hunt,,,,9494,0,4
+429705103210079317,18-29,,Korean Polish Swaheli Spanish,Russian,target,5,hunt,,,,5344,0,2
+429705103210079317,18-29,,Korean Polish Swaheli Spanish,Russian,target,7,,,jimmy,,8635,0,5
+429705103210079317,18-29,,Korean Polish Swaheli Spanish,Russian,target,18,hunt,,,,4721,0,5
+429705103210079317,18-29,,Korean Polish Swaheli Spanish,Russian,target,3,,fact,,,9588,0,2
+429705103210079317,18-29,,Korean Polish Swaheli Spanish,Russian,filler,19,,fact,,,8180,0,5
+429705103210079317,18-29,,Korean Polish Swaheli Spanish,Russian,filler,4,,fact,,,7534,0,4
+429705103210079317,18-29,,Korean Polish Swaheli Spanish,Russian,target,9,,,jimmy,,10658,0,4
+429705103210079317,18-29,,Korean Polish Swaheli Spanish,Russian,filler,22,,fact,,,8334,0,2
+429705103210079317,18-29,,Korean Polish Swaheli Spanish,Russian,filler,17,,fact,,,8144,0,0
+429705103210079317,18-29,,Korean Polish Swaheli Spanish,Russian,target,16,hunt,,,,10041,0,2
+429705103210079317,18-29,,Korean Polish Swaheli Spanish,Russian,check,10,,,,,7350,0,0
+429705103210079317,18-29,,Korean Polish Swaheli Spanish,Russian,filler,20,,fact,,,5118,0,3
+429705103210079317,18-29,,Korean Polish Swaheli Spanish,Russian,target,21,hunt,,,,4341,0,3
+444472590837793352,30-39,male,,Korean,filler,13,,fact,,,7441,0,0
+444472590837793352,30-39,male,,Korean,check,11,,,,,8004,0,5
+444472590837793352,30-39,male,,Korean,target,12,hunt,,,,9369,0,1
+444472590837793352,30-39,male,,Korean,target,1,hunt,,,,9567,0,4
+444472590837793352,30-39,male,,Korean,filler,6,,fact,,,9584,0,2
+444472590837793352,30-39,male,,Korean,target,18,hunt,,,,6999,0,4
+444472590837793352,30-39,male,,Korean,target,21,hunt,,,,9862,0,4
+444472590837793352,30-39,male,,Korean,filler,4,,fact,,,4642,0,1
+444472590837793352,30-39,male,,Korean,target,16,hunt,,,,4196,0,2
+444472590837793352,30-39,male,,Korean,filler,0,hunt,,,,5850,0,2
+444472590837793352,30-39,male,,Korean,target,3,,fact,,,7272,0,0
+444472590837793352,30-39,male,,Korean,filler,19,,fact,,,5525,0,2
+444472590837793352,30-39,male,,Korean,filler,8,,,jimmy,,9078,0,2
+444472590837793352,30-39,male,,Korean,check,10,,,,,10237,0,0
+444472590837793352,30-39,male,,Korean,filler,2,,fact,,,6420,0,2
+444472590837793352,30-39,male,,Korean,filler,15,,fact,,,9242,0,1
+444472590837793352,30-39,male,,Korean,target,5,hunt,,,,9127,0,2
+444472590837793352,30-39,male,,Korean,target,7,,,jimmy,,5594,0,1
+444472590837793352,30-39,male,,Korean,target,14,,fact,,,11055,0,2
+444472590837793352,30-39,male,,Korean,filler,20,,fact,,,7617,0,5
+451417078739158148,18-29,,Mandarin,Italian,filler,4,,fact,,,10390,0,1
+451417078739158148,18-29,,Mandarin,Italian,target,18,hunt,,,,11841,0,2
+451417078739158148,18-29,,Mandarin,Italian,filler,19,,fact,,,8073,0,0
+451417078739158148,18-29,,Mandarin,Italian,filler,13,,fact,,,9833,0,5
+451417078739158148,18-29,,Mandarin,Italian,target,9,,,jimmy,,9700,0,5
+451417078739158148,18-29,,Mandarin,Italian,filler,17,,fact,,,11453,0,2
+451417078739158148,18-29,,Mandarin,Italian,filler,8,,,jimmy,,9481,0,0
+451417078739158148,18-29,,Mandarin,Italian,target,3,,fact,,,10599,0,5
+451417078739158148,18-29,,Mandarin,Italian,filler,20,,fact,,,6787,0,3
+451417078739158148,18-29,,Mandarin,Italian,filler,2,,fact,,,5672,0,3
+451417078739158148,18-29,,Mandarin,Italian,filler,15,,fact,,,5203,0,5
+451417078739158148,18-29,,Mandarin,Italian,check,10,,,,,6471,0,2
+451417078739158148,18-29,,Mandarin,Italian,target,1,hunt,,,,8203,0,3
+451417078739158148,18-29,,Mandarin,Italian,target,12,hunt,,,,8332,0,5
+451417078739158148,18-29,,Mandarin,Italian,target,5,hunt,,,,6119,0,1
+451417078739158148,18-29,,Mandarin,Italian,filler,0,hunt,,,,5825,0,5
+451417078739158148,18-29,,Mandarin,Italian,filler,6,,fact,,,9253,0,0
+451417078739158148,18-29,,Mandarin,Italian,check,11,,,,,10098,0,2
+451417078739158148,18-29,,Mandarin,Italian,filler,22,,fact,,,11603,0,5
+451417078739158148,18-29,,Mandarin,Italian,target,14,,fact,,,4102,0,4
+453601471777904617,40-49,male,none Swaheli Mandarin German,Italian,target,16,hunt,,,,5920,0,2
+453601471777904617,40-49,male,none Swaheli Mandarin German,Italian,filler,17,,fact,,,5517,0,1
+453601471777904617,40-49,male,none Swaheli Mandarin German,Italian,filler,4,,fact,,,7389,0,2
+453601471777904617,40-49,male,none Swaheli Mandarin German,Italian,target,5,hunt,,,,7252,0,0
+453601471777904617,40-49,male,none Swaheli Mandarin German,Italian,target,18,hunt,,,,9881,0,3
+453601471777904617,40-49,male,none Swaheli Mandarin German,Italian,filler,13,,fact,,,6476,0,2
+453601471777904617,40-49,male,none Swaheli Mandarin German,Italian,check,11,,,,,6580,0,2
+453601471777904617,40-49,male,none Swaheli Mandarin German,Italian,filler,0,hunt,,,,6535,0,3
+453601471777904617,40-49,male,none Swaheli Mandarin German,Italian,target,12,hunt,,,,4796,0,2
+453601471777904617,40-49,male,none Swaheli Mandarin German,Italian,target,3,,fact,,,4858,0,5
+453601471777904617,40-49,male,none Swaheli Mandarin German,Italian,check,10,,,,,5186,0,2
+453601471777904617,40-49,male,none Swaheli Mandarin German,Italian,target,1,hunt,,,,8063,0,1
+453601471777904617,40-49,male,none Swaheli Mandarin German,Italian,target,14,,fact,,,9039,0,1
+453601471777904617,40-49,male,none Swaheli Mandarin German,Italian,filler,8,,,jimmy,,7337,0,1
+453601471777904617,40-49,male,none Swaheli Mandarin German,Italian,target,21,hunt,,,,10846,0,4
+453601471777904617,40-49,male,none Swaheli Mandarin German,Italian,target,9,,,jimmy,,5074,0,1
+453601471777904617,40-49,male,none Swaheli Mandarin German,Italian,target,7,,,jimmy,,6434,0,4
+453601471777904617,40-49,male,none Swaheli Mandarin German,Italian,filler,22,,fact,,,9802,0,3
+453601471777904617,40-49,male,none Swaheli Mandarin German,Italian,filler,19,,fact,,,11859,0,0
+453601471777904617,40-49,male,none Swaheli Mandarin German,Italian,filler,6,,fact,,,7197,0,1
+85512889727412464,18-29,female,English Mandarin,English,filler,0,hunt,,,,4351,0,2
+85512889727412464,18-29,female,English Mandarin,English,filler,19,,fact,,,7816,0,4
+85512889727412464,18-29,female,English Mandarin,English,filler,20,,fact,,,9042,0,1
+85512889727412464,18-29,female,English Mandarin,English,filler,17,,fact,,,10639,0,4
+85512889727412464,18-29,female,English Mandarin,English,target,3,,fact,,,5927,0,5
+85512889727412464,18-29,female,English Mandarin,English,filler,4,,fact,,,11419,0,5
+85512889727412464,18-29,female,English Mandarin,English,target,5,hunt,,,,4006,0,3
+85512889727412464,18-29,female,English Mandarin,English,filler,22,,fact,,,4623,0,5
+85512889727412464,18-29,female,English Mandarin,English,target,16,hunt,,,,8872,0,3
+85512889727412464,18-29,female,English Mandarin,English,target,7,,,jimmy,,5118,0,1
+85512889727412464,18-29,female,English Mandarin,English,target,21,hunt,,,,6904,0,3
+85512889727412464,18-29,female,English Mandarin,English,filler,8,,,jimmy,,6966,0,5
+85512889727412464,18-29,female,English Mandarin,English,filler,15,,fact,,,10835,0,4
+85512889727412464,18-29,female,English Mandarin,English,check,10,,,,,7381,0,4
+85512889727412464,18-29,female,English Mandarin,English,target,18,hunt,,,,8366,0,3
+85512889727412464,18-29,female,English Mandarin,English,filler,2,,fact,,,7230,0,2
+85512889727412464,18-29,female,English Mandarin,English,check,11,,,,,7027,0,0
+85512889727412464,18-29,female,English Mandarin,English,filler,6,,fact,,,6889,0,3
+85512889727412464,18-29,female,English Mandarin,English,target,1,hunt,,,,6003,0,3
+85512889727412464,18-29,female,English Mandarin,English,target,14,,fact,,,11928,0,4

@@ -19,6 +19,10 @@ Best used with [prolific](https://prolific.ac).
  - a lot of other stuff, like a simple, flexible json configuration, tests,
    bootstrap layout, tested result generation, aso.
 
+## Docs
+
+ - see ``./docs``, you probably want to start with the [user guide](https://github.com/inktrap/studyriffic/blob/master/docs/USER.md)
+
 ## Demo
 
  - The demo is about [owls](https://perigen.diphda.uberspace.de/study/owls).
@@ -28,10 +32,6 @@ Best used with [prolific](https://prolific.ac).
 ## Tests
 
  - see ``./tests`` and ``test.sh``
-
-## Docs
-
- - see ``./docs``
 
 ## Deployment
 

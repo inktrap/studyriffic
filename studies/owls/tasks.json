@@ -1,0 +1,159 @@
+[{
+    "category": "filler",
+    "check": [0.0],
+    "id": 0,
+    "sentence": "It was surprising that the owl saw the mouse even if it was dark.",
+    "situation": "Owls can hunt if it is dark.",
+    "type": ["hunt"]
+}, {
+    "category": "target",
+    "id": 1,
+    "sentence": "The owl caught the mouse and played with it.",
+    "situation": "Owls are very good hunters.",
+    "type": ["hunt"]
+}, {
+    "category": "filler",
+    "check": [0.5],
+    "id": 2,
+    "sentence": "It was surprising that the owl did not eat the mouse.",
+    "situation": "Owls can eat a lot of mice.",
+    "type": ["fact"]
+}, {
+    "category": "target",
+    "id": 3,
+    "sentence": "Jimmy called the owl but the owl did not listen.",
+    "situation": "Owls are not very good listeners.",
+    "type": ["fact"]
+}, {
+    "category": "filler",
+    "check": [1.0],
+    "id": 4,
+    "sentence": "It was surprising that the owl saw the mouse even if it was dark.",
+    "situation": "Owls are awesome.",
+    "type": ["fact"]
+}, {
+    "category": "target",
+    "id": 5,
+    "sentence": "The owl caught the mouse and fed it another owl",
+    "situation": "Owls have a lot of feathers.",
+    "type": ["hunt"]
+}, {
+    "category": "filler",
+    "check": [0.5],
+    "id": 6,
+    "sentence": "It was surprising that the owl saw the mouse even if it was dark.",
+    "situation": "Owls have a lot of humor.",
+    "type": ["fact"]
+}, {
+    "category": "target",
+    "id": 7,
+    "sentence": "The owl caught the mouse and ate it.",
+    "situation": "Jimmy petted an owl once.",
+    "type": ["jimmy"]
+}, {
+    "category": "filler",
+    "check": [0.0],
+    "id": 8,
+    "sentence": "It was surprising that the owl saw the mouse even if it was dark.",
+    "situation": "The owl caught a mouse and brought it to Jimmy.",
+    "type": ["jimmy"]
+}, {
+    "category": "target",
+    "id": 9,
+    "sentence": "The owl caught the mouse but the mouse was too quick.",
+    "situation": "Jimmy is the best friend of an owl.",
+    "type": ["jimmy"]
+}, {
+    "situation": "This is an attention check.",
+    "category": "check",
+    "sentence": "Please select “MAX_SCALE_DESC” to pass this check.",
+    "check": [1.0],
+    "type": [],
+    "id": 10
+}, {
+    "situation": "This is an attention check.",
+    "category": "check",
+    "sentence": "Please select “MIN_SCALE_DESC” to pass this check.",
+    "check": [0.0],
+    "type": [],
+    "id": 11
+}, {
+    "category": "target",
+    "id": 12,
+    "sentence": "The owl caught the mouse and played with it.",
+    "situation": "Owls are very good hunters.",
+    "type": ["hunt"]
+}, {
+    "category": "filler",
+    "check": [0.5],
+    "id": 13,
+    "sentence": "It was surprising that the owl did not eat the mouse.",
+    "situation": "Owls can eat a lot of mice.",
+    "type": ["fact"]
+}, {
+    "category": "target",
+    "id": 14,
+    "sentence": "Jimmy called the owl but the owl did not listen.",
+    "situation": "Owls are not very good listeners.",
+    "type": ["fact"]
+}, {
+    "category": "filler",
+    "check": [1.0],
+    "id": 15,
+    "sentence": "It was surprising that the owl saw the mouse even if it was dark.",
+    "situation": "Owls are awesome.",
+    "type": ["fact"]
+}, {
+    "category": "target",
+    "id": 16,
+    "sentence": "The owl caught the mouse and fed it another owl",
+    "situation": "Owls have a lot of feathers.",
+    "type": ["hunt"]
+}, {
+    "category": "filler",
+    "check": [1.0],
+    "id": 17,
+    "sentence": "It was surprising that the owl saw the mouse even if it was dark.",
+    "situation": "Owls are awesome.",
+    "type": ["fact"]
+}, {
+    "category": "target",
+    "id": 18,
+    "sentence": "The owl caught the mouse and fed it another owl",
+    "situation": "Owls have a lot of feathers.",
+    "type": ["hunt"]
+}, {
+    "category": "filler",
+    "check": [0.5],
+    "id": 19,
+    "sentence": "It was surprising that the owl saw the mouse even if it was dark.",
+    "situation": "Owls have a lot of humor.",
+    "type": ["fact"]
+}, {
+    "category": "filler",
+    "check": [1.0],
+    "id": 20,
+    "sentence": "It was surprising that the owl saw the mouse even if it was dark.",
+    "situation": "Owls are awesome.",
+    "type": ["fact"]
+}, {
+    "category": "target",
+    "id": 21,
+    "sentence": "The owl caught the mouse and fed it another owl",
+    "situation": "Owls have a lot of feathers.",
+    "type": ["hunt"]
+}, {
+    "category": "filler",
+    "check": [1.0],
+    "id": 22,
+    "sentence": "It was surprising that the owl saw the mouse even if it was dark.",
+    "situation": "Owls are awesome.",
+    "type": ["fact"]
+}, {
+    "category": "target",
+    "id": 23,
+    "sentence": "The owl caught the mouse and fed it another owl",
+    "situation": "Owls have a lot of feathers.",
+    "type": ["hunt"]
+}
+]

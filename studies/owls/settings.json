@@ -1,0 +1,31 @@
+{
+    "active" : true,
+    "max_check_fail": 1,
+    "labels" : false,
+    "filler_is_first" : true,
+    "question":"Do you think the following sentence is “true” or “false” in the above situation?",
+    "situation":"Please consider the following situation:",
+    "questions": 20,
+    "min_scale": 0,
+    "max_scale": 4,
+    "min_scale_desc" : "Definitely false",
+    "max_scale_desc" : "Definitely true",
+    "university": "Great Owl University",
+    "investigator": "Dr. Owly Mc Owlface",
+    "contact" : "Owly.Owlface@owl-university.owl",
+    "time" : 5,
+    "link" : "https://github.com/inktrap/studyriffic",
+    "types":["hunt", "fact", "jimmy", "owl"],
+    "templates": ["first.tpl"],
+    "restrictions":[
+        {"action":"select", "category":"filler", "argument":9},
+        {"action":"select", "category":"target", "argument":9},
+        {"action":"select", "category":"check", "argument":2},
+        {"action":"max_successors", "category":"check", "argument":0},
+        {"action":"max_successors", "category":"filler", "argument":3},
+        {"action":"max_successors", "category":"target", "argument":3},
+        {"action":"max_successors", "type":"hunt", "argument":2},
+        {"action":"max_successors", "type":"jimmy", "argument":2},
+        {"action":"not_positions", "category":"check", "argument":[0, 19]}
+    ]
+}

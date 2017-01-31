@@ -30,11 +30,11 @@ class baseConfig():
         else:
             # configured uberspace
             # client = MongoClient('mongodb://username:password@localhost:27017/')
-            username = 'perigen'
-            password = 'zeishee3ue'
+            username = 'example'
+            password = 'example'
             this_username = urllib.parse.quote_plus(username)
             this_password = urllib.parse.quote_plus(password)
-            this_port = 21205
+            this_port = 27017
             mongodb_uri = 'mongodb://%s:%s@localhost:%i/%s' % (this_username, this_password, this_port, database)
 
         client = MongoClient(mongodb_uri, serverSelectionTimeoutMS=1)
